@@ -1,5 +1,10 @@
 # projet hopital
 
+# Install dependencies
+
+```
+symfony composer install
+```
 
 
 ## Getting started
