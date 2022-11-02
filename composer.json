@@ -12,11 +12,14 @@
         "doctrine/orm": "^2.13",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
-        "symfony/flex": "^2",
+        "symfony/flex": "^2.2",
         "symfony/framework-bundle": "6.1.*",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "6.1.*",
-        "symfony/yaml": "6.1.*"
+        "symfony/twig-bundle": "6.1.*",
+        "symfony/yaml": "6.1.*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "config": {
         "allow-plugins": {
@@ -72,6 +75,8 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.47"
+        "symfony/maker-bundle": "^1.47",
+        "symfony/stopwatch": "6.1.*",
+        "symfony/web-profiler-bundle": "6.1.*"
     }
 }
