@@ -52,6 +52,11 @@
         </div>
     </nav>
 
+        <br><br>
+        {% block menu %} 
+            <a href={{path('patient_menu')}}>Accueil</a>
+            <a href={{path('patient_venue')}}>Indiquer votre venue</a>
+        {% endblock %}
     
     <body>
         {% block body %}
