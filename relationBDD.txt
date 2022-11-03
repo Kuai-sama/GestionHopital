@@ -1,0 +1,25 @@
+Personne OneToMany RDV
+Personne OneToMany RDV
+
+Personne OneToMany Patient
+
+Personne ManyToMany Diagnostic
+Personne ManyToOne Diagnostic
+
+Personne ManyToMany Prescription
+Personne ManyToMany Prescription
+Personne ManyToMany Prescription
+
+Prescription ManyToOne Medicament
+
+Medicament ManyToMany Commande
+
+Personne ManyToOne Metier
+
+Personne ManyToOne Service
+
+Personne ManyToOne Lit
+
+
+
+

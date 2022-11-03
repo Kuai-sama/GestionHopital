@@ -22,8 +22,8 @@ class Salle
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $TypeSalle = null;
 
-    #[ORM\Column]
-    private ?int $RFID = null;
+    #[ORM\ManyToOne]
+    private ?Service $Service = null;
 
     public function getId(): ?int
     {
@@ -66,14 +66,14 @@ class Salle
         return $this;
     }
 
-    public function getRFID(): ?int
+    public function getService(): ?Service
     {
-        return $this->RFID;
+        return $this->Service;
     }
 
-    public function setRFID(int $RFID): self
+    public function setService(?Service $Service): self
     {
-        $this->RFID = $RFID;
+        $this->Service = $Service;
 
         return $this;
     }

@@ -20,6 +20,10 @@ class Prescription
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $DateFin = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Medicament $Medicament = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +49,18 @@ class Prescription
     public function setDateFin(\DateTimeInterface $DateFin): self
     {
         $this->DateFin = $DateFin;
+
+        return $this;
+    }
+
+    public function getMedicament(): ?Medicament
+    {
+        return $this->Medicament;
+    }
+
+    public function setMedicament(?Medicament $Medicament): self
+    {
+        $this->Medicament = $Medicament;
 
         return $this;
     }

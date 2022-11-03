@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MedicamentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MedicamentRepository::class)]
@@ -21,6 +23,14 @@ class Medicament
 
     #[ORM\Column(nullable: true)]
     private ?int $Stock = null;
+
+    #[ORM\ManyToMany(targetEntity: Commande::class)]
+    private Collection $Commander;
+
+    public function __construct()
+    {
+        $this->Commander = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +69,30 @@ class Medicament
     public function setStock(?int $Stock): self
     {
         $this->Stock = $Stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommander(): Collection
+    {
+        return $this->Commander;
+    }
+
+    public function addCommander(Commande $commander): self
+    {
+        if (!$this->Commander->contains($commander)) {
+            $this->Commander->add($commander);
+        }
+
+        return $this;
+    }
+
+    public function removeCommander(Commande $commander): self
+    {
+        $this->Commander->removeElement($commander);
 
         return $this;
     }

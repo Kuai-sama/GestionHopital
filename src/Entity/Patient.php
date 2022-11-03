@@ -23,6 +23,10 @@ class Patient
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $DateHeureSortie = null;
 
+    #[ORM\OneToOne(inversedBy: 'patient', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Personne $Personne = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +64,18 @@ class Patient
     public function setDateHeureSortie(?\DateTimeInterface $DateHeureSortie): self
     {
         $this->DateHeureSortie = $DateHeureSortie;
+
+        return $this;
+    }
+
+    public function getPersonne(): ?Personne
+    {
+        return $this->Personne;
+    }
+
+    public function setPersonne(Personne $Personne): self
+    {
+        $this->Personne = $Personne;
 
         return $this;
     }
