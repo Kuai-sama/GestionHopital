@@ -2,18 +2,23 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <link rel="stylesheet" href="/CSS/style.css">
         <title>
             {% block title %}
-                Welcome!
+                Accueil
             {% endblock %}
         </title>
     </head>
-    <body>
+    <p>
+        Hospital
+    </p>
         <br><br>
         {% block menu %} 
-            <li><a href={{path('patient_menu')}}>Accueil</a></li>
-            <li><a href={{path('patient_venue')}}>Indiquer votre venue</a></li>
+            <a href={{path('patient_menu')}}>Accueil</a>
+            <a href={{path('patient_venue')}}>Indiquer votre venue</a>
         {% endblock %}
+    
+    <body>
         {% block body %}
         {% endblock %}
         <br /><br />
