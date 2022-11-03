@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+	<title>
+		{{'Visualisation des lits'}}
+	</title>
+{% endblock %}
+
+{% set strNumLit, strPosLit, strOccLit = "Numéro", "Emplacement", "Occupation" %}
+
+{% block body %}
+	<h1>{{ 'Visualisation des lits' }}</h1>
+	{% block content%}
+		<table
+			class="table-info">
+			{# class="table-info" #}
+			<thead>
+				<tr>
+					<th>
+						{{ strNumLit }}
+					</th>
+					<th>
+						{{ strPosLit }}
+					</th>
+					<th>
+						{{ strOccLit }}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="active-row">
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+				<tr>
+					<td data-label="{{ strNumLit }}">
+						{{1}}
+					</td>
+					<td data-label="{{ strPosLit }}">
+						{{'Chambre 1'}}
+					</td>
+					<td data-label="{{ strOccLit}}">
+						{{'Lit occupé'}}
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	{% endblock %}
+{% endblock %}
