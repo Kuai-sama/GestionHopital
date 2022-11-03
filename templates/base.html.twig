@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% for msg in app.session.flashBag.get('info') %}
-            <p>{{ msg }}</p>
-        {% endfor %}
-        <br><br>
-        {% block contenue %}
-        {% endblock %}
-
-
-        
-
+        <meta charset="UTF-8" />
+        <title>
+            {% block title %}
+                Welcome!
+            {% endblock %}
+        </title>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <br><br>
+        {% block menu %} 
+            <li><a href={{path('patient_menu')}}>Accueil</a></li>
+            <li><a href={{path('patient_venue')}}>Indiquer votre venue</a></li>
+        {% endblock %}
+        {% block body %}
+        {% endblock %}
+        <br /><br />
+        {% block contenue %}
+            
+        {% endblock %}
     </body>
 </html>
