@@ -9,6 +9,7 @@
 {% set strNumLit, strPosLit, strOccLit = "Numéro", "Emplacement", "Occupation" %}
 
 {% block body %}
+	{{dump(lits)}}
 	<h1>{{ 'Visualisation des lits' }}</h1>
 	{% block content%}
 		<table
@@ -28,95 +29,23 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="active-row">
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-				<tr>
-					<td data-label="{{ strNumLit }}">
-						{{1}}
-					</td>
-					<td data-label="{{ strPosLit }}">
-						{{'Chambre 1'}}
-					</td>
-					<td data-label="{{ strOccLit}}">
-						{{'Lit occupé'}}
-					</td>
-				</tr>
-
+				{% for lit in lits %}
+					<tr>
+						<td data-label="{{ strNumLit }}">
+							{{ lit.id }}
+						</td>
+						<td data-label="{{ strPosLit }}">
+							{{ lit.salle.EmplacementSalle }}
+						</td>
+						<td data-label="{{ strOccLit}}">
+							{% if lit.LitOccupe == 1 %}
+								{{ 'Occupé' }}
+							{% else %}
+								{{ 'Libre' }}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	{% endblock %}
