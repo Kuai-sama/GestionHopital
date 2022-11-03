@@ -1,7 +1,12 @@
 {% extends "base.html.twig" %}
-{% block title %}
-    Form Patient
-{% endblock %}
-{% block contenue %}
-    {% include "Patient/form.html.twig" %}
-{% endblock %}
+    {% block title %}
+        Demande de venue
+    {% endblock %}
+
+    {% block body %}
+            {% if salle != null %}
+                <h1> La chambre {{salle.NomSalle}} vous est attribué, veuillez vous addresser à l'accueil </h1>
+            {% else %}
+                <h1> Aucun lit n'est disponible, voici les hopitaux les plus proches : </h1>
+            {% endif %}
+    {% endblock %}

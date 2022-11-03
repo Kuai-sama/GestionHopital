@@ -64,12 +64,4 @@ class LitRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function findSalle()
-    {
-        $qb = $this->createQueryBuilder('l')
-        ->where('l.etre = salle.id')
-        ->orderBy('l.LitOccupe')
-        ;
-        return $qb->getQuery()->getResult();
-    }
 }

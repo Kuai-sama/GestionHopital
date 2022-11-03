@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Lit;
+use App\Entity\Salle;
 use App\Entity\Patient;
 use App\Form\PatientType;
+use Doctrine\ORM\Mapping\Id;
 use App\Repository\LitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/patient', name: 'patient_')]
 class PatientController extends AbstractController
 {
+    /*
     #[Route('/FormPatient', name: 'formPatient')]
     public function FormPatientAction(Request $request, EntityManagerInterface $em): Response
     {
@@ -35,29 +38,35 @@ class PatientController extends AbstractController
             return $this->redirectToRoute('patient_menu');
         }
 
-        return $this->render('patient/venue.html.twig', [
+        return $this->render('patient/rdv.html.twig', [
             'form' => $form->createView(),
         ]);
-    }
+    }*/
 
     #[Route('', name: 'menu')]
     public function menuAction(): Response
     {
-        return new Response('Bonjour');
+        return $this->render('base.html.twig');
     }
 
     #[Route('/venue', name: 'venue')]
-    public function FormVenueAction(EntityManagerInterface $em): Response
+    public function VenueAction(EntityManagerInterface $em, Request $request): Response
     {
-        $disponible = $em->getRepository(Lit::class)->findBy(['LitOccupe' => false]);
-        dump($disponible);
-        if($disponible ==null)
+
+        // verification de lit disponible
+        $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
+        if(!$disponible)
         {
-            return new Response('Aucun lit disponible');
+            return $this->render('patient/venue.html.twig',['salle'=>null]);
         }
 
-        $salle = $disponible->findSalle();
-        dump($salle);
-        return new Response ('Lit disponible salle '.$salle);
+        $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible]);
+        $lit = new Lit;
+        $lit = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]); 
+        $disponible->setLitOccupe(true);
+        $em->persist($disponible);
+        $em->flush();
+        //return new Response ('Lit disponible salle '.$salle->getNomSalle());
+        return $this->render('patient/venue.html.twig',['salle'=>$salle]);
     }
 }
