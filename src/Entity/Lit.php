@@ -16,6 +16,9 @@ class Lit
     #[ORM\Column(nullable: true)]
     private ?bool $LitOccupe = null;
 
+    #[ORM\ManyToOne]
+    private ?Salle $Salle = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Lit
     public function setLitOccupe(?bool $LitOccupe): self
     {
         $this->LitOccupe = $LitOccupe;
+
+        return $this;
+    }
+
+    public function getSalle(): ?Salle
+    {
+        return $this->Salle;
+    }
+
+    public function setSalle(?Salle $Salle): self
+    {
+        $this->Salle = $Salle;
 
         return $this;
     }
