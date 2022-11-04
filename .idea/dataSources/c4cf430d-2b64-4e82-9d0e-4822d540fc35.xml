@@ -1645,7 +1645,7 @@ commande_id</ColNames>
       <Position>12</Position>
     </column>
     <column id="563" parent="491" name="num_tel">
-      <DataType>INTEGER|0s</DataType>
+      <DataType>VARCHAR(255)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>13</Position>
     </column>

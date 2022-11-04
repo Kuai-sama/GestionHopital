@@ -42,7 +42,7 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Prenom = null;
 
     #[ORM\Column]
-    private ?int $NumTel = null;
+    private ?string $NumTel = null;
 
     #[ORM\ManyToOne]
     private ?Lit $idLit = null;
@@ -189,12 +189,12 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getNumTel(): ?int
+    public function getNumTel(): ?string
     {
         return $this->NumTel;
     }
 
-    public function setNumTel(int $NumTel): self
+    public function setNumTel(string $NumTel): self
     {
         $this->NumTel = $NumTel;
 

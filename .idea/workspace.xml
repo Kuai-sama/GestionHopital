@@ -2,26 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cc9d60f-aa17-4ecd-895e-b93900aafcc2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Projet-hopital.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Projet-hopital.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/data.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221102141420.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221102141430.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221102143644.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221102144352.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221102150308.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221102153042.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-hopital" beforeDir="false" afterPath="$PROJECT_DIR$/projet-hopital" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Medicament.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Medicament.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Message.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Patient.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Patient.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/data.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Personne.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Personne.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Prescription.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Prescription.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/RDV.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/RDV.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Salle.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Salle.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +115,8 @@
       <workItem from="1667393045471" duration="2391000" />
       <workItem from="1667395470231" duration="7376000" />
       <workItem from="1667462054901" duration="6798000" />
-      <workItem from="1667482533582" duration="2856000" />
+      <workItem from="1667482533582" duration="3216000" />
+      <workItem from="1667553394509" duration="914000" />
     </task>
     <servers />
   </component>
