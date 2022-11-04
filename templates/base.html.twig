@@ -36,12 +36,11 @@
                     <a class="nav-link" href={{path('patient_venue')}}>Indiquer votre venue</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href={{path('patient_validation')}}>Mon Compte</a>
+                    <a class="nav-link " href={{path('patient_validation')}}>Supprimer mon compte</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                <li><a href={{ path('app_logout') }}><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
             </ul>
         </div>
     </nav>
