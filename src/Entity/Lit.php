@@ -16,9 +16,6 @@ class Lit
     #[ORM\Column(nullable: true)]
     private ?bool $LitOccupe = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Salle $etre = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -32,18 +29,6 @@ class Lit
     public function setLitOccupe(?bool $LitOccupe): self
     {
         $this->LitOccupe = $LitOccupe;
-
-        return $this;
-    }
-
-    public function getEtre(): ?Salle
-    {
-        return $this->etre;
-    }
-
-    public function setEtre(?Salle $etre): self
-    {
-        $this->etre = $etre;
 
         return $this;
     }

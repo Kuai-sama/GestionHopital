@@ -4,15 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Lit;
 use App\Entity\Salle;
-use App\Entity\Patient;
-use App\Form\PatientType;
-use Doctrine\ORM\Mapping\Id;
-use App\Repository\LitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/patient', name: 'patient_')]
@@ -59,14 +54,17 @@ class PatientController extends AbstractController
         {
             return $this->render('patient/venue.html.twig',['salle'=>null]);
         }
-
-        $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible]);
-        $lit = new Lit;
-        $lit = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]); 
+        $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible->getEtre()->getId()]); 
         $disponible->setLitOccupe(true);
         $em->persist($disponible);
         $em->flush();
-        //return new Response ('Lit disponible salle '.$salle->getNomSalle());
         return $this->render('patient/venue.html.twig',['salle'=>$salle]);
+    }
+
+    
+    #[Route('/validation', name: 'validation')]
+    public function validation(): Response
+    {
+        return $this->render('patient/validationDelete.html.twig');
     }
 }

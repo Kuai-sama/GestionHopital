@@ -1,0 +1,58 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+<body>
+    <form method="post">
+        <section class="vh-100 gradient-custom">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                            <div class="card-body p-5 text-center">
+                                <h2 class="fw-bold mb-2 text-uppercase">Création votre compte</h2>
+                                <br>
+                                <br>
+                                <div>
+                                    {{ form_start(form) }}
+                                    <div>
+                                        <a>Nom</a></br>
+                                        {{form_widget(form.Nom)}}
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <a>Prénom</a></br>
+                                        {{form_widget(form.Prenom)}}
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <a>Numéro securité sociale</a></br>
+                                        {{form_widget(form.NumSecuriteSociale)}}
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <a>Mot de passe</a></br>
+                                        {{form_widget(form.password)}}
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <a>Email</a></br>
+                                        {{form_widget(form.Email)}}
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <a>Téléphone</a></br>
+                                        {{ form_errors(form.NumTel) }}
+                                        {{form_widget(form.NumTel)}}
+                                    </div>
+                                    <br>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+</body>
