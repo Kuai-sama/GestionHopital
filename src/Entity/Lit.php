@@ -17,7 +17,7 @@ class Lit
     private ?bool $LitOccupe = null;
 
     //Many Lits have One Salle. This is the owning side.
-    #[ORM\ManyToOne(targetEntity: Salle::class, inversedBy: "lits")]
+    #[ORM\ManyToOne(targetEntity: Salle::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Salle $salle = null;
 

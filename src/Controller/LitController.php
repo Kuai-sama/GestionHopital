@@ -17,7 +17,7 @@ class LitController extends AbstractController
     #[Route('/lit', name: 'app_lit')]
     public function index(EntityManagerInterface $em)
     {
-        $lits = $em->getRepository(Lit::class)->findAll();
+        $lits = $em->getRepository(Lit::class)->findAllWithSalle();
         return $this->render('LitsTwig/view.html.twig', [
             'lits' => $lits,
         ]);
