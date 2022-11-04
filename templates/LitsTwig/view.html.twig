@@ -49,4 +49,17 @@
 			</tbody>
 		</table>
 	{% endblock %}
+
+	<div class="pagination">
+		{% if (nbTotalPages > 1)  %}
+			{% for myPage in 1..nbTotalPages %}
+				<a href="{{ path('list_lits', {'page': myPage}) }}">
+					<button>
+						{{myPage}}
+					</button>
+				</a>
+			{% endfor %}
+		{% endif %}
+	</div>
+
 {% endblock %}

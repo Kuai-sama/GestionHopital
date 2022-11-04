@@ -18,7 +18,8 @@
 }
 
 .table-info thead tr {
-	background-color: #2c2c54
+	background-color: #2c2c54;
+	color: #FFF;
 }
 
 .table-info td,
@@ -26,6 +27,13 @@
 	padding: 12px 15px;
 	text-align: center;
 	font-size: 16px
+}
+
+.table-info,
+.table-info>th,
+.table-info>td {
+	background-color: #6cc3d5;
+	color: #FFF;
 }
 
 .table-info tbody tr {
@@ -85,4 +93,15 @@
 		font-weight: bold;
 		word-wrap: break-word
 	}
+}
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 5px;
+}
+
+.pagination button {
+	width: 30px;
+	height: 30px;
 }

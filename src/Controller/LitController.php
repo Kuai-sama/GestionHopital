@@ -14,12 +14,29 @@ class LitController extends AbstractController
     /**
      * @Route("/lit", name="lit")
      */
-    #[Route('/lit', name: 'app_lit')]
-    public function index(EntityManagerInterface $em)
+    #[Route(
+        '/lits/{page}',
+        name: 'list_lits',
+        requirements: ['page' => '\d+'],
+        defaults: ['page' => 1]
+    )]
+
+    public function index($page, EntityManagerInterface $em)
     {
-        $lits = $em->getRepository(Lit::class)->findAllWithSalle();
+
+        $nbPerPage = 2;
+        // On compte tout les articles qui sont publiés (méthode magique count() de Doctrine)
+
+        $lits = $em->getRepository(Lit::class)->findAllWithSalleAndPaging($page, $nbPerPage);
+
+        $nbTotalPages = intval(ceil(count($em->getRepository(Lit::class)->findAll()) / $nbPerPage));
+
+        if ($page > $nbTotalPages)
+            throw $this->createNotFoundException("La page $page n'existe pas");
+
         return $this->render('LitsTwig/view.html.twig', [
             'lits' => $lits,
+            'nbTotalPages' => $nbTotalPages,
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Lit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @extends ServiceEntityRepository<Lit>
@@ -39,12 +40,30 @@ class LitRepository extends ServiceEntityRepository
         }
     }
 
+    public function leftJoinSalle(QueryBuilder $queryBuilder)
+    {
+        $queryBuilder->leftJoin('l.salle', 's')
+            ->addSelect('s');
+    }
+
+
     public function findAllWithSalle(): mixed
     {
-        return $this->createQueryBuilder('l')
-            ->leftJoin('l.salle', 's')
-            ->addSelect('s')
-            ->getQuery()
+        $queryBuilder = $this->createQueryBuilder('l');
+        $this->leftJoinSalle($queryBuilder);
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+
+    public function findAllWithSalleAndPaging(int $currentPage, int $nbPerPage): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('l');
+        $this->leftJoinSalle($queryBuilder);
+        $queryBuilder->setFirstResult(($currentPage - 1) * $nbPerPage) // Premier élément de la page
+            ->setMaxResults($nbPerPage);
+
+        return $queryBuilder->getQuery()
             ->getResult();
     }
 
