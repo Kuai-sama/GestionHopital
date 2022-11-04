@@ -6,6 +6,9 @@ use App\Entity\Personne;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class CreerCompteType extends AbstractType
 {
@@ -14,9 +17,9 @@ class CreerCompteType extends AbstractType
         $builder
             ->add('Email')
             ->add('password')
-            ->add('NumSecuriteSociale')
-            ->add('Nom')
-            ->add('Prenom')
+            ->add('NumSecuriteSociale',IntegerType::class,['required' => true])
+            ->add('Nom',TextType::class)
+            ->add('Prenom',TextType::class)
             ->add('NumTel')
         ;
     }

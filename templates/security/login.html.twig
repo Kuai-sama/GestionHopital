@@ -21,9 +21,11 @@
                                 <div class="card-body p-5 text-center">
 
                                     <div class="mb-md-5 mt-md-4 pb-5">
+                                        {% for message in app.session.getFlashBag.get('message') %}
+                                            {{ message }}
+                                        {% endfor %}
                                         {% if error %}
-                                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData,
-                                                    'security') }}</div>
+                                            <div class="alert alert-danger">Les informations d'identification invalides.</div>
                                         {% endif %}
 
                                         {% if app.user %}

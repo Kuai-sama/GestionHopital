@@ -85,7 +85,7 @@ class ResetPasswordController extends AbstractController
 
         $token = $this->getTokenFromSession();
         if (null === $token) {
-            throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            throw $this->createNotFoundException('Aucun jeton de réinitialisation du mot de passe trouvé dans l URL ou dans la session.');
         }
 
         try {
@@ -133,7 +133,7 @@ class ResetPasswordController extends AbstractController
         $user = $this->entityManager->getRepository(Personne::class)->findOneBy([
             'Email' => $emailFormData,
         ]);
-
+        
         // Do not reveal whether a user account was found or not.
         if (!$user) {
             return $this->redirectToRoute('app_check_email');
@@ -142,15 +142,6 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
-            // If you want to tell the user why a reset email was not sent, uncomment
-            // the lines below and change the redirect to 'app_forgot_password_request'.
-            // Caution: This may reveal if a user is registered or not.
-            //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE,
-            //     $e->getReason()
-            // ));
 
             return $this->redirectToRoute('app_check_email');
         }
@@ -164,7 +155,7 @@ class ResetPasswordController extends AbstractController
                 'resetToken' => $resetToken,
             ])
         ;
-
+        
         $mailer->send($email);
 
         // Store the token object in session for retrieval in check-email route.

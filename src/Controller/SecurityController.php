@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Personne;
+use App\Entity\ResetPasswordRequest;
 use App\Form\CreerCompteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class SecurityController extends AbstractController
 {
@@ -30,14 +33,30 @@ class SecurityController extends AbstractController
     #[Route('/supprimercompte', name: 'app_supprimercompte')]
     public function deleteCompte( EntityManagerInterface $em): Response
     {
-        $compte = $em->getRepository(Personne::class)->find($this->getUser());
+       
+        $user = $em->getRepository(Personne::class)->find($this->getUser());
+        $this->container->get('security.token_storage')->setToken(null);
 
+        $em->remove($user);
+        $em->flush();
+        
+        $this->addFlash('message', 'Votre compte utilisateur a bien été supprimé !'); 
+
+        return $this->redirectToRoute('app_login');
+    }
+
+    #[Route('/supprimerrequte/{id}', name: 'app_supprimerrequete')]
+    public function deleterequete(int $id, EntityManagerInterface $em): Response
+    {
+        $compte = $em->getRepository(ResetPasswordRequest::class)->find($id);
+        
         $em->remove($compte);
         $em->flush();
 
         return $this->redirectToRoute('app_login');
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/creercompte', name: 'app_creercomppte')]
     public function addCompte(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
