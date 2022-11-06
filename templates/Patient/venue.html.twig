@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+    {% block title %}
+        Demande de venue
+    {% endblock %}
+
+    {% block body %}
+            {% if salle != null %}
+                <!--<h1> La {{salle.NomSalle}} vous est attribué, veuillez vous addresser à l'accueil </h1> -->
+                <h1>Vous pouvez venir </h1>
+            {% else %}
+                <h1> Aucun lit n'est disponible, voici les hopitaux les plus proches : </h1>
+            {% endif %}
+    {% endblock %}

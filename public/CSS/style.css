@@ -1,0 +1,32 @@
+body {
+    text-align: left;
+}
+
+h1 {
+    color: black;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 30px;
+}
+
+a {
+    font-family: verdana;
+    font-size: 15px;
+    display: list-item;
+}
+
+p {
+    font-family: verdana;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
