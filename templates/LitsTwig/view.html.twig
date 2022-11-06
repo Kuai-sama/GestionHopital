@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+	<title>
+		{{'Visualisation des lits'}}
+	</title>
+{% endblock %}
+
+{% set strNumLit, strPosLit, strOccLit = "Numéro", "Emplacement", "Occupation" %}
+
+{% block body %}
+	<h1>{{ 'Visualisation des lits' }}</h1>
+	{% block content%}
+		<table
+			class="table-info">
+			{# class="table-info" #}
+			<thead>
+				<tr>
+					<th>
+						{{ strNumLit }}
+					</th>
+					<th>
+						{{ strPosLit }}
+					</th>
+					<th>
+						{{ strOccLit }}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for lit in lits %}
+					<tr>
+						<td data-label="{{ strNumLit }}">
+							{{ lit.id }}
+						</td>
+						<td data-label="{{ strPosLit }}">
+							{{ lit.salle.EmplacementSalle }}
+						</td>
+						<td data-label="{{ strOccLit}}">
+							{% if lit.LitOccupe == 1 %}
+								{{ 'Occupé' }}
+							{% else %}
+								{{ 'Libre' }}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endblock %}
+
+	<div class="pagination">
+		{% if (nbTotalPages > 1)  %}
+			{% for myPage in 1..nbTotalPages %}
+				<a href="{{ path('list_lits', {'page': myPage}) }}">
+					<button>
+						{{myPage}}
+					</button>
+				</a>
+			{% endfor %}
+		{% endif %}
+	</div>
+
+{% endblock %}

@@ -16,8 +16,10 @@ class Lit
     #[ORM\Column(nullable: true)]
     private ?bool $LitOccupe = null;
 
-    #[ORM\ManyToOne]
-    private ?Salle $Salle = null;
+    //Many Lits have One Salle. This is the owning side.
+    #[ORM\ManyToOne(targetEntity: Salle::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Salle $salle = null;
 
     public function getId(): ?int
     {
@@ -38,12 +40,12 @@ class Lit
 
     public function getSalle(): ?Salle
     {
-        return $this->Salle;
+        return $this->salle;
     }
 
-    public function setSalle(?Salle $Salle): self
+    public function setSalle(?Salle $salle): self
     {
-        $this->Salle = $Salle;
+        $this->salle = $salle;
 
         return $this;
     }
