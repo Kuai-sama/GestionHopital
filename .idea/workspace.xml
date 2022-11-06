@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4cc9d60f-aa17-4ecd-895e-b93900aafcc2" name="Changes" comment="">
+    <list default="true" id="4cc9d60f-aa17-4ecd-895e-b93900aafcc2" name="Changes" comment="Updating iml file">
       <change beforePath="$PROJECT_DIR$/.idea/Projet-hopital.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Projet-hopital.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c4cf430d-2b64-4e82-9d0e-4822d540fc35.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c4cf430d-2b64-4e82-9d0e-4822d540fc35.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,12 +101,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "T:/Thomas/Documents/Symfony/ProjetBe/prod/projet-hopital",
+    "last_opened_file_path": "T:/Thomas/Documents/Symfony/ProjetBe/prod2/projet-hopital",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -126,6 +125,7 @@
       <workItem from="1667482533582" duration="3216000" />
       <workItem from="1667553394509" duration="1695000" />
       <workItem from="1667751813945" duration="869000" />
+      <workItem from="1667764041613" duration="118000" />
     </task>
     <servers />
   </component>
@@ -145,5 +145,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Updating iml file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating iml file" />
   </component>
 </project>
