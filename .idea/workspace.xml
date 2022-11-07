@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cc9d60f-aa17-4ecd-895e-b93900aafcc2" name="Changes" comment="Resolving Errors due to the merging">
+      <change afterPath="$PROJECT_DIR$/migrations/Version20221107090440.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/AppliquerPrescription.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/AppliquerPrescriptionRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Projet-hopital.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Projet-hopital.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/data.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20221103143857.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221103143857.php" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Version20221107084735.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20221103151154.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20221103151404.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/migrations/Version20221103152040.php" beforeDir="false" />
@@ -167,7 +170,7 @@
       <workItem from="1667807586634" duration="140000" />
       <workItem from="1667807728887" duration="35000" />
       <workItem from="1667807765091" duration="657000" />
-      <workItem from="1667808441256" duration="3526000" />
+      <workItem from="1667808441256" duration="3900000" />
     </task>
     <task id="LOCAL-00001" summary="Resolving Errors due to the merging">
       <created>1667765199576</created>
