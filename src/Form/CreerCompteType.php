@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class CreerCompteType extends AbstractType
 {
@@ -18,7 +19,7 @@ class CreerCompteType extends AbstractType
     {
         $builder
             ->add('Email')
-            ->add('password')
+            ->add('password', PasswordType::class)
             ->add('NumSecuriteSociale',IntegerType::class,['required' => true])
             ->add('Nom',TextType::class)
             ->add('Prenom',TextType::class)
