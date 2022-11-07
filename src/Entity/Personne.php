@@ -65,13 +65,13 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'Personne', cascade: ['persist', 'remove'])]
     private ?Patient $patient = null;
 
-    #[ORM\ManyToMany(targetEntity: Prescription::class)]
-    private Collection $Appliquer;
+    #[ORM\OneToMany(mappedBy: 'patient', targetEntity: AppliquerPrescription::class)]
+    private Collection $appliquerPrescriptions;
 
     public function __construct()
     {
         $this->Diagnostiquer = new ArrayCollection();
-        $this->Appliquer = new ArrayCollection();
+        $this->appliquerPrescriptions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,25 +294,31 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Prescription>
+     * @return Collection<int, AppliquerPrescription>
      */
-    public function getAppliquer(): Collection
+    public function getAppliquerPrescriptions(): Collection
     {
-        return $this->Appliquer;
+        return $this->appliquerPrescriptions;
     }
 
-    public function addAppliquer(Prescription $appliquer): self
+    public function addAppliquerPrescription(AppliquerPrescription $appliquerPrescription): self
     {
-        if (!$this->Appliquer->contains($appliquer)) {
-            $this->Appliquer->add($appliquer);
+        if (!$this->appliquerPrescriptions->contains($appliquerPrescription)) {
+            $this->appliquerPrescriptions->add($appliquerPrescription);
+            $appliquerPrescription->setPatient($this);
         }
 
         return $this;
     }
 
-    public function removeAppliquer(Prescription $appliquer): self
+    public function removeAppliquerPrescription(AppliquerPrescription $appliquerPrescription): self
     {
-        $this->Appliquer->removeElement($appliquer);
+        if ($this->appliquerPrescriptions->removeElement($appliquerPrescription)) {
+            // set the owning side to null (unless already changed)
+            if ($appliquerPrescription->getPatient() === $this) {
+                $appliquerPrescription->setPatient(null);
+            }
+        }
 
         return $this;
     }
