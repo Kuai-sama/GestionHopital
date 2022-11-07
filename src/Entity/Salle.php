@@ -17,7 +17,7 @@ class Salle
     private ?string $NomSalle = null;
 
     #[ORM\Column]
-    private ?int $EmplacementSalle = null;
+    private ?string $EmplacementSalle = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $TypeSalle = null;
@@ -42,12 +42,12 @@ class Salle
         return $this;
     }
 
-    public function getEmplacementSalle(): ?int
+    public function getEmplacementSalle(): ?string
     {
         return $this->EmplacementSalle;
     }
 
-    public function setEmplacementSalle(int $EmplacementSalle): self
+    public function setEmplacementSalle(string $EmplacementSalle): self
     {
         $this->EmplacementSalle = $EmplacementSalle;
 

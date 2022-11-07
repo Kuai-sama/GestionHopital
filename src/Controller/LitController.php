@@ -34,7 +34,7 @@ class LitController extends AbstractController
         if ($page > $nbTotalPages)
             throw $this->createNotFoundException("La page $page n'existe pas");
 
-        return $this->render('LitsTwig/view.html.twig', [
+        return $this->render('Lits/view.html.twig', [
             'lits' => $lits,
             'nbTotalPages' => $nbTotalPages,
         ]);
