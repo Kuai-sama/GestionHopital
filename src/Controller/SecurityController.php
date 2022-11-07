@@ -63,7 +63,7 @@ class SecurityController extends AbstractController
         $personne = new Personne();
         $personne->setRoles(['ROLE_PATIENT']);
         $form = $this->createForm(CreerCompteType::class, $personne);
-        $form->add('send', SubmitType::class, ['label' => 'Compte créer']);
+        $form->add('send', SubmitType::class, ['label' => 'Valider']);
         $form->handleRequest($request); // Alimentation du formulaire avec la Request
 
         if ($form->isSubmitted() && $form->isValid()) {
