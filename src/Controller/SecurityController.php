@@ -33,7 +33,6 @@ class SecurityController extends AbstractController
     #[Route('/supprimercompte', name: 'app_supprimercompte')]
     public function deleteCompte( EntityManagerInterface $em): Response
     {
-       
         $user = $em->getRepository(Personne::class)->find($this->getUser());
         $this->container->get('security.token_storage')->setToken(null);
 
@@ -56,7 +55,7 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('app_login');
     }
 
-    #[IsGranted('ROLE_ADMIN')]
+    //#[IsGranted('ROLE_ADMIN')]
     #[Route('/creercompte', name: 'app_creercomppte')]
     public function addCompte(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {

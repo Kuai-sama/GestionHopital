@@ -6,9 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="4cc9d60f-aa17-4ecd-895e-b93900aafcc2" name="Changes" comment="Resolving Errors due to the merging">
       <change beforePath="$PROJECT_DIR$/.idea/Projet-hopital.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Projet-hopital.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/c4cf430d-2b64-4e82-9d0e-4822d540fc35.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/data.db" beforeDir="false" afterPath="$PROJECT_DIR$/database/data.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221103143857.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221103151154.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221103151404.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221103152040.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221104092051.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221104100727.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221104105923.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221106212755.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20221107073300.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Personne.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Personne.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -150,7 +160,7 @@
       <workItem from="1667751813945" duration="869000" />
       <workItem from="1667764041613" duration="118000" />
       <workItem from="1667764162673" duration="1241000" />
-      <workItem from="1667806053365" duration="416000" />
+      <workItem from="1667806053365" duration="3906000" />
     </task>
     <task id="LOCAL-00001" summary="Resolving Errors due to the merging">
       <created>1667765199576</created>
