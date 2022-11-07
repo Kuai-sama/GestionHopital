@@ -54,7 +54,7 @@ class PatientController extends AbstractController
         {
             return $this->render('patient/venue.html.twig',['salle'=>null]);
         }
-        $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible->getEtre()->getId()]); 
+        $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible->getSalle()->getId()]); 
         $disponible->setLitOccupe(true);
         $em->persist($disponible);
         $em->flush();

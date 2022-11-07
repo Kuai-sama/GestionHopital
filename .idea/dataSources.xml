@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="data" uuid="c4cf430d-2b64-4e82-9d0e-4822d540fc35">
+    <data-source source="LOCAL" name="data" uuid="23929cd8-3081-4361-acd4-800b52cf022d">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\aallai09\TP_symfony\projet-hopital\database\data.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\vdeles01\projet\projet-hopital-2\database\data.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
         <library>
