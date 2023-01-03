@@ -11,7 +11,7 @@ class InfirmierController extends AbstractController
     #[Route('/infirmier', name: 'app_infirmier')]
     public function index(): Response
     {
-        return $this->render('infirmier/index.html.twig', [
+        return $this->render('infirmier/creerCompteAdmin.html.twig', [
             'controller_name' => 'InfirmierController',
         ]);
     }

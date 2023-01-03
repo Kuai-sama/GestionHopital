@@ -11,7 +11,7 @@ class MedecinController extends AbstractController
     #[Route('/medecin', name: 'app_medecin')]
     public function index(): Response
     {
-        return $this->render('medecin/index.html.twig', [
+        return $this->render('medecin/creerCompteAdmin.html.twig', [
             'controller_name' => 'MedecinController',
         ]);
     }
