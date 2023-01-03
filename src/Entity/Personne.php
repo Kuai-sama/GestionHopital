@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: PersonneRepository::class)]
@@ -44,7 +43,6 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Prenom = null;
 
     #[ORM\Column]
-    #[Assert\Regex('^[0-9{5}]$')]
     private ?string $NumTel = null;
 
     #[ORM\ManyToOne]
