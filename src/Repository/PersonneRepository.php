@@ -56,6 +56,8 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         $this->save($user, true);
     }
 
+    
+
 //    /**
 //     * @return Personne[] Returns an array of Personne objects
 //     */

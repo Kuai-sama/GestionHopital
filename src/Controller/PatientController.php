@@ -4,11 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Lit;
 use App\Entity\Salle;
+use App\Entity\Patient;
+use App\Entity\Personne;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
+
 
 #[Route('/patient', name: 'patient_')]
 class PatientController extends AbstractController
@@ -38,6 +42,19 @@ class PatientController extends AbstractController
         ]);
     }*/
 
+    /**
+     * @var Security
+     */
+    private $security;
+    private $user;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+        
+    }
+
+
     #[Route('', name: 'menu')]
     public function menuAction(): Response
     {
@@ -46,19 +63,34 @@ class PatientController extends AbstractController
 
     #[Route('/venue', name: 'venue')]
     public function VenueAction(EntityManagerInterface $em, Request $request): Response
-    {
-
-        // verification de lit disponible
-        $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
-        if(!$disponible)
+    {  
+        $user = $this->security->getUser();
+        $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email'=>$user->getUserIdentifier()]);
+        $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne'=>$idpersonne->getId()]);
+        dump($idpatient->getCodeEntre() == "");
+        if($idpatient->getCodeEntre() == "")
         {
-            return $this->render('patient/venue.html.twig',['salle'=>null]);
+            // verification de lit disponible
+            $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
+            if(!$disponible)
+            {
+                return $this->render('patient/venue.html.twig',['salle'=>null]);
+            }
+            $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible->getSalle()->getId()]); 
+            $disponible->setLitOccupe(true);
+            $em->persist($disponible);
+            $em->flush();
+
+            dump($code = random_bytes(10));
+            $idpatient->setCodeEntre($code);
+            $em->persist($idpatient);
+            $em->flush();
+            return $this->render('patient/venue.html.twig',['salle'=>$salle, 'code' =>$idpatient->getCodeEntre()]);
         }
-        $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible->getSalle()->getId()]); 
-        $disponible->setLitOccupe(true);
-        $em->persist($disponible);
-        $em->flush();
-        return $this->render('patient/venue.html.twig',['salle'=>$salle]);
+        else
+        {
+            return $this->render('patient/venue.html.twig',['salle'=>null, 'code' =>$idpatient->getCodeEntre()]); // recup la salle TODO
+        }
     }
 
     
