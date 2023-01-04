@@ -3,9 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Lit;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Personne;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Lit>
@@ -77,6 +78,18 @@ class LitRepository extends ServiceEntityRepository
         return $queryBuilder->getQuery()
             ->getResult();
     }
+
+    public function findSalle(int $idpersonne): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('l')
+            ->leftJoin('l.salle', 's')
+            ->where('l.IdPersonne ='."'$idpersonne'")
+            ->andwhere('l.salle = s.id')
+            ->Select('s.NomSalle');
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
 
     //    /**
     //     * @return Lit[] Returns an array of Lit objects
