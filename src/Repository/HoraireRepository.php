@@ -39,9 +39,14 @@ class HoraireRepository extends ServiceEntityRepository
         }
     }
 
-    //public function getHoraireWithoutEnd(int idPersonne){
+    public function getHoraireWithoutEnd(int $idPersonne){
+        $qb = $this->createQueryBuilder('h')
+            ->where('h.Tfin = null')
+            ->where('h.idPersonne', $idPersonne);
 
-    //}
+
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Horaire[] Returns an array of Horaire objects

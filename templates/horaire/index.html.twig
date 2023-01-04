@@ -3,7 +3,7 @@
 {% block title %}Hello HoraireController!{% endblock %}
 
 {% block body %}
-    <button>debut du service</button>
-    <button disabled>fin du service</button>
+    <a href={{ path('Add_debut') }}><button>debut du service</button></a>
+    <a href={{ path('Add_fin') }}><button>fin du service</button></a>
 
 {% endblock %}
