@@ -27,10 +27,10 @@ class CreerCompteAdminType extends AbstractType
                 'entry_options'  => [
                     'label' => false,
                     'choices' => [
-                        'Infirmier' => 'ROLE_BENEVOLE',
+                        'Infirmier' => 'ROLE_INFIRMIER',
                         'Admin' => 'ROLE_ADMIN',
                         'Medecin' => 'ROLE_MEDECIN',
-                        'Ambulancier' => 'ROLE_AMBUlANCIER',
+                        'Ambulancier' => 'ROLE_AMBULANCIER',
                     ],
                 ],
             ])
