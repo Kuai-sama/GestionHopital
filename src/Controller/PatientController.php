@@ -6,12 +6,13 @@ use App\Entity\Lit;
 use App\Entity\Salle;
 use App\Entity\Patient;
 use App\Entity\Personne;
+use App\Repository\LitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Security;
 
 
 #[Route('/patient', name: 'patient_')]
@@ -62,34 +63,39 @@ class PatientController extends AbstractController
     }
 
     #[Route('/venue', name: 'venue')]
-    public function VenueAction(EntityManagerInterface $em, Request $request): Response
+    public function VenueAction(EntityManagerInterface $em, LitRepository $lit): Response
     {  
         $user = $this->security->getUser();
         $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email'=>$user->getUserIdentifier()]);
         $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne'=>$idpersonne->getId()]);
-        dump($idpatient->getCodeEntre() == "");
+        
         if($idpatient->getCodeEntre() == "")
         {
             // verification de lit disponible
             $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
             if(!$disponible)
             {
-                return $this->render('patient/venue.html.twig',['salle'=>null]);
+                return $this->render('patient/venue.html.twig',['salle'=>null,'code'=>""]);
             }
-            $salle = $em->getRepository(Salle::class)->findOneBy(['id' => $disponible->getSalle()->getId()]); 
+            $sallerecup = $lit->findOneBy(['id'=>$disponible->getId()]); 
+            $salle = $lit->findSalleAssos($sallerecup->getId());
+
             $disponible->setLitOccupe(true);
             $em->persist($disponible);
-            $em->flush();
-
-            dump($code = random_bytes(10));
+            
+            $code = uniqid(10);
             $idpatient->setCodeEntre($code);
+            $idpersonne->setLit($disponible);
             $em->persist($idpatient);
+            $em->persist($idpersonne);
             $em->flush();
             return $this->render('patient/venue.html.twig',['salle'=>$salle, 'code' =>$idpatient->getCodeEntre()]);
         }
         else
         {
-            return $this->render('patient/venue.html.twig',['salle'=>null, 'code' =>$idpatient->getCodeEntre()]); // recup la salle TODO
+            $sallerecup = $lit->findOneBy(['IdPersonne'=>$idpersonne->getId()]);
+            $salle = $lit->findSalleAssos($sallerecup->getId());
+            return $this->render('patient/venue.html.twig',['salle'=>$salle, 'code' =>$idpatient->getCodeEntre()]); // recup la salle TODO
         }
     }
 

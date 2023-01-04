@@ -4,21 +4,24 @@
     {% endblock %}
 
     {% block body %}
+        
             {% if code != "" %}
+            <!--
                 {% if salle != null %}
                     {% for salle_reserve in salle %}
-                        <h1> La {{salle_reserve.NomSalle}} vous est attribué, veuillez vous addresser à l'accueil </h1> 
+                        <h1> La lit de la {{salle_reserve.NomSalle}} vous est attribué, veuillez vous addresser à l'accueil </h1> 
                         <br>
-                    <!--<h1>Vous pouvez venir </h1>-->
+                        <h1>Vous pouvez venir </h1>
                     {% endfor %}
                 {% endif %}
-                {% for codeentre in code %}
-                    <h1> Donner le code suivant à l'acceuil lors de votre arrivée : </h1> 
-                    <h1><b>{{codeentre.code_entre}}</b></h1>
-
-                {% endfor %}
-                
-                {% else %}
-                    <h1> Aucun lit n'est disponible, voici les hopitaux les plus proches : </h1>
+            -->
+                <h1> Donner le code suivant à l'acceuil lors de votre arrivée : </h1> 
+                <h1><b>{{code}}</b></h1>
+            {% else %}
+                <h1> Aucun lit n'est disponible, voici les hopitaux les plus proches : </h1>
             {% endif %}
     {% endblock %}
+
+
+
+    

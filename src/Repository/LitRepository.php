@@ -67,6 +67,16 @@ class LitRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findSalleAssos(int $lit): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('l')
+            ->leftJoin('l.salle', 's')
+            ->where('l.id ='."'$lit'")
+            ->andwhere('l.salle = s.id')
+            ->Select('s.NomSalle');
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
 
     //    /**
     //     * @return Lit[] Returns an array of Lit objects
