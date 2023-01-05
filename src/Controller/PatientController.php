@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Lit;
 use App\Entity\Salle;
+use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,5 +67,13 @@ class PatientController extends AbstractController
     public function validation(): Response
     {
         return $this->render('patient/validationDelete.html.twig');
+    }
+
+    #[Route('/listePatient')]
+    public function listePat(PatientRepository $patient): Response
+    {
+        return $this->render('patient/listPat.html.twig', [
+            'patients' => $patient->getPatPer(),
+        ]);
     }
 }
