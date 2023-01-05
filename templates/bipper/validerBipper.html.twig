@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <a>Bipper : {{ receveur.nom }}, {{ receveur.prenom }}</a>
+        <a>dans la salle : {{ salle.NomSalle }}, {{ salle.EmplacementSalle }}</a>
+
+        <a href="{{path('app_bipper_enregistre_bippe',{'idEnvoyeur': idEnvoyeur ,'idReceveur': idReceveur,'idSalle': salle.id})}}"><input type='button' class="btn btn-warning" value="Valider"></input></a><br><br>
+    </table>
+{% endblock %}

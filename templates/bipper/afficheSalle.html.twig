@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Nom </th>
+            <th scope="col"> Emplacement </th>
+            <th scope="col"> Type </th>
+            <th scope="col"> Bipper </th>
+        </tr>
+        </thead>
+        {% for salle in salles %}
+            <tr>
+                <td> {{salle.NomSalle}} </td>
+                <td> {{salle.EmplacementSalle}} </td>
+                <td> {{salle.TypeSalle}} </td>
+                <td>
+                    <a href="{{path('app_bipper_valide_bippe',{'idEnvoyeur': app.user.id ,'idReceveur': idReceveur,'idSalle': salle.id})}}"><input type='button' class="btn btn-warning" value="Bipper"></input></a><br><br>
+                </td>
+            </tr>
+        {% endfor %}
+
+
+    </table>
+{% endblock %}

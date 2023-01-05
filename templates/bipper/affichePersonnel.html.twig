@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Nom </th>
+            <th scope="col"> Prenom </th>
+            <th scope="col"> Bipper </th>
+        </tr>
+        </thead>
+        {% for medecin in medecins %}
+            <tr>
+                <td> {{medecin.Nom}} </td>
+                <td> {{medecin.Prenom}} </td>
+                <td>
+                    <a href="{{path('app_bipper_salle',{'idReceveur': medecin.id})}}"><input type='button' class="btn btn-warning" value="Bipper"></input></a><br><br>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Nom </th>
+            <th scope="col"> Prenom </th>
+            <th scope="col"> Bipper </th>
+        </tr>
+        </thead>
+        {% for infirmier in infirmiers %}
+            <tr>
+                <td> {{infirmier.Nom}} </td>
+                <td> {{infirmier.Prenom}} </td>
+                <td>
+                    <a href="{{path('app_bipper_salle',{'idReceveur': infirmier.id})}}"><input type='button' class="btn btn-warning" value="Bipper"></input></a><br><br>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
