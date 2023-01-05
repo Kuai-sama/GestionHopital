@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+	<title>
+		{{'Visualisation des lits'}}
+	</title>
+{% endblock %}
+
+{% set strNumLit, strPosLit, strOccLit = "Numéro", "Emplacement", "Occupation" %}
+
+{% block body %}
+
+		<table class="table">
+			<tr>
+				<th scope="col">nom</th>
+				<th scope="col">prenom</th>
+				<th scope="col">Emplacement salle</th>
+			</tr>
+			{% for patien in patient %}
+				<tr>
+					<td>{{ patien.Personne.nom }}</td>
+					<td>{{ patien.Personne.prenom }}</td>
+					<td>{{ patien.Personne.idLit.salle.EmplacementSalle }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+
+{% endblock %}

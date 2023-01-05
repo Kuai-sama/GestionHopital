@@ -39,6 +39,17 @@ class PatientRepository extends ServiceEntityRepository
         }
     }
 
+    public function getPatLit(){
+        $qb = $this->createQueryBuilder('pat')
+            ->leftJoin("pat.Personne","per")
+            ->leftJoin("per.idLit ","l")
+            ->leftJoin("l.salle ","sa")
+            ->select("pat","per","l","sa");
+
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Patient[] Returns an array of Patient objects
 //     */

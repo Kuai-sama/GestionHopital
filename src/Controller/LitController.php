@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Lit;
 use App\Entity\Salle;
+use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,6 +38,14 @@ class LitController extends AbstractController
         return $this->render('Lits/view.html.twig', [
             'lits' => $lits,
             'nbTotalPages' => $nbTotalPages,
+        ]);
+    }
+
+    #[Route('/lits/emplacementPatient')]
+    public function ouEstLePatient(PatientRepository $patient){
+
+        return $this->render('Lits/viewPat.html.twig', [
+            'patient' => $patient->getPatLit()
         ]);
     }
 }
