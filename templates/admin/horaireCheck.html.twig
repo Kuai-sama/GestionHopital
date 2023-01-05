@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HoraireController!{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <tr>
+            <th scope="col">nom</th>
+            <th scope="col">prenom</th>
+            <th scope="col">debut service</th>
+            <th scope="col">fin service</th>
+        </tr>
+        {% for horaire in horaires %}
+            <tr>
+                <td>{{ horaire.idPersonne.nom }}</td>
+                <td>{{ horaire.idPersonne.prenom }}</td>
+                <td>{{ horaire.tdebut|date("H:i d/m/Y") }}</td>
+                <td>{{ horaire.tfin is empty ? "" : horaire.tfin|date("H:i d/m/Y") }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

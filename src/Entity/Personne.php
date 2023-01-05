@@ -66,6 +66,9 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'patient', targetEntity: AppliquerPrescription::class)]
     private Collection $appliquerPrescriptions;
 
+    #[ORM\OneToMany(mappedBy: 'idPersonne', targetEntity: Horaire::class)]
+    private Collection $horaires;
+
     public function __construct()
     {
         $this->Diagnostiquer = new ArrayCollection();

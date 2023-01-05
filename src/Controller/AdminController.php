@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Personne;
 use App\Form\CreerCompteAdminType;
+use App\Repository\HoraireRepository;
+use App\Repository\PersonneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -34,5 +36,11 @@ class AdminController extends AbstractController
 
         // Affichage du formulaire initial (requête GET) OU affichage du formulaire avec erreurs après validation (requête POST)
         return $this->render('admin/creerCompteAdmin.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('/admin/checkHoraire')]
+    public function checkHorairePersonnel(HoraireRepository $horaire){
+        return $this->render('admin/horaireCheck.html.twig',
+            ['horaires' => $horaire->getPersonneHoraire()]);
     }
 }
