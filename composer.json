@@ -10,14 +10,18 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "nikic/php-parser": "^4.15",
+        "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "6.1.*",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",
+        "symfony/expression-language": "6.1.*",
         "symfony/flex": "^2",
         "symfony/form": "6.1.*",
         "symfony/framework-bundle": "6.1.*",
         "symfony/google-mailer": "6.1.*",
         "symfony/mailer": "6.1.*",
+        "symfony/maker-bundle": "^1.48",
         "symfony/monolog-bundle": "^3.8",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "6.1.*",
@@ -82,7 +86,6 @@
     },
     "require-dev": {
         "symfony/debug-bundle": "6.1.*",
-        "symfony/maker-bundle": "^1.48",
         "symfony/stopwatch": "6.1.*",
         "symfony/web-profiler-bundle": "6.1.*"
     }

@@ -3,7 +3,15 @@
 {% block title %}Hello HoraireController!{% endblock %}
 
 {% block body %}
-    <a href={{ path('Add_debut') }}><button>debut du service</button></a>
-    <a href={{ path('Add_fin') }}><button>fin du service</button></a>
+
+    {% if bool1 == true %}
+        <a href={{ path('Add_debut') }}><button class="btn btn-danger btn-lg btn-block">debut du service</button></a>
+        <a href={{ path('Add_fin') }}><button disabled class="btn btn-danger btn-lg btn-block">fin du service</button></a>
+    {% endif %}
+    {% if bool1 == false %}
+        <a href={{ path('Add_debut') }}><button disabled class="btn btn-danger btn-lg btn-block">debut du service</button></a>
+        <a href={{ path('Add_fin') }}><button class="btn btn-danger btn-lg btn-block">fin du service</button></a>
+    {% endif %}
+
 
 {% endblock %}

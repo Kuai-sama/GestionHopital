@@ -42,6 +42,14 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         }
     }
 
+    public function getPersonneById(int $idPersonne){
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.id', $idPersonne);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */

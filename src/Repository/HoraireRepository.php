@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Horaire;
+use App\Entity\Personne;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,13 +40,13 @@ class HoraireRepository extends ServiceEntityRepository
         }
     }
 
-    public function getHoraireWithoutEnd(int $idPersonne){
+    public function getHoraireWithoutEnd(int $idp){
         $qb = $this->createQueryBuilder('h')
-            ->where('h.Tfin = null')
-            ->where('h.idPersonne', $idPersonne);
+            ->where('h.Tfin is NULL')
+            ->leftJoin("h.idPersonne","p")
+            ->andwhere('p.id ='."'$idp'");
 
-
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->setMaxResults(1)->getResult();
     }
 
 //    /**
