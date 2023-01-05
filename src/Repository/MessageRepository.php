@@ -39,6 +39,21 @@ class MessageRepository extends ServiceEntityRepository
         }
     }
 
+    public function findNotif($idR): array
+    {
+        return $this->createQueryBuilder('message')
+            ->where('message.Personne2 = :id')
+            ->setParameter('id', $idR)
+            ->leftJoin('message.Salle', 'salle')
+            ->andWhere('salle.id = message.Salle')
+            ->leftJoin('message.Personne1', 'personne')
+            ->andWhere('personne.id = message.Personne1')
+            ->select('salle.NomSalle, salle.EmplacementSalle, personne.Nom, personne.Prenom, message.id')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Message[] Returns an array of Message objects
 //     */

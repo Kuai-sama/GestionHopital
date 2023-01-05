@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Nom </th>
+            <th scope="col"> Prenom </th>
+            <th scope="col"> Salle </th>
+            <th scope="col"> Emplacement de la salle </th>
+            <th scope="col">  </th>
+        </tr>
+        </thead>
+        {% for notif in notifs %}
+            <tr>
+                <td> {{notif.Nom}} </td>
+                <td> {{notif.Prenom}} </td>
+                <td> {{notif.NomSalle}} </td>
+                <td> {{notif.EmplacementSalle}}</td>
+                <td>
+                    <a href="{{path('app_bipper_fini_notif',{'id': notif.id})}}"><input type='button' class="btn btn-success" value="Fini"/></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -75,10 +75,31 @@ class BipperController extends AbstractController
     {
         $user = $this->getUser()->getId();
         //$notif = $em->getRepository(Message::class)->findBy(['Personne2' => $user]);
-        //$notif = $em->getRepository(Message::class)->findNotif($user);
-        dump($user);
-        dump($notif);
+        $notif = $em->getRepository(Message::class)->findNotif($user);
+
+        //dump($user);
+        //dump($notif);
 
         return $this->render('bipper/afficheBipperPerso.html.twig', ['notifs' => $notif]);
+    }
+
+    #[Route('/fini/notif/{id}', name: 'app_bipper_fini_notif')]
+    public function notifFini(int $id, EntityManagerInterface $em): Response
+    {
+        return $this->render('bipper/confirmationNotifFini.html.twig', ['id' => $id]);
+    }
+
+    #[Route('/delete/notif/{id}', name: 'app_bipper_delete_notif')]
+    public function deleteNotif(int $id, EntityManagerInterface $em): Response
+    {
+        $message = $em->getRepository(Message::class)->findOneById($id);
+
+        $em->remove($message);
+        $em->flush();
+
+
+        dump($message);
+
+        return $this->redirectToRoute("app_bipper_affiche_notif");
     }
 }
