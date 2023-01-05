@@ -42,7 +42,7 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         }
     }
 
-    public function getPersonneById(int $idPersonne){
+    public function getPersonneByIdHoraire(int $idPersonne){
         $qb = $this->createQueryBuilder('p')
             ->where('p.id', $idPersonne);
 

@@ -49,6 +49,15 @@ class HoraireRepository extends ServiceEntityRepository
         return $qb->getQuery()->setMaxResults(1)->getResult();
     }
 
+    public function getPersonneHoraire(){
+        $qb = $this->createQueryBuilder('h')
+            ->leftJoin("h.idPersonne","p")
+        ->select("h","p");
+
+
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Horaire[] Returns an array of Horaire objects
 //     */
