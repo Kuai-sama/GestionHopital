@@ -56,6 +56,17 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         $this->save($user, true);
     }
 
+    public function findMedecin(): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('p')
+            ->where('p.roles LIKE :role')
+            ->setParameter('role', '%ROLE_MEDECIN%');
+
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+
     
 
 //    /**

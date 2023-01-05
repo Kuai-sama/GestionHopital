@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation d'un contact{% endblock %}
+{% block body %}
+
+    <h1> Contact</h1><br>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th> Patient </th>
+                <th> Salle </th>
+                <th> Raison de la visite </th>
+                <th> Medecin assignable </th>
+            </tr>
+        </thead>
+
+        <tr>
+            <td> {{personne.Nom}}  {{personne.Prenom}} </td>
+
+        {% for locsalle in salle %}
+            <td> {{locsalle.NomSalle}} </td>
+        {% endfor %}
+            <td> {{raison}}</td>
+            <td>
+                
+                <form>
+                <select name="medecin" id="medecin-select">
+                    <option value="">Aucun médecin assigné</option>
+            {% for doc in medecin %}
+                    <option value="{{doc.id}}">Dr {{doc.Nom}} {{doc.Prenom}}</option>
+            {% endfor %}
+                </select>
+                    <input class="btn btn-success"  value="Assigner" type="submit" formmethod = "POST" formaction="{{path('infirmier_verification_code')}}"></input>
+                </form>
+            </td>
+            
+        </tr>
+    </table>
+
+
+{% endblock %}
+
+
+
