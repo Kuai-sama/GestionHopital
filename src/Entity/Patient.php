@@ -27,6 +27,9 @@ class Patient
     #[ORM\JoinColumn(nullable: false)]
     private ?Personne $Personne = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $code_entre = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class Patient
     public function setPersonne(Personne $Personne): self
     {
         $this->Personne = $Personne;
+
+        return $this;
+    }
+
+    public function getCodeEntre(): ?string
+    {
+        return $this->code_entre;
+    }
+
+    public function setCodeEntre(?string $code_entre): self
+    {
+        $this->code_entre = $code_entre;
 
         return $this;
     }

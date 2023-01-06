@@ -3,9 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Lit;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Personne;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Lit>
@@ -63,6 +64,28 @@ class LitRepository extends ServiceEntityRepository
         $queryBuilder->setFirstResult(($currentPage - 1) * $nbPerPage) // Premier élément de la page
             ->setMaxResults($nbPerPage);
 
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+    public function findSalleAssos(int $lit): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('l')
+            ->leftJoin('l.salle', 's')
+            ->where('l.id ='."'$lit'")
+            ->andwhere('l.salle = s.id')
+            ->Select('s.NomSalle');
+        return $queryBuilder->getQuery()
+            ->getResult();
+    }
+
+    public function findSalle(int $idpersonne): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('l')
+            ->leftJoin('l.salle', 's')
+            ->where('l.IdPersonne ='."'$idpersonne'")
+            ->andwhere('l.salle = s.id')
+            ->Select('s.NomSalle');
         return $queryBuilder->getQuery()
             ->getResult();
     }

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Verification de code d'acceuil{% endblock %}
+
+{% block body %}
+    <form>
+        <input class="btn btn-success" type="text" placeholder="Code" id="code" name="code"></input>
+        <input class="btn btn-success" type="submit" value="Verifier" formmethod = "POST" formaction="{{path('infirmier_verification_code')}}"></input>
+    </form>
+    <br><br>
+    {% if salle != null %}
+        {% if salle != "introuvable" %}
+                <h1> Patient : {{patient.Nom}} {{patient.Prenom}} </h1>
+            {% for salle_reserve in salle %}
+                <h1> Le lit de la <b>{{salle_reserve.NomSalle}}</b> est réservée pour ce patient </h1>
+            {% endfor %}
+        {% else %}
+            <h1> Ce code est invalide </h1>
+        {% endif %}
+    {% endif %}
+{% endblock %}

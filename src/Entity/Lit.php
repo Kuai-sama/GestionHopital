@@ -21,6 +21,10 @@ class Lit
     #[ORM\JoinColumn(nullable: false)]
     private ?Salle $salle = null;
 
+    #[ORM\OneToOne(inversedBy: 'lit', cascade: ['persist', 'remove'])]
+    private ?Personne $IdPersonne = null;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -49,4 +53,17 @@ class Lit
 
         return $this;
     }
+
+    public function getIdPersonne(): ?Personne
+    {
+        return $this->IdPersonne;
+    }
+
+    public function setIdPersonne(?Personne $IdPersonne): self
+    {
+        $this->IdPersonne = $IdPersonne;
+
+        return $this;
+    }
+
 }

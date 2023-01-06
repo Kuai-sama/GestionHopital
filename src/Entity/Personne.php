@@ -69,6 +69,9 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'idPersonne', targetEntity: Horaire::class)]
     private Collection $horaires;
 
+    #[ORM\OneToOne(mappedBy: 'IdPersonne', cascade: ['persist', 'remove'])]
+    private ?Lit $lit = null;
+
     public function __construct()
     {
         $this->Diagnostiquer = new ArrayCollection();
@@ -320,6 +323,28 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
                 $appliquerPrescription->setPatient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLit(): ?Lit
+    {
+        return $this->lit;
+    }
+
+    public function setLit(?Lit $lit): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($lit === null && $this->lit !== null) {
+            $this->lit->setIdPersonne(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($lit !== null && $lit->getIdPersonne() !== $this) {
+            $lit->setIdPersonne($this);
+        }
+
+        $this->lit = $lit;
 
         return $this;
     }
