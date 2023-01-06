@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <a>Supprimer : {{ compte.nom }}, {{ compte.prenom }}, {{ compte.email }}</a>
+
+        <a href="{{path('app_admin_delete_compte',{'id': compte.id})}}"><input type='button' class="btn btn-success" value="Oui"></input></a>
+        <a href="{{path('app_admin_affichercompte')}}"><input type='button' class="btn btn-danger" value="Non"></input></a>
+    </table>
+{% endblock %}

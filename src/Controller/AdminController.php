@@ -38,9 +38,38 @@ class AdminController extends AbstractController
         return $this->render('admin/creerCompteAdmin.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/admin/checkHoraire')]
+    #[Route('/admin/checkHoraire', name: 'app_admin_checkHoraire')]
     public function checkHorairePersonnel(HoraireRepository $horaire){
         return $this->render('admin/horaireCheck.html.twig',
             ['horaires' => $horaire->getPersonneHoraire()]);
+    }
+
+    #[Route('/admin/affichercompte', name: 'app_admin_affichercompte')]
+    public function affichercompte(EntityManagerInterface $em){
+        $infirmier = $em->getRepository(Personne::class)->PersonneInfirmier();
+        $medecin = $em->getRepository(Personne::class)->PersonneMedecin();
+
+        return $this->render('admin/affichercompte.html.twig',
+            ['medecins' => $medecin, 'infirmiers' => $infirmier]);
+    }
+
+    #[Route('/admin/valide/deletecompte/{id}', name: 'app_admin_valide_delete_compte')]
+    public function validedeletecompte(int $id, EntityManagerInterface $em){
+
+        $compte = $em->getRepository(Personne::class)->findOneById($id);
+
+        return $this->render('admin/validerDelete.html.twig',
+            ['compte' => $compte]);
+    }
+
+    #[Route('/admin/deletecompte/{id}', name: 'app_admin_delete_compte')]
+    public function deletecompte(int $id, EntityManagerInterface $em){
+
+        $personne = $em->getRepository(Personne::class)->findOneById($id);
+
+        $em->remove($personne);
+        $em->flush();
+
+        return $this->redirectToRoute("app_admin_affichercompte");
     }
 }
