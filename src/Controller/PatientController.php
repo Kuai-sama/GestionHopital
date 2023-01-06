@@ -4,9 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Lit;
 use App\Entity\Salle;
-use App\Entity\Patient;
-use App\Entity\Personne;
-use App\Repository\LitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -52,7 +49,7 @@ class PatientController extends AbstractController
     public function __construct(Security $security)
     {
         $this->security = $security;
-        
+
     }
 
 
@@ -64,11 +61,11 @@ class PatientController extends AbstractController
 
     #[Route('/venue', name: 'venue')]
     public function VenueAction(EntityManagerInterface $em, LitRepository $lit): Response
-    {  
+    {
         $user = $this->security->getUser();
         $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email'=>$user->getUserIdentifier()]);
         $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne'=>$idpersonne->getId()]);
-        
+
         if($idpatient == "")
         {
             $idpatient = new Patient();
@@ -78,12 +75,12 @@ class PatientController extends AbstractController
             {
                 return $this->render('patient/venue.html.twig',['salle'=>null,'code'=>""]);
             }
-            $sallerecup = $lit->findOneBy(['id'=>$disponible->getId()]); 
+            $sallerecup = $lit->findOneBy(['id'=>$disponible->getId()]);
             $salle = $lit->findSalleAssos($sallerecup->getId());
 
             $disponible->setLitOccupe(true);
             $em->persist($disponible);
-            
+
             $code = uniqid(10);
             $idpatient->setCodeEntre($code);
             $idpatient->setPersonne($idpersonne);
@@ -106,5 +103,13 @@ class PatientController extends AbstractController
     public function validation(): Response
     {
         return $this->render('patient/validationDelete.html.twig');
+    }
+
+    #[Route('/listePatient',name: "list_patient")]
+    public function listePat(PatientRepository $patient): Response
+    {
+        return $this->render('patient/listPat.html.twig', [
+            'patients' => $patient->getPatPer(),
+        ]);
     }
 }

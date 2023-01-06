@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}
+	<title>
+		{{'Visualisation des lits'}}
+	</title>
+{% endblock %}
+
+{% set strNumLit, strPosLit, strOccLit = "Numéro", "Emplacement", "Occupation" %}
+
+{% block body %}
+
+		<table class="table">
+			<tr>
+				<th scope="col">nom</th>
+				<th scope="col">prenom</th>
+				<th scope="col">numero de securité social</th>
+				<th scope="col">email</th>
+				<th scope="col">numero telephone</th>
+				<th scope="col">Dossier Patient</th>
+			</tr>
+			{% for patient in patients %}
+				<tr>
+					<td>{{ patient.Personne.nom }}</td>
+					<td>{{ patient.Personne.prenom }}</td>
+					<td>{{ patient.Personne.NumSecuriteSociale }}</td>
+					<td>{{ patient.Personne.email }}</td>
+					<td>{{ patient.Personne.NumTel }}</td>
+					<td><a href={{ path("app_dossier_patient",{"idpatient": patient.id}) }}><button>acceder au dossier du patient</button></a></td>
+				</tr>
+			{% endfor %}
+		</table>
+
+{% endblock %}
