@@ -51,58 +51,6 @@
 					{% endif %}
 				</ul>
 
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Menu</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                {% if is_granted('ROLE_PATIENT') %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href={{path('patient_menu')}}>Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href={{path('patient_venue')}}>Indiquer votre venue</a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_PATIENT') == false %}
-                    <li class="nav-item">
-                        <a class="nav-link" href={{path('list_lits')}}>Gestion des lits</a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_PATIENT') %}
-                    <li class="nav-item">
-                        <a class="nav-link " href={{path('patient_validation')}}>Supprimer mon compte</a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link " href={{path('app_admin_checkHoraire')}}>Horaire travaille</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href={{path('app_admin_affichercompte')}}>Liste comptes</a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_INFIRMIER') %}
-                    <li class="nav-item">
-                        <a class="nav-link " href={{path('infirmier_verification_code')}}>Verfication code</a>
-                    </li>
-                {% endif %}
-            {% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER')) %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_bipper_liste') }}">Bipper</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_bipper_affiche_notif') }}">Voir ses notifications</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_horaire') }}">Prise de service</a>
-                </li>
-            {% endif %}
-            </ul>
-=======
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 						<a href={{ path('app_logout') }}>
@@ -119,7 +67,6 @@
 		{% block body %}{% endblock %}
 		<br/><br/>
 		{% block contenue %}{% endblock %}
->>>>>>> origin/Symfony
 
 	</body>
 </html>
