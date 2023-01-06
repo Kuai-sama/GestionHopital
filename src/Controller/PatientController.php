@@ -69,8 +69,9 @@ class PatientController extends AbstractController
         $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email'=>$user->getUserIdentifier()]);
         $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne'=>$idpersonne->getId()]);
         
-        if($idpatient->getCodeEntre() == "")
+        if($idpatient == "")
         {
+            $idpatient = new Patient();
             // verification de lit disponible
             $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
             if(!$disponible)
@@ -85,6 +86,7 @@ class PatientController extends AbstractController
             
             $code = uniqid(10);
             $idpatient->setCodeEntre($code);
+            $idpatient->setPersonne($idpersonne);
             $idpersonne->setLit($disponible);
             $em->persist($idpatient);
             $em->persist($idpersonne);

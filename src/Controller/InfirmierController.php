@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Personne;
 use App\Entity\Patient;
+use App\Entity\Personne;
 use App\Service\CodeReminder;
 use App\Repository\LitRepository;
 use App\Repository\PatientRepository;
@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\DateTime;
+
 
 #[Route('/infirmier', name: 'infirmier_')]
 class InfirmierController extends AbstractController
@@ -64,7 +66,7 @@ class InfirmierController extends AbstractController
         $salle = $lit->findSalle($IdPersonne);
         if($assigner == false)
         {
-            $medecin = $roles->findMedecin();
+            $medecin = $roles->PersonneMedecin();
             return $this->render('infirmier/assignemedecin.html.twig',[ 'medecin' => $medecin, 'personne'=> $personne, 'salle' => $salle, 'code'=>$code]);
         }
 
@@ -74,6 +76,7 @@ class InfirmierController extends AbstractController
         $medecin = $em->getRepository(Personne::class)->findOneBy(['id' => $idMed]);
         dump($medecin);
         $medecin->setPatient($Patient);
+        $Patient->setDateHeureEntree(new \DateTime());
         $Patient->setCodeEntre(null);
 
         $em->persist($medecin);
