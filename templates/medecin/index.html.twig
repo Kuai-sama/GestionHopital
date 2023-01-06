@@ -11,7 +11,7 @@
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
-					<a class="nav-link" href={{path('patient_menu')}}>Accueil</a>
+					<a class="nav-link" href="{{ path('app_medecin') }}">Accueil</a>
 				</li>
 
 				{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER')) %}
