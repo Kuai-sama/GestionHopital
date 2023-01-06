@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation d'un contact{% endblock %}
+{% block body %}
+        <style>
+
+            .no-outline {
+                border-top-style: hidden;
+                border-right-style: hidden;
+                border-left-style: hidden;
+                border-bottom-style: hidden;
+                background-color: #f9f9f9;
+            }
+        </style>
+
+
+    <table style="horizontal-align: middle;" class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center"> Patient </th>
+                <th class="text-center"> Salle </th>
+                <th class="text-center"> Raison de la visite </th>
+                <th class="text-center"> Code d'entrée </th>
+                <th class="text-center"> Medecin assignable </th>
+            </tr>
+        </thead>
+
+        <tr>
+            <form>
+                <td class="text-center"> {{personne.Nom}}  {{personne.Prenom}} </td>
+
+            {% for locsalle in salle %}
+                <td class="text-center"> {{locsalle.NomSalle}} </td>
+            {% endfor %}
+
+                <td class="text-center"><input  type="text"  name="raison" id="raison" value="test" placeholder="Ajouter la raison de la visite"/></td>
+
+                <!--<td class="text-center"><input  class="no-outline" type="text" name="code" id="code" Value="{{code}}"/></td>-->
+
+                <td class="text-center">
+                    <select name="medecin" id="medecin-select">
+                        <option value="">Aucun médecin assigné</option>
+                {% for doc in medecin %}
+                        <option value="{{doc.id}}">Dr {{doc.Nom}} {{doc.Prenom}}</option>
+                {% endfor %}
+                    </select>
+                    
+                        <input class="btn btn-success"  value="Assigner" type="submit" formmethod = "POST" formaction="{{path('infirmier_verification_code')}}"></input>
+            
+                </td>
+            </form>
+        </tr>
+    </table>
+
+
+{% endblock %}
+
+
+
