@@ -15,7 +15,10 @@ class CalendarController extends AbstractController
     #[Route('/calendar', name: 'app_calendar')]
     public function view(EntityManagerInterface $em): Response
     {
-        $events = $em->getRepository(RDV::class)->findAll();
+        # Récupère l'id du médecin authentifié
+        $id = $this->getUser()->getId();
+
+        $events = $em->getRepository(RDV::class)->findRDVByMedecin($id);
         $rdvs = [];
 
         foreach ($events as $event) {
