@@ -20,13 +20,19 @@ use Symfony\Component\Validator\Constraints\DateTime;
 #[Route('/infirmier', name: 'infirmier_')]
 class InfirmierController extends AbstractController
 {
-    #[Route('/admin', name: 'admin')]
+    #[Route('/accueil', name: 'accueil')]
     public function index(): Response
+    {
+        return $this->render('infirmier/index.html.twig', [
+            'controller_name' => 'InfirmierController',
+        ]);
+    }
+    /*public function index(): Response
     {
         return $this->render('infirmier/creerCompteAdmin.html.twig', [
             'controller_name' => 'InfirmierController',
         ]);
-    }
+    }*/
 
     #[Route('/verification_code', name: 'verification_code')]
     public function verification_code(PatientRepository $patients, LitRepository $lit,PersonneRepository $roles ,ManagerRegistry $doctrine, EntityManagerInterface $em): Response

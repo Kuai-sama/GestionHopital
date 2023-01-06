@@ -55,6 +55,11 @@
                         <a class="nav-link " href={{path('app_admin_affichercompte')}}>Liste comptes</a>
                     </li>
                 {% endif %}
+                {% if is_granted('ROLE_INFIRMIER') %}
+                    <li class="nav-item">
+                        <a class="nav-link " href={{path('infirmier_verification_code')}}>Verfication code</a>
+                    </li>
+                {% endif %}
             {% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER')) %}
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('app_bipper_liste') }}">Bipper</a>
