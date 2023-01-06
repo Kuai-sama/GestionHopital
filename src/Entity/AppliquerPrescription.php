@@ -22,11 +22,11 @@ class AppliquerPrescription
     #[ORM\JoinColumn(nullable: false)]
     private ?Prescription $Prescription = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $DateHeureApplication = null;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Personne $Soignant = null;
 
     public function getId(): ?int

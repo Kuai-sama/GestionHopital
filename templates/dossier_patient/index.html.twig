@@ -22,7 +22,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <button>ajouter un diagnostic</button>
+        <a href={{ path('app_dossier_patient_ajout_diagno',{"idper": infoPatient.Personne.id}) }}><button>ajouter un diagnostic</button></a>
 
         <h2>Prescription</h2>
         <table class="table">
@@ -39,7 +39,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <button>ajouter un diagnostic</button>
+        <a href={{ path('app_dossier_patient_ajout_prescri',{"idper": infoPatient.Personne.id}) }}><button>ajouter une prescription</button></a>
 
     {% endfor %}
 {% endblock %}

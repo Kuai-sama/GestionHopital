@@ -50,6 +50,16 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         return $qb->getQuery()->getResult();
     }
 
+    public function AddPersoDiagno(int $idPersonne, int $idDiagno){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.Diagnostiquer','perDia')
+        ->add('perDia.personne_id',$idPersonne)
+            ->add('perDia.diagnostic_id',$idDiagno);
+
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
