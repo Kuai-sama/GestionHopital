@@ -31,6 +31,7 @@ class CreerCompteAdminType extends AbstractType
                         'Admin' => 'ROLE_ADMIN',
                         'Medecin' => 'ROLE_MEDECIN',
                         'Ambulancier' => 'ROLE_AMBULANCIER',
+                        'Pharmacien' => 'ROLE_PHARMACIEN',
                     ],
                 ],
             ])

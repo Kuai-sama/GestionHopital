@@ -17,6 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app_admin')]
+    public function index(): Response
+    {
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
+
+    #[Route('/admin/ajoutcompte', name: 'app_admin_ajoutcompte')]
     public function ajoutCompte(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $personne = new Personne();
@@ -31,7 +39,7 @@ class AdminController extends AbstractController
             $em->persist($personne);
             $em->flush();
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_admin_ajoutcompte');
         }
 
         // Affichage du formulaire initial (requête GET) OU affichage du formulaire avec erreurs après validation (requête POST)
@@ -48,9 +56,10 @@ class AdminController extends AbstractController
     public function affichercompte(EntityManagerInterface $em){
         $infirmier = $em->getRepository(Personne::class)->PersonneInfirmier();
         $medecin = $em->getRepository(Personne::class)->PersonneMedecin();
+        $pharmacien = $em->getRepository(Personne::class)->PersonnePharmacien();
 
         return $this->render('admin/affichercompte.html.twig',
-            ['medecins' => $medecin, 'infirmiers' => $infirmier]);
+            ['medecins' => $medecin, 'infirmiers' => $infirmier, 'pharmaciens' => $pharmacien]);
     }
 
     #[Route('/admin/valide/deletecompte/{id}', name: 'app_admin_valide_delete_compte')]

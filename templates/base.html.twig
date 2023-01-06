@@ -54,6 +54,9 @@
 				<li class="nav-item">
 					<a class="nav-link " href={{path('app_admin_affichercompte')}}>Liste comptes</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link " href={{path('app_admin_ajoutcompte')}}>Ajout compte</a>
+				</li>
 			{% endif %}
 			{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER')) %}
 				<li class="nav-item active">
@@ -64,6 +67,9 @@
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" href="{{ path('app_horaire') }}">Prise de service</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href={{path('app_calendar')}}>Emploi du temps</a>
 				</li>
 			{% endif %}
 		</ul>
