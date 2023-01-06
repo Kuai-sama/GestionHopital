@@ -40,7 +40,7 @@ security:
         - { path: ^/patient, roles: ROLE_PATIENT }
         - { path: ^/medecin, roles: ROLE_MEDECIN }
         - { path: ^/ambulancier, roles: ROLE_AMBULANCIER }
-        #- { path: ^/infirmier, roles: ROLE_INFIRMIER }
+        - { path: ^/infirmier, roles: ROLE_INFIRMIER }
         - { path: ^/admin, roles: ROLE_ADMIN }
 
         
