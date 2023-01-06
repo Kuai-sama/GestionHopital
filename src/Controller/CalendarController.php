@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CalendarController extends AbstractController
 {
-    #[Route('/medecin/calendar', name: 'app_calendar')]
+    #[Route('/calendar', name: 'app_calendar')]
     public function view(EntityManagerInterface $em): Response
     {
         $events = $em->getRepository(RDV::class)->findAll();
@@ -39,6 +39,6 @@ class CalendarController extends AbstractController
             ];
         }
         $data = json_encode($rdvs);
-        return $this->render('medecin/index.html.twig', compact('data'));
+        return $this->render('medecin/view.html.twig', compact('data'));
     }
 }

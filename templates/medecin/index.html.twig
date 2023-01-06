@@ -1,136 +1,39 @@
-{% extends 'baseMedecin.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block titre %}
-	<title>
-		{{'Planning'}}
-	</title>
+
+{% block navbar %}
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">Menu</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href={{path('patient_menu')}}>Accueil</a>
+				</li>
+
+				{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER')) %}
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ path('app_bipper_liste') }}">Bipper</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ path('app_bipper_affiche_notif') }}">Voir ses notifications</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href={{path('app_calendar')}}>Emploi du temps</a>
+					</li>
+				{% endif %}
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href={{ path('app_logout') }}>
+						<span class="glyphicon glyphicon-log-out"></span>
+						Déconnexion</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 {% endblock %}
-
-{% block stylesheets %}
-	<style>
-		#calendar {
-			max-width: 90%;
-			max-height: 90%;
-			margin: auto;
-		}
-		.popover-body{
-			max-width: 100%;
-			overflow-x: scroll;
-			white-space: normal;
-		}
-	</style>
-{% endblock %}
-
-{% block body %}
-	<h1>{{ 'Visualisation du planning' }}</h1>
-	<div id="calendar"></div>
-{% endblock %}
-
-{% block javascripts %}
-	<script>
-		window.onload = () => {
-			let calendarElt = document.querySelector('#calendar')
-			
-			var currentHour = new Date().getHours().toString();
-
-			let myCalendar = new FullCalendar.Calendar(calendarElt, {
-				initialView: 'timeGridDay',
-				locale: 'fr',
-				timeZone: 'Europe/Paris',
-				headerToolbar: {
-					start: 'prev,next today',
-					center: 'title',
-					end: 'timeGridDay,timeGridWeek,dayGridMonth'
-				},
-				buttonText: {
-					today: 'Aujourd\'hui',
-					month: 'Mois',
-					week: 'Semaine',
-					day: 'Jour',
-					list: 'Liste',
-					this: 'Cette semaine'
-				},
-				nowIndicator: true,
-				slotMinTime: '06:00:00',
-				scrollTime: currentHour,
-				allDaySlot: false,
-				firstDay: 1,
-				displayEventEnd: true,
-				events: {{data | raw}},
-				selectable: true,
-				eventMinHeight:20,
-				
-				eventContent: function(info) {
-					var start_time = new Date(Date.parse(info.event.start.toISOString()));
-					var end_time = new Date(Date.parse(info.event.end.toISOString()));
-
-					start_time = start_time.toUTCString().slice(0, -4);
-					end_time = end_time.toUTCString().slice(0, -4);
-
-					start_time = new Date(start_time)
-					end_time = new Date(end_time)
-
-					var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
-					var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
-
-					// Si on est en mode mois
-					if (info.view.type == 'dayGridMonth') {
-						// H:i -> i
-						start_hour = start_time_str.substring(3);
-						end_hour = end_time_str.substring(3);
-						if (parseInt(start_hour) < 10)
-							start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
-						if (parseInt(end_hour) < 10)
-							end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
-						
-						var element = document.createElement('div');
-						
-						element.innerHTML = "°" + start_time_str + "-" + end_time_str;
-						return { domNodes: [element] }
-					}
-				},
-						
-				eventClick: function(info) {
-					var start_time = new Date(Date.parse(info.event.start.toISOString()));
-					var end_time = new Date(Date.parse(info.event.end.toISOString()));
-
-					start_time = start_time.toUTCString().slice(0, -4);
-					end_time = end_time.toUTCString().slice(0, -4);
-
-					start_time = new Date(start_time)
-					end_time = new Date(end_time)
-
-					var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
-					var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
-
-					start_hour = start_time_str.substring(3);
-					end_hour = end_time_str.substring(3);
-					if (parseInt(start_hour) < 10)
-						start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
-					if (parseInt(end_hour) < 10)
-						end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
-
-					console.log(start_time_str);
-					console.log(end_time_str);
-
-					console.log(info.event);
-					
-					$popover = $(info.el).popover({
-						html: true,
-						title: info.event.title,
-
-						content: "Horaire : " + start_time_str + " - " + end_time_str +
-								 "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" +
-								 "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient +
-								 "<br> Description: " + info.event.extendedProps.description,
-            			placement: 'top',
-            			container: 'body',
-					});
-        		},
-			})
-		
-			myCalendar.render()
-		}
-	</script>
-{% endblock %}
-
