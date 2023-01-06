@@ -17,8 +17,14 @@ class RDV
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $DateHeure = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $Duree = null;
+    #[ORM\Column(type: Types::INTEGER)]  # minutes
+    private ?int $Duree = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $Titre = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Description = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -48,14 +54,38 @@ class RDV
         return $this;
     }
 
-    public function getDuree(): ?\DateTimeInterface
+    public function getDuree(): ?int
     {
         return $this->Duree;
     }
 
-    public function setDuree(?\DateTimeInterface $Duree): self
+    public function setDuree(int $Duree): self
     {
         $this->Duree = $Duree;
+
+        return $this;
+    }
+
+    public function getTitre(): ?string
+    {
+        return $this->Titre;
+    }
+
+    public function setTitre(string $Titre): self
+    {
+        $this->Titre = $Titre;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(string $Description): self
+    {
+        $this->Description = $Description;
 
         return $this;
     }
