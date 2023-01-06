@@ -3,7 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Lit;
+use App\Entity\Patient;
+use App\Entity\Personne;
 use App\Entity\Salle;
+use App\Repository\LitRepository;
+use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;

@@ -8,7 +8,6 @@
 /var/
 /vendor/
 /.idea
-/migrations
 
 ###< symfony/framework-bundle ###
 

@@ -9,7 +9,7 @@
     <h4>prenom = {{ infoPatient.Personne.prenom }}</h4>
     <h4>raison = {{ infoPatient.Raison }}</h4>
     <h4>date d'entree = {{ infoPatient.DateHeureEntree|date("H:i d/m/Y") }}</h4>
-    <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><button>definir/modifier la date de sortie</button>
+    <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><!--<button>definir/modifier la date de sortie</button>-->
 
         <h2>Diagnostic</h2>
         <table class="table">
@@ -22,7 +22,7 @@
                 </tr>
             {% endfor %}
         </table>
-        <a href={{ path('app_dossier_patient_ajout_diagno',{"idper": infoPatient.Personne.id}) }}><button>ajouter un diagnostic</button></a>
+        <!--<a href={{ path('app_dossier_patient_ajout_diagno',{"idper": infoPatient.Personne.id}) }}><button>ajouter un diagnostic</button></a>-->
 
         <h2>Prescription</h2>
         <table class="table">
@@ -39,7 +39,8 @@
                 </tr>
             {% endfor %}
         </table>
-        <a href={{ path('app_dossier_patient_ajout_prescri',{"idper": infoPatient.Personne.id}) }}><button>ajouter une prescription</button></a>
-
+        {% if is_granted('ROLE_MEDECIN') %}
+            <a href={{ path('app_dossier_patient_ajout_prescri',{"idper": infoPatient.Personne.id}) }}><button>ajouter une prescription</button></a>
+        {% endif %}
     {% endfor %}
 {% endblock %}
