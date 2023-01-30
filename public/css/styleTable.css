@@ -138,3 +138,8 @@
 .boutonAjouter:hover:before{
 	content: "Ajouter";
 }
+
+a{
+	list-style-type: none;  
+	display: inline;
+}

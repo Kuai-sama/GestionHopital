@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Lit;
 use App\Entity\Salle;
+use App\Entity\Personne;
 use App\Form\AjoutLitType;
 use App\Form\ModifierLitType;
 use App\Repository\PatientRepository;
@@ -79,12 +80,16 @@ class LitController extends AbstractController
     public function ModifierLit($id, EntityManagerInterface $em, Request $request){
 
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
-        
+
         $form = $this->createForm(ModifierLitType::class, $lit);
         $form->add('send', SubmitType::class, ['label' => 'Valider']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
+            $personne->setIdLit($lit);
+
+            $em->persist($personne);            
             $em->persist($lit);
             $em->flush();
 
@@ -96,6 +101,19 @@ class LitController extends AbstractController
         ]);
     }
 
+    #[Route('/SupprimerLit/{id}', name:'Supprimer', requirements: ['id' => '\d+'])]
+    public function SupprimerLit($id, EntityManagerInterface $em, Request $request){
+
+        $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
+        $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
+        $personne->setIdLit(null);
+        
+        $em->persist($personne);            
+        $em->remove($lit);
+        $em->flush();
+
+        return $this->redirectToRoute('lits_list');
+    }
 
 
 }

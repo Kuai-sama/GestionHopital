@@ -48,8 +48,8 @@
 							{% endif %}
 						</td>
 						<td data-label="{{ strBouton}}">
-							<button class="boutonModifier" onclick="window.location.href='{{path('lits_Modifier',{"id": lit.id})}}';"> Modifier </button>
-							<button class="boutonSupprimer" onclick="window.location.href='{{path('patient_menu')}}';"> Supprimer </button>
+							<a href="{{ path('lits_Modifier' , {"id": lit.id}) }}"><input class="boutonModifier" type='button' value="Modifier"></input></a>
+							<a onclick="return confirm('Voulez-vous supprimer ce lit ?')" href="{{ path('lits_Supprimer' , {"id": lit.id}) }}"><input class="boutonSupprimer" type='button' value="Supprimer"></input></a>
 						</td>
 					</tr>
 				{% endfor %}

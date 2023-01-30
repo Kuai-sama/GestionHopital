@@ -21,7 +21,7 @@ class Lit
     #[ORM\JoinColumn(nullable: false)]
     private ?Salle $salle = null;
 
-    #[ORM\OneToOne(inversedBy: 'lit', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'lit')]
     private ?Personne $IdPersonne = null;
 
 
