@@ -52,7 +52,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($this->urlGenerator->generate('app_medecin'));
         }
         elseif (in_array('ROLE_AMBULANCIER', $user->getRoles(), true)) {
-            return new RedirectResponse($this->urlGenerator->generate('app_ambulancier'));
+            return new RedirectResponse($this->urlGenerator->generate('app_ambulancier_ajoutcompte'));
         }
         elseif (in_array('ROLE_INFIRMIER', $user->getRoles(), true)) {
             return new RedirectResponse($this->urlGenerator->generate('infirmier_accueil'));

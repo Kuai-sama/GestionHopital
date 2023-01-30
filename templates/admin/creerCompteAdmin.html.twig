@@ -1,6 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <body>
+{% for flashMessage in app.session.flashbag.get('info') %}
+
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('alert') %}
+
+    <div class="alert alert-danger">
+        {{ flashMessage }}
+    </div>
+
+{% endfor %}
+<div style="width: 700px; margin-left: auto; margin-right: auto">
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
 <form method="post">
     <section class="vh-100 gradient-custom">
                             <h2 class="fw-bold mb-2 text-uppercase">Création de compte</h2>
@@ -45,5 +61,6 @@
                             </div>
     </section>
 </form>
+</div>
 </body>
 {% endblock %}
