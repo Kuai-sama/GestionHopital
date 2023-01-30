@@ -39,7 +39,7 @@
 			{% endif %}
 			{% if is_granted('ROLE_PATIENT') == false %}
 				<li class="nav-item">
-					<a class="nav-link" href={{path('list_lits')}}>Gestion des lits</a>
+					<a class="nav-link" href={{path('lits_list')}}>Gestion des lits</a>
 				</li>
 			{% endif %}
 			{% if is_granted('ROLE_PATIENT') %}

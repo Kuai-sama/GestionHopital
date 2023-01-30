@@ -96,3 +96,45 @@
 	width: 30px;
 	height: 30px;
 }
+
+.boutonSupprimer{
+	background-color: white;
+	color: black;
+	transition-duration: 0.4s;
+	border: 2px solid #f44336;
+	border-radius: 8px;
+}
+
+.boutonSupprimer:hover {
+	background-color: #f44336; /* Green */
+	color: white;
+}
+
+.boutonModifier:hover {
+	background-color: #4CAF50; /* Green */
+	color: white;
+}
+
+.boutonModifier{
+	background-color: white;
+	color: black;
+	transition-duration: 0.4s;
+	border: 2px solid #4CAF50;
+	border-radius: 8px;
+}
+
+.boutonAjouter{
+	background-color: #4CAF50;
+	color: white;
+	transition-duration: 0.4s;
+	border: 2px solid #4CAF50;
+	border-radius: 8px;
+	text-align: center;
+}
+
+.boutonAjouter:hover span {
+	display: none
+}
+.boutonAjouter:hover:before{
+	content: "Ajouter";
+}

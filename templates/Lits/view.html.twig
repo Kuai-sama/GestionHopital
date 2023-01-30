@@ -6,12 +6,12 @@
 	</title>
 {% endblock %}
 
-{% set strNumLit, strPosLit, strOccLit = "Numéro", "Emplacement", "Occupation" %}
+{% set strNumLit, strPosLit, strOccLit, strBouton = "Numéro", "Emplacement", "Occupation", "Gestion" %}
 
 {% block body %}
 	<link rel="stylesheet" href="/CSS/styleTable.css">
 	<h1>{{ 'Visualisation des lits' }}</h1>
-	{% block content%}
+	{% block content %}
 		<table
 			class="table-info">
 			{# class="table-info" #}
@@ -25,6 +25,9 @@
 					</th>
 					<th>
 						{{ strOccLit }}
+					</th>
+					<th>
+						{{ strBouton }} <button class="boutonAjouter" onclick="window.location.href='{{path('lits_Ajouter')}}';"><span>+</span></button>
 					</th>
 				</tr>
 			</thead>
@@ -43,6 +46,10 @@
 							{% else %}
 								{{ 'Libre' }}
 							{% endif %}
+						</td>
+						<td data-label="{{ strBouton}}">
+							<button class="boutonModifier" onclick="window.location.href='{{path('lits_Modifier',{"id": lit.id})}}';"> Modifier </button>
+							<button class="boutonSupprimer" onclick="window.location.href='{{path('patient_menu')}}';"> Supprimer </button>
 						</td>
 					</tr>
 				{% endfor %}

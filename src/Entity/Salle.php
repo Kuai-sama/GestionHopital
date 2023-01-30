@@ -25,6 +25,10 @@ class Salle
     #[ORM\ManyToOne]
     private ?Service $Service = null;
 
+    public function __toString(): string {
+        return $this->getNomSalle();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
