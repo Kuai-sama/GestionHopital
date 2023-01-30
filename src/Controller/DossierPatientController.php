@@ -3,18 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\AppliquerPrescription;
-use App\Entity\Article;
 use App\Entity\Diagnostic;
 use App\Entity\Personne;
 use App\Entity\Prescription;
 use App\Form\AjoutDiagnosticType;
 use App\Form\AjoutPrescriptionType;
-use App\Form\ArticleFormType;
 use App\Form\PatientType;
 use App\Repository\AppliquerPrescriptionRepository;
 use App\Repository\PatientRepository;
 use App\Repository\PersonneRepository;
-use App\Service\SpamFinder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -65,14 +62,14 @@ class DossierPatientController extends AbstractController
         $form = $this->createForm(AjoutDiagnosticType::class,$diagnostic);
         $form->add('send',SubmitType::class,['label'=>'ajouter un diagnostic a se patient']);
         $form->handleRequest($request);
-        dump($idper);
 
 
         if(($form->isSubmitted() && $form->isValid())){
             //form
-            dump($idper);
+
+
             $personne = $per->findOneById($idper);
-            $personne->setDiagnostic($diagnostic);
+            $personne->addDiagnostiquer($diagnostic);
             $en->persist($personne);
             $en->persist($diagnostic);
             $en->flush();

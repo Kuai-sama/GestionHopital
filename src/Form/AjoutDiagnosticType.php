@@ -20,6 +20,7 @@ class AjoutDiagnosticType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Diagnostic::class,
+
         ]);
     }
 }

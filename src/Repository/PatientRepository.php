@@ -66,7 +66,7 @@ class PatientRepository extends ServiceEntityRepository
             ->leftJoin("per.appliquerPrescriptions","apppres")
             ->leftJoin("apppres.Prescription","pres")
             ->select("pat","per")
-        ->where('pat.id ='."'$idp'");
+            ->where('pat.id ='."'$idp'");
 
 
         return $qb->getQuery()->getResult();
