@@ -25,7 +25,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/admin/ajoutcompte', name: 'app_admin_ajoutcompte')]
-    public function ajoutCompte(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
+    public function ajoutCompte(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, PersonneRepository $compteExistant): Response
     {
         $personne = new Personne();
         $form = $this->createForm(CreerCompteAdminType::class, $personne);
@@ -33,12 +33,25 @@ class AdminController extends AbstractController
         $form->handleRequest($request); // Alimentation du formulaire avec la Request
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $mdp = $personne->getPassword();
-            $hashedPassword = $passwordHasher->hashPassword($personne, $mdp);
-            $personne->setPassword($hashedPassword);
-            $em->persist($personne);
-            $em->flush();
 
+            $mailEntrer = $form->get('Email')->getData();
+
+            $mailExistant = $compteExistant->MailCompte($mailEntrer);
+            if($mailExistant == null)
+            {
+                $mdp = $personne->getPassword();
+                $hashedPassword = $passwordHasher->hashPassword($personne, $mdp);
+                $personne->setPassword($hashedPassword);
+                $em->persist($personne);
+                $em->flush();
+
+                $this->addFlash("info", "Le compte a été créé");
+
+            }
+            else
+            {
+                $this->addFlash("alert", "Le mail est déjà utilisé pour un autre compte");
+            }
             return $this->redirectToRoute('app_admin_ajoutcompte');
         }
 
@@ -57,9 +70,10 @@ class AdminController extends AbstractController
         $infirmier = $em->getRepository(Personne::class)->PersonneInfirmier();
         $medecin = $em->getRepository(Personne::class)->PersonneMedecin();
         $pharmacien = $em->getRepository(Personne::class)->PersonnePharmacien();
+        $ambulancier = $em->getRepository(Personne::class)->PersonneAmbulancier();
 
         return $this->render('admin/affichercompte.html.twig',
-            ['medecins' => $medecin, 'infirmiers' => $infirmier, 'pharmaciens' => $pharmacien]);
+            ['medecins' => $medecin, 'infirmiers' => $infirmier, 'pharmaciens' => $pharmacien, 'ambulanciers' => $ambulancier]);
     }
 
     #[Route('/admin/valide/deletecompte/{id}', name: 'app_admin_valide_delete_compte')]

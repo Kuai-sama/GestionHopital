@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-
+    <h1>Medecin</h1>
     <table class="table table-striped" style="table-layout: auto;
 width: 100%;">
         <thead class="thead-dark">
@@ -23,7 +23,7 @@ width: 100%;">
             </tr>
         {% endfor %}
     </table>
-
+    <h1>Infirmier</h1>
     <table class="table table-striped" style="table-layout: auto;
 width: 100%;">
         <thead class="thead-dark">
@@ -45,7 +45,7 @@ width: 100%;">
             </tr>
         {% endfor %}
     </table>
-
+    <h1>Pharmacien</h1>
     <table class="table table-striped" style="table-layout: auto;
 width: 100%;">
         <thead class="thead-dark">
@@ -63,6 +63,28 @@ width: 100%;">
                 <td> {{pharmacien.Email}} </td>
                 <td>
                     <a href="{{path('app_admin_valide_delete_compte',{'id': pharmacien.id})}}"><input type='button' class="btn btn-danger" value="Supprimer"/></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <h1>Ambulancier</h1>
+    <table class="table table-striped" style="table-layout: auto;
+width: 100%;">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col"> Nom </th>
+            <th scope="col"> Prenom </th>
+            <th scope="col"> EMail </th>
+            <th scope="col">  </th>
+        </tr>
+        </thead>
+        {% for ambulancier in ambulanciers %}
+            <tr>
+                <td> {{ambulancier.Nom}} </td>
+                <td> {{ambulancier.Prenom}} </td>
+                <td> {{ambulancier.Email}} </td>
+                <td>
+                    <a href="{{path('app_admin_valide_delete_compte',{'id': ambulancier.id})}}"><input type='button' class="btn btn-danger" value="Supprimer"/></a>
                 </td>
             </tr>
         {% endfor %}
