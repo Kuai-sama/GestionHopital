@@ -37,7 +37,12 @@
 					<a class="nav-link" href={{path('patient_venue')}}>Indiquer votre venue</a>
 				</li>
 			{% endif %}
-			{% if is_granted('ROLE_PATIENT') == false %}
+			{% if is_granted('ROLE_AMBULANCIER') %}
+			<li class="nav-item">
+				<a class="nav-link " href="{{ path('app_ambulancier_ajoutcompte') }}">Créer compte patient</a>
+			</li>
+			{% endif %}
+			{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER') or is_granted('ROLE_ADMIN')) %}
 				<li class="nav-item">
 					<a class="nav-link" href={{path('list_lits')}}>Gestion des lits</a>
 				</li>

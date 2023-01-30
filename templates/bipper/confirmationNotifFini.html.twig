@@ -1,7 +1,0 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-
-    <a>Êtes-vous sûrs ?</a>
-    <a href="{{path('app_bipper_delete_notif',{'id': id})}}"><input type='button' class="btn btn-success" value="Oui"></input></a><br><br>
-    <a href="{{path('app_bipper_affiche_notif')}}"><input type='button' class="btn btn-danger" value="Non"></input></a><br><br>
-{% endblock %}
