@@ -14,6 +14,7 @@ use App\Form\PatientType;
 use App\Repository\AppliquerPrescriptionRepository;
 use App\Repository\PatientRepository;
 use App\Repository\PersonneRepository;
+use App\Repository\PrescriptionRepository;
 use App\Service\SpamFinder;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,12 +26,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class DossierPatientController extends AbstractController
 {
     #[Route('/dossier/{idpatient}', name: 'app_dossier_patient')]
-    public function index($idpatient, PatientRepository $patient): Response
+    public function index($idpatient, PatientRepository $patient, AppliquerPrescriptionRepository $prescription): Response
     {
-        dump($patient->getPatInfo($idpatient));
+        //dump($patient->getPatInfo($idpatient));
+        dump($prescription->prescriptionDejaRealiser(20));
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
+            'DejaPrescri' => $prescription->prescriptionDejaRealiser(20)
         ]);
     }
 
@@ -118,5 +121,30 @@ class DossierPatientController extends AbstractController
 
         $reponse = new Response($this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]));
         return $reponse;
+    }
+
+    #[Route('/appliquer/{idprescription}/{idpatient}', name: 'patient_appliquer')]
+    public function appliquer($idprescription, $idpatient,PersonneRepository $pers,PrescriptionRepository $presciption ,AppliquerPrescriptionRepository $prescripApp, EntityManagerInterface $em): Response
+    {
+        $idApplication = $prescripApp->retrouverPrescription($idpatient,$idprescription);
+
+        $ApplicationPrescription = $prescripApp->find($idApplication[0]->getId());
+        $soignant = $pers->findOneById($this->getUser()->getId());
+        $ApplicationPrescription->setSoignant($soignant)->setDateHeureApplication(new \DateTime());
+
+        $em->persist($ApplicationPrescription);
+        $em->flush();
+
+        $patient = $pers->findOneById($idpatient);
+        $presci = $presciption->findOneById($idprescription);
+
+        $test = $patient->getPatient()->getId();
+
+        $appPrescription = new AppliquerPrescription();
+        $appPrescription->setPatient($patient)->setPrescription($presci);
+        $em->persist($appPrescription);
+        $em->flush();
+
+        return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$test]);
     }
 }

@@ -30,12 +30,14 @@
                 <th scope="col">medicament</th>
                 <th scope="col">quantiter</th>
                 <th scope="col">date de fin</th>
+                <th> </th>
             </tr>
             {% for prescri in infoPatient.Personne.appliquerPrescriptions %}
                 <tr>
                     <td>{{ prescri.Prescription.Medicament.NomMedicament }}</td>
                     <td>{{ prescri.Prescription.Unite }}</td>
                     <td>{{ prescri.Prescription.DateFin is empty ? "" : prescri.Prescription.DateFin|date("H:i d/m/Y") }}</td>
+                    <td><a href="{{ path('patient_appliquer', {"idprescription": prescri.Prescription.id ,"idpatient": infoPatient.Personne.id }) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Appliquer</a></td>
                 </tr>
             {% endfor %}
         </table>
@@ -43,4 +45,18 @@
             <a href={{ path('app_dossier_patient_ajout_prescri',{"idper": infoPatient.Personne.id}) }}><button>ajouter une prescription</button></a>
         {% endif %}
     {% endfor %}
+
+    <h2> Déjà appliquer </h2>
+    <table class="table">
+        <tr>
+            <th scope="col">Soigant</th>
+            <th scope="col">Heure et Date</th>
+        </tr>
+        {% for dejaprescris in DejaPrescri %}
+            <tr>
+                <td>{{ dejaprescris.Soignant.Nom }}</td>
+                <td>{{ dejaprescris.DateHeureApplication is empty ? "" : dejaprescris.DateHeureApplication|date("H:i d/m/Y")}}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

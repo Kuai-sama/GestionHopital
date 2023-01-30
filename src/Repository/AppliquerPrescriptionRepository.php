@@ -39,6 +39,27 @@ class AppliquerPrescriptionRepository extends ServiceEntityRepository
         }
     }
 
+    public function retrouverPrescription( $idPatient,  $idPrescription): array
+    {
+        return $this->createQueryBuilder('prescription')
+            ->where('prescription.patient = '. "'$idPatient'")
+            ->andWhere('prescription.Prescription = '. "'$idPrescription'")
+            ->andWhere('prescription.Soignant is null')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function prescriptionDejaRealiser( $idPatient ): array
+    {
+        return $this->createQueryBuilder('prescription')
+            ->leftJoin("prescription.Soignant","personne")
+            ->where('prescription.patient = '. "'$idPatient'")
+            ->andWhere('prescription.Soignant is not null')
+            ->andWhere('personne.id = prescription.Soignant')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return AppliquerPrescription[] Returns an array of AppliquerPrescription objects
 //     */
