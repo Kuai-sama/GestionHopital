@@ -126,11 +126,11 @@ class PatientController extends AbstractController
 
 
             // On Créer un objet RDV
-            $rdv = new RDV();
+            $obj_rdv = new RDV();
             // On hydrate l'objet RDV
-            $rdv->setDateHeure($form->get('date_heure')->getData());
-            $rdv->setDescription($form->get('description')->getData());
-            $rdv->setPersonne1($this->getUser());
+            $obj_rdv->setDateHeure($form->get('date_heure')->getData());
+            $obj_rdv->setDescription($form->get('description')->getData());
+            $obj_rdv->setPersonne1($this->getUser());
 
             // On récupère la liste des médecins
             $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
@@ -138,12 +138,22 @@ class PatientController extends AbstractController
             // On récupère la liste des rendez-vous
             $rdvs = $em->getRepository(RDV::class)->findALL();
 
-
             // On exclus les médecins qui ont déjà un rendez-vous à la date demandée
             foreach ($rdvs as $rdv) {
                 foreach ($medecins as $key => $medecin) {
-                    if ($rdv->getPersonne1() == $medecin) {
-                        unset($medecins[$key]);
+
+                    if ($rdv->getDuree() != null) {
+                        $duree_rdv = $rdv->getDuree();
+
+                        // On calcule la date de fin du rendez-vous (date_heure + durée du rendez-vous (en minutes))
+                        $date_fin_rdv = clone $rdv->getDateHeure();
+                        $date_fin_rdv->add(new \DateInterval('PT' . $duree_rdv . 'M'));
+
+                        // Si rendez-vous est compris entre la date demandée et la date demandée + sa durée
+                        if ($rdv->getDateHeure() >= $obj_rdv->getDateHeure() && $rdv->getDateHeure() <= $date_fin_rdv) {
+                            // On supprime le médecin de la liste
+                            unset($medecin[$key]);
+                        }
                     }
                 }
             }
