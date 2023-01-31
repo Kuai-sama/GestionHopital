@@ -15,7 +15,6 @@ class ModifierLitType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('LitOccupe')
             ->add('salle')
             ->add('IdPersonne', EntityType::class, [
                 'class' => Personne::class,

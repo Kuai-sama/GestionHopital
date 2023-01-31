@@ -65,6 +65,7 @@ class LitController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $lit->setLitOccupe(false);
             $em->persist($lit);
             $em->flush();
 
@@ -88,6 +89,7 @@ class LitController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
             $personne->setIdLit($lit);
+            $lit->setLitOccupe(true);
 
             $em->persist($personne);            
             $em->persist($lit);
@@ -106,10 +108,13 @@ class LitController extends AbstractController
 
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
         $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
-        $personne->setIdLit(null);
-        
-        $em->persist($personne);            
-        $em->remove($lit);
+        if($personne != null){
+            $personne->setIdLit(null);
+            $em->persist($personne); 
+        }
+        $lit->setLitOccupe(false);
+        $lit->setIdPersonne(null);
+        $em->persist($lit);
         $em->flush();
 
         return $this->redirectToRoute('lits_list');
