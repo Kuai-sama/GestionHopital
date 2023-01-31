@@ -29,11 +29,11 @@ class DossierPatientController extends AbstractController
     public function index($idpatient, PatientRepository $patient, AppliquerPrescriptionRepository $prescription): Response
     {
         //dump($patient->getPatInfo($idpatient));
-        dump($prescription->prescriptionDejaRealiser(20));
+        dump($patient->findOneById($idpatient)->getPersonne()->getId());
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
-            'DejaPrescri' => $prescription->prescriptionDejaRealiser(20)
+            'DejaPrescri' => $prescription->prescriptionDejaRealiser($patient->findOneById($idpatient)->getPersonne()->getId())
         ]);
     }
 
