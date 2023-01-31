@@ -14,6 +14,7 @@ use App\Form\ServicePatientType;
 use App\Repository\AppliquerPrescriptionRepository;
 use App\Repository\PatientRepository;
 use App\Repository\PersonneRepository;
+use App\Repository\PrescriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -171,5 +172,33 @@ class DossierPatientController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$test]);
+    }
+
+    #[Route('/modifier/{idprescription}', name: 'patient_modifier')]
+    public function modifier($idprescription,Request $request,PrescriptionRepository $pre, EntityManagerInterface $em): Response
+    {
+        $prescription = $pre->findOneById($idprescription);
+        $form = $this->createForm(AjoutPrescriptionType::class,$prescription);
+        $form->add('send',SubmitType::class,['label'=>'ajouter un prescription a se patient']);
+        $form->handleRequest($request);
+
+
+        if(($form->isSubmitted() && $form->isValid())){
+            //form
+            $em->persist($prescription);
+            $em->flush();
+
+
+            //message
+            $this->addFlash('info','ajout réussi');
+
+            //prescription diagno
+            //$per->AddPersoDiagno($idper,$prescription->getId());
+
+            return $this->redirectToRoute('list_patient');
+        }
+
+        $reponse = new Response($this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]));
+        return $reponse;
     }
 }

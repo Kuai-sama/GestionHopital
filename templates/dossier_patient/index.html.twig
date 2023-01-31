@@ -9,7 +9,6 @@
     <h4>prenom = {{ infoPatient.Personne.prenom }}</h4>
     <h4>raison = {{ infoPatient.Raison }}</h4>
     <h4>date d'entree = {{ infoPatient.DateHeureEntree|date("H:i d/m/Y") }}</h4>
-    <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><!--<button>definir/modifier la date de sortie</button>-->
     <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><button><a href={{ path('dossier_date_sortie',{"idpatient": infoPatient.id}) }}>definir/modifier la date de sortie</a></button>
     <h4>service actuelle = {{ infoPatient.Service }}</h4><button><a href={{ path('dossier_service',{"idpatient": infoPatient.id}) }}>definir/modifier le service</a></button>
 
@@ -29,10 +28,11 @@
         <h2>Prescription</h2>
         <table class="table">
             <tr>
-                <th scope="col">medicament</th>
-                <th scope="col">quantiter</th>
-                <th scope="col">date de fin</th>
-                <th> </th>
+                <th scope="col">Medicament</th>
+                <th scope="col">Quantiter</th>
+                <th scope="col">Date de fin</th>
+                <th>Appliquer la prescription</th>
+                <th>Modification</th>
             </tr>
             {% for prescri in infoPatient.Personne.appliquerPrescriptions %}
                 <tr>
@@ -40,6 +40,7 @@
                     <td>{{ prescri.Prescription.Unite }}</td>
                     <td>{{ prescri.Prescription.DateFin is empty ? "" : prescri.Prescription.DateFin|date("H:i d/m/Y") }}</td>
                     <td><a href="{{ path('patient_appliquer', {"idprescription": prescri.Prescription.id ,"idpatient": infoPatient.Personne.id }) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Appliquer</a></td>
+                    <td><a href="{{ path('patient_modifier', {"idprescription": prescri.Prescription.id}) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Modifier</a></td>
                 </tr>
             {% endfor %}
         </table>
