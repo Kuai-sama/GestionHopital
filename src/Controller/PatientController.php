@@ -126,11 +126,11 @@ class PatientController extends AbstractController
 
 
             // On Créer un objet RDV
-            $obj_rdv = new RDV();
+            $rdv = new RDV();
             // On hydrate l'objet RDV
-            $obj_rdv->setDateHeure($form->get('date_heure')->getData());
-            $obj_rdv->setDescription($form->get('description')->getData());
-            $obj_rdv->setPersonne1($this->getUser());
+            $rdv->setDateHeure($form->get('date_heure')->getData());
+            $rdv->setDescription($form->get('description')->getData());
+            $rdv->setPersonne1($this->getUser());
 
             // On récupère la liste des médecins
             $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
@@ -139,20 +139,13 @@ class PatientController extends AbstractController
             $rdvs = $em->getRepository(RDV::class)->findALL();
 
 
-            // On exclus les médecins qui ont déjà un rendez-vous à la date demandée + la durée
+            // On exclus les médecins qui ont déjà un rendez-vous à la date demandée
             foreach ($rdvs as $rdv) {
-                // Si la date demandé est comprise entre la date de début et la date de fin du rendez-vous (date de fin = date de début + durée)
-                // On construit la date de fin du rendez-vous
-                $date_fin = $rdv->getDateHeure()->add(new \DateInterval('PT' . $rdv->getPersonne2()->getDuree() . 'M'));
-
-                dd($date_fin);
-                
-                
-                // if ($obj_rdv->getDateHeure() >= $rdv->getDateHeure() && $obj_rdv->getDateHeure() <= ) {
-                //     // On supprime le médecin de la liste
-                //     unset($medecins[array_search($rdv->getPersonne2(), $medecins)]);
-                // }
-                
+                foreach ($medecins as $key => $medecin) {
+                    if ($rdv->getPersonne1() == $medecin) {
+                        unset($medecins[$key]);
+                    }
+                }
             }
 
 
@@ -174,6 +167,7 @@ class PatientController extends AbstractController
             $this->addFlash('info', 'Votre rendez-vous a bien été pris');
             return $this->redirectToRoute('patient_menu');
         }
+
 
         return $this->render('patient/rdv.html.twig', [
             'form' => $form->createView(),
