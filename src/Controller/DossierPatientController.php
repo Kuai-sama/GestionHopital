@@ -7,6 +7,7 @@ use App\Entity\Article;
 use App\Entity\Diagnostic;
 use App\Entity\Personne;
 use App\Entity\Prescription;
+use App\Entity\Medicament;
 use App\Form\AjoutDiagnosticType;
 use App\Form\AjoutPrescriptionType;
 use App\Form\ArticleFormType;
@@ -29,11 +30,13 @@ class DossierPatientController extends AbstractController
     public function index($idpatient, PatientRepository $patient, AppliquerPrescriptionRepository $prescription): Response
     {
         //dump($patient->getPatInfo($idpatient));
-        dump($patient->findOneById($idpatient)->getPersonne()->getId());
+        //dump($patient->findOneById($idpatient)->getPersonne()->getId());
+        dump($prescription->getPrescirption($patient->findOneById($idpatient)->getPersonne()->getId()));
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
-            'DejaPrescri' => $prescription->prescriptionDejaRealiser($patient->findOneById($idpatient)->getPersonne()->getId())
+            'DejaPrescri' => $prescription->prescriptionDejaRealiser($patient->findOneById($idpatient)->getPersonne()->getId()),
+            'Presciption' => $prescription->getPrescirption($patient->findOneById($idpatient)->getPersonne()->getId())
         ]);
     }
 

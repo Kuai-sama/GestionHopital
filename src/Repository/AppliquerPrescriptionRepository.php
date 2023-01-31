@@ -53,9 +53,21 @@ class AppliquerPrescriptionRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('prescription')
             ->leftJoin("prescription.Soignant","personne")
+            ->leftJoin("prescription.Prescription","prescri")
+            ->leftJoin("prescri.Medicament","medicament")
             ->where('prescription.patient = '. "'$idPatient'")
             ->andWhere('prescription.Soignant is not null')
             ->andWhere('personne.id = prescription.Soignant')
+            ->andWhere('prescri.id = prescription.Prescription')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPrescirption( $idPatient ): array
+    {
+        return $this->createQueryBuilder('prescription')
+            ->where('prescription.patient = '. "'$idPatient'")
+            ->andWhere('prescription.Soignant is null')
             ->getQuery()
             ->getResult();
     }

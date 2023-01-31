@@ -31,58 +31,58 @@
 		<ul class="navbar-nav mr-auto">
 			{% if is_granted('ROLE_PATIENT') %}
 				<li class="nav-item active">
-					<a class="nav-link" href={{path('patient_menu')}}>Accueil</a>
+					<a class="nav-link active" href={{path('patient_menu')}}>Accueil</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href={{path('patient_venue')}}>Indiquer votre venue</a>
+					<a class="nav-link active" href={{path('patient_venue')}}>Indiquer votre venue</a>
 				</li>
 			{% endif %}
 			{% if is_granted('ROLE_AMBULANCIER') %}
 			<li class="nav-item">
-				<a class="nav-link " href="{{ path('app_ambulancier_ajoutcompte') }}">Créer compte patient</a>
+				<a class="nav-link active" href="{{ path('app_ambulancier_ajoutcompte') }}">Créer compte patient</a>
 			</li>
 			{% endif %}
 			{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER') or is_granted('ROLE_ADMIN')) %}
 				<li class="nav-item">
-					<a class="nav-link" href={{path('list_lits')}}>Gestion des lits</a>
+					<a class="nav-link active" href={{path('list_lits')}}>Gestion des lits</a>
 				</li>
 			{% endif %}
 			{% if is_granted('ROLE_PATIENT') %}
 				<li class="nav-item">
-					<a class="nav-link " href={{path('patient_validation')}}>Supprimer mon compte</a>
+					<a class="nav-link active" href={{path('patient_validation')}}>Supprimer mon compte</a>
 				</li>
 			{% endif %}
 			{% if is_granted('ROLE_INFIRMIER') %}
 				<li class="nav-item">
-					<a class="nav-link " href={{path('infirmier_verification_code')}}>Valider code</a>
+					<a class="nav-link active" href={{path('infirmier_verification_code')}}>Valider code</a>
 				</li>
 			{% endif %}
 			{% if is_granted('ROLE_ADMIN') %}
 				<li class="nav-item">
-					<a class="nav-link " href={{path('app_admin_checkHoraire')}}>Horaire travaille</a>
+					<a class="nav-link active" href={{path('app_admin_checkHoraire')}}>Horaire travaille</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link " href={{path('app_admin_affichercompte')}}>Liste comptes</a>
+					<a class="nav-link active" href={{path('app_admin_affichercompte')}}>Liste comptes</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link " href={{path('app_admin_ajoutcompte')}}>Ajout compte</a>
+				<li class="nav-item active">
+					<a class="nav-link active" href={{path('app_admin_ajoutcompte')}}>Ajout compte</a>
 				</li>
 			{% endif %}
 			{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER')) %}
 				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('app_bipper_liste') }}">Bipper</a>
+					<a class="nav-link active" href="{{ path('app_bipper_liste') }}">Bipper</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('app_bipper_affiche_notif') }}">Voir ses notifications</a>
+					<a class="nav-link active" href="{{ path('app_bipper_affiche_notif') }}">Voir ses notifications</a>
 				</li>
 				<li class="nav-item active">
-					<a class="nav-link" href="{{ path('app_horaire') }}">Prise de service</a>
+					<a class="nav-link active" href="{{ path('app_horaire') }}">Prise de service</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href={{path('app_calendar')}}>Emploi du temps</a>
+					<a class="nav-link active" href={{path('app_calendar')}}>Emploi du temps</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href={{path('patient_list_patient')}}>Liste patient</a>
+					<a class="nav-link active" href={{path('patient_list_patient')}}>Liste patient</a>
 				</li>
 			{% endif %}
 		</ul>

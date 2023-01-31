@@ -32,7 +32,7 @@
                 <th scope="col">date de fin</th>
                 <th> </th>
             </tr>
-            {% for prescri in infoPatient.Personne.appliquerPrescriptions %}
+            {% for prescri in Presciption %}
                 <tr>
                     <td>{{ prescri.Prescription.Medicament.NomMedicament }}</td>
                     <td>{{ prescri.Prescription.Unite }}</td>
@@ -50,11 +50,13 @@
     <table class="table">
         <tr>
             <th scope="col">Soigant</th>
+            <th scope="col"> Médicament </th>
             <th scope="col">Heure et Date</th>
         </tr>
         {% for dejaprescris in DejaPrescri %}
             <tr>
                 <td>{{ dejaprescris.Soignant.Nom }}</td>
+                <td>{{ dejaprescris.Prescription.Medicament.NomMedicament }}</td>
                 <td>{{ dejaprescris.DateHeureApplication is empty ? "" : dejaprescris.DateHeureApplication|date("H:i d/m/Y")}}</td>
             </tr>
         {% endfor %}
