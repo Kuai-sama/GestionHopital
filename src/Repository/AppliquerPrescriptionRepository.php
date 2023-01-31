@@ -60,6 +60,16 @@ class AppliquerPrescriptionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getPrescirption( $idPatient ): array
+    {
+        return $this->createQueryBuilder('prescription')
+            ->where('prescription.patient = '. "'$idPatient'")
+            ->andWhere('prescription.Soignant is null')
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return AppliquerPrescription[] Returns an array of AppliquerPrescription objects
 //     */

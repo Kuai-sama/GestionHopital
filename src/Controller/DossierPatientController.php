@@ -14,6 +14,7 @@ use App\Form\ServicePatientType;
 use App\Repository\AppliquerPrescriptionRepository;
 use App\Repository\PatientRepository;
 use App\Repository\PersonneRepository;
+use App\Repository\PrescriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -31,7 +32,8 @@ class DossierPatientController extends AbstractController
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
-            'DejaPrescri' => $prescription->prescriptionDejaRealiser($patient->findOneById($idpatient)->getPersonne()->getId())
+            'DejaPrescri' => $prescription->prescriptionDejaRealiser($patient->findOneById($idpatient)->getPersonne()->getId()),
+            'Presciption' => $prescription->getPrescirption($patient->findOneById($idpatient)->getPersonne()->getId())
         ]);
     }
 

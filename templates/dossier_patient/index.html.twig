@@ -9,7 +9,6 @@
     <h4>prenom = {{ infoPatient.Personne.prenom }}</h4>
     <h4>raison = {{ infoPatient.Raison }}</h4>
     <h4>date d'entree = {{ infoPatient.DateHeureEntree|date("H:i d/m/Y") }}</h4>
-    <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><!--<button>definir/modifier la date de sortie</button>-->
     <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><button><a href={{ path('dossier_date_sortie',{"idpatient": infoPatient.id}) }}>definir/modifier la date de sortie</a></button>
     <h4>service actuelle = {{ infoPatient.Service }}</h4><button><a href={{ path('dossier_service',{"idpatient": infoPatient.id}) }}>definir/modifier le service</a></button>
 
@@ -30,11 +29,11 @@
         <table class="table">
             <tr>
                 <th scope="col">medicament</th>
-                <th scope="col">quantiter</th>
+                <th scope="col">quantité</th>
                 <th scope="col">date de fin</th>
                 <th> </th>
             </tr>
-            {% for prescri in infoPatient.Personne.appliquerPrescriptions %}
+            {% for prescri in Presciption %}
                 <tr>
                     <td>{{ prescri.Prescription.Medicament.NomMedicament }}</td>
                     <td>{{ prescri.Prescription.Unite }}</td>
@@ -48,17 +47,21 @@
         {% endif %}
     {% endfor %}
 
+
     <h2> Déjà appliquer </h2>
     <table class="table">
         <tr>
-            <th scope="col">Soigant</th>
+            <th scope="col">Soignant</th>
+            <th scope="col"> Médicament </th>
             <th scope="col">Heure et Date</th>
         </tr>
         {% for dejaprescris in DejaPrescri %}
             <tr>
                 <td>{{ dejaprescris.Soignant.Nom }}</td>
+                <td>{{ dejaprescris.Prescription.Medicament.NomMedicament }}</td>
                 <td>{{ dejaprescris.DateHeureApplication is empty ? "" : dejaprescris.DateHeureApplication|date("H:i d/m/Y")}}</td>
             </tr>
         {% endfor %}
     </table>
+
 {% endblock %}

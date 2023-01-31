@@ -32,41 +32,41 @@
 					<li class="nav-item active">
 						<a class="nav-link" href={{path('patient_menu')}}>Accueil</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href={{path('patient_venue')}}>Indiquer votre venue</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href={{path('patient_prendre_rdv')}}>Prendre un rendez-vous</a>
 					</li>
 				{% endif %}
 				{% if is_granted('ROLE_AMBULANCIER') %}
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link " href="{{ path('app_ambulancier_ajoutcompte') }}">Créer compte patient</a>
 					</li>
 				{% endif %}
 				{% if (is_granted('ROLE_MEDECIN') or is_granted('ROLE_INFIRMIER') or is_granted('ROLE_ADMIN')) %}
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href={{path('list_lits')}}>Gestion des lits</a>
 					</li>
 				{% endif %}
 				{% if is_granted('ROLE_PATIENT') %}
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link " href={{path('patient_validation')}}>Supprimer mon compte</a>
 					</li>
 				{% endif %}
 				{% if is_granted('ROLE_INFIRMIER') %}
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link " href={{path('infirmier_verification_code')}}>Valider code</a>
 					</li>
 				{% endif %}
 				{% if is_granted('ROLE_ADMIN') %}
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link " href={{path('app_admin_checkHoraire')}}>Horaire travaille</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link " href={{path('app_admin_affichercompte')}}>Liste comptes</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link " href={{path('app_admin_ajoutcompte')}}>Ajout compte</a>
 					</li>
 				{% endif %}
@@ -80,10 +80,10 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="{{ path('app_horaire') }}">Prise de service</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href={{path('app_calendar')}}>Emploi du temps</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href={{path('patient_list_patient')}}>Liste patient</a>
 					</li>
 				{% endif %}
