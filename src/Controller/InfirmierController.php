@@ -7,14 +7,15 @@ use App\Entity\Personne;
 use App\Service\CodeReminder;
 use App\Repository\LitRepository;
 use App\Repository\PatientRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\PersonneRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 #[Route('/infirmier', name: 'infirmier_')]
@@ -35,19 +36,17 @@ class InfirmierController extends AbstractController
     }*/
 
     #[Route('/verification_code', name: 'verification_code')]
-    public function verification_code(PatientRepository $patients, LitRepository $lit,PersonneRepository $roles ,ManagerRegistry $doctrine, EntityManagerInterface $em): Response
+    public function verification_code(PatientRepository $patients, LitRepository $lit,PersonneRepository $roles ,ManagerRegistry $doctrine, EntityManagerInterface $em, ServiceRepository $service): Response
     {
         $request = Request::createFromGlobals();
-        $idMed = $request->request->get('medecin');
         $code = $request->request->get('code');
+        $services = $request->request->get('service');
 
-        if($idMed != null || $idMed != "")
+        if($services != null || $services != "")
         {
             $assigner = true;
             $raison = $request->request->get('raison');
-            dump($idMed);
-            dump($raison);
-            dump($code);
+            
         }
         else
         {
@@ -72,20 +71,18 @@ class InfirmierController extends AbstractController
         $salle = $lit->findSalle($IdPersonne);
         if($assigner == false)
         {
-            $medecin = $roles->PersonneMedecin();
-            return $this->render('infirmier/assignemedecin.html.twig',[ 'medecin' => $medecin, 'personne'=> $personne, 'salle' => $salle, 'code'=>$code]);
+            $services = $service->findAll();
+            return $this->render('infirmier/assignemedecin.html.twig',[ 'personne'=> $personne, 'salle' => $salle, 'code'=>$code, 'services'=>$services]);
         }
 
         $litpatient = $lit->findOneBy(['salle'=> $salle])->getId();
+        $idservice = $service->findOneBy(['id' => $services]);
 
         $Patient->setRaison($raison);
-        $medecin = $em->getRepository(Personne::class)->findOneBy(['id' => $idMed]);
-        dump($medecin);
-        $medecin->setPatient($Patient);
         $Patient->setDateHeureEntree(new \DateTime());
         $Patient->setCodeEntre(null);
+        $Patient->setService($idservice);
 
-        $em->persist($medecin);
         $em->persist($Patient);
         $em->flush();
 

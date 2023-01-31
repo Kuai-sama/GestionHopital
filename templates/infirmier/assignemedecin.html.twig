@@ -21,7 +21,7 @@
                 <th class="text-center"> Salle </th>
                 <th class="text-center"> Raison de la visite </th>
                 <th class="text-center"> Code d'entrée </th>
-                <th class="text-center"> Medecin assignable </th>
+                <th class="text-center"> Service </th>
             </tr>
         </thead>
 
@@ -38,16 +38,14 @@
                 <td class="text-center"><input  class="no-outline" type="text" name="code" id="code" Value="{{code}}"/></td>
 
                 <td class="text-center">
-                    <select name="medecin" id="medecin-select">
-                        <option value="">Aucun médecin assigné</option>
-                {% for doc in medecin %}
-                        <option value="{{doc.id}}">Dr {{doc.Nom}} {{doc.Prenom}}</option>
-                {% endfor %}
+                    <select name="service" id="service-select">
+                        {% for service in services %}
+                            <option value="{{service.id}}">{{service.NomService}}</option>
+                        {% endfor %}
                     </select>
-                    
                         <input class="btn btn-success"  value="Assigner" type="submit" formmethod = "POST" formaction="{{path('infirmier_verification_code')}}"></input>
-            
                 </td>
+                
             </form>
         </tr>
     </table>
