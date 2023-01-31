@@ -69,6 +69,7 @@ class PatientController extends AbstractController
         $user = $this->security->getUser();
         $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email' => $user->getUserIdentifier()]);
         $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne' => $idpersonne->getId()]);
+        $code ="";
 
         if($idpatient != "")
         {
