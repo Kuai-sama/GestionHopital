@@ -94,6 +94,8 @@ class AdminController extends AbstractController
         $em->remove($personne);
         $em->flush();
 
+        $this->addFlash("delte", "Le compte a été supprimer");
+
         return $this->redirectToRoute("app_admin_affichercompte");
     }
 
@@ -108,6 +110,8 @@ class AdminController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($personne);
             $em->flush();
+
+            $this->addFlash("info", "Le compte a été modifier");
 
             return $this->redirectToRoute("app_admin_affichercompte");
         }
