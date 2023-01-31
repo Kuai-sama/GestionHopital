@@ -54,10 +54,8 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne]
     private ?Service $Service = null;
 
-    #[ORM\ManyToOne]
-    private ?Diagnostic $Diagnostic = null;
-
-    #[ORM\ManyToMany(targetEntity: Diagnostic::class)]
+    #[ORM\ManyToMany(targetEntity: Diagnostic::class)]//Medecin
+    #[ORM\JoinTable(name: "personne_diagnostiquer")]
     private Collection $Diagnostiquer;
 
     #[ORM\OneToOne(mappedBy: 'Personne', cascade: ['persist', 'remove'])]
@@ -69,10 +67,15 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'idPersonne', targetEntity: Horaire::class)]
     private Collection $horaires;
 
+    #[ORM\ManyToMany(targetEntity: Diagnostic::class, inversedBy: 'Diagno_patient_personne')]//patient
+    #[ORM\JoinTable(name: "personne_diagnostic")]
+    private Collection $Diagnostic;
+
     public function __construct()
     {
         $this->Diagnostiquer = new ArrayCollection();
         $this->appliquerPrescriptions = new ArrayCollection();
+        $this->Diagnostic = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -241,18 +244,6 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDiagnostic(): ?Diagnostic
-    {
-        return $this->Diagnostic;
-    }
-
-    public function setDiagnostic(?Diagnostic $Diagnostic): self
-    {
-        $this->Diagnostic = $Diagnostic;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Diagnostic>
      */
@@ -320,6 +311,30 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
                 $appliquerPrescription->setPatient(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Diagnostic>
+     */
+    public function getDiagnostic(): Collection
+    {
+        return $this->Diagnostic;
+    }
+
+    public function addDiagnostic(Diagnostic $diagnostic): self
+    {
+        if (!$this->Diagnostic->contains($diagnostic)) {
+            $this->Diagnostic->add($diagnostic);
+        }
+
+        return $this;
+    }
+
+    public function removeDiagnostic(Diagnostic $diagnostic): self
+    {
+        $this->Diagnostic->removeElement($diagnostic);
 
         return $this;
     }

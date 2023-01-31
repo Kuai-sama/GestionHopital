@@ -27,6 +27,9 @@ class Patient
     #[ORM\JoinColumn(nullable: false)]
     private ?Personne $Personne = null;
 
+    #[ORM\ManyToOne(inversedBy: 'patients')]
+    private ?Service $Service = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -79,4 +82,17 @@ class Patient
 
         return $this;
     }
+
+    public function getService(): ?Service
+    {
+        return $this->Service;
+    }
+
+    public function setService(?Service $Service): self
+    {
+        $this->Service = $Service;
+
+        return $this;
+    }
+
 }

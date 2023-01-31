@@ -68,12 +68,4 @@ class PatientController extends AbstractController
     {
         return $this->render('patient/validationDelete.html.twig');
     }
-
-    #[Route('/listePatient',name: "list_patient")]
-    public function listePat(PatientRepository $patient): Response
-    {
-        return $this->render('patient/listPat.html.twig', [
-            'patients' => $patient->getPatPer(),
-        ]);
-    }
 }

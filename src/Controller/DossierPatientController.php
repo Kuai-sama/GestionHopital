@@ -8,7 +8,9 @@ use App\Entity\Personne;
 use App\Entity\Prescription;
 use App\Form\AjoutDiagnosticType;
 use App\Form\AjoutPrescriptionType;
+use App\Form\DateDeSortiePatientType;
 use App\Form\PatientType;
+use App\Form\ServicePatientType;
 use App\Repository\AppliquerPrescriptionRepository;
 use App\Repository\PatientRepository;
 use App\Repository\PersonneRepository;
@@ -24,18 +26,16 @@ class DossierPatientController extends AbstractController
     #[Route('/dossier/{idpatient}', name: 'app_dossier_patient')]
     public function index($idpatient, PatientRepository $patient): Response
     {
-        dump($patient->getPatInfo($idpatient));
-
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
         ]);
     }
 
-    /*#[Route('/dossier/{idpatient}', name: 'app_dossier_patient')]
+    #[Route('/dossier/date_de_sortie/{idpatient}', name: 'dossier_date_sortie')]
     public function dateSortieForm($idpatient, PatientRepository $patient,Request $request,EntityManagerInterface $en): Response
     {
         $personne = $patient->findOneById($idpatient);
-        $form = $this->createForm(PatientType::class,$personne);
+        $form = $this->createForm(DateDeSortiePatientType::class,$personne);
         $form->add('send',SubmitType::class,['label'=>'modifier/ajouter une date de sortie pour ce patient']);
         $form->handleRequest($request);
 
@@ -53,7 +53,31 @@ class DossierPatientController extends AbstractController
 
         $reponse = new Response($this->render('dossier_patient/dateSortieForm.html.twig',['form'=>$form->createView()]));
         return $reponse;
-    }*/
+    }
+
+    #[Route('/dossier/service/{idpatient}', name: 'dossier_service')]
+    public function ServiceForm($idpatient, PatientRepository $patient,Request $request,EntityManagerInterface $en): Response
+    {
+        $personne = $patient->findOneById($idpatient);
+        $form = $this->createForm(ServicePatientType::class,$personne);
+        $form->add('send',SubmitType::class,['label'=>'modifier/ajouter le service pour ce patient']);
+        $form->handleRequest($request);
+
+
+
+        if(($form->isSubmitted() && $form->isValid())){
+            //form
+            $en->persist($personne);
+            $en->flush();
+            //message
+            $this->addFlash('info','ajout réussi');
+
+            return $this->redirectToRoute('list_patient');
+        }
+
+        $reponse = new Response($this->render('dossier_patient/ServiceForm.html.twig',['form'=>$form->createView()]));
+        return $reponse;
+    }
 
     #[Route('/ajoutDiagno/{idper}', name: 'app_dossier_patient_ajout_diagno')]
     public function AjoutDiagno(PersonneRepository $per,$idper,Request $request,EntityManagerInterface $en): Response
@@ -63,14 +87,17 @@ class DossierPatientController extends AbstractController
         $form->add('send',SubmitType::class,['label'=>'ajouter un diagnostic a se patient']);
         $form->handleRequest($request);
 
-
         if(($form->isSubmitted() && $form->isValid())){
             //form
 
+            $medecin = $per->find($this->getUser());
+            $medecin->addDiagnostiquer($diagnostic);
+            $en->persist($medecin);
 
-            $personne = $per->findOneById($idper);
-            $personne->addDiagnostiquer($diagnostic);
-            $en->persist($personne);
+            $patient = $per->findOneById($idper);
+            $patient->addDiagnostic($diagnostic);
+            $en->persist($patient);
+
             $en->persist($diagnostic);
             $en->flush();
             //message
@@ -79,7 +106,7 @@ class DossierPatientController extends AbstractController
             //diagnostic diagno
             //$per->AddPersoDiagno($idper,$diagnostic->getId());
 
-            return $this->redirectToRoute('patient_list_patient');
+            return $this->redirectToRoute('list_patient');
         }
 
         $reponse = new Response($this->render('dossier_patient/DiagnoForm.html.twig',['form'=>$form->createView()]));
@@ -110,7 +137,7 @@ class DossierPatientController extends AbstractController
             //prescription diagno
             //$per->AddPersoDiagno($idper,$prescription->getId());
 
-            return $this->redirectToRoute('patient_list_patient');
+            return $this->redirectToRoute('list_patient');
         }
 
         $reponse = new Response($this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]));
