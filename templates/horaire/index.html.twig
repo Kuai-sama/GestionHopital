@@ -5,13 +5,23 @@
 {% block body %}
 
     {% if bool1 == true %}
-        <a href={{ path('Add_debut') }}><button class="btn btn-danger btn-lg btn-block">debut du service</button></a>
-        <a href={{ path('Add_fin') }}><button disabled class="btn btn-danger btn-lg btn-block">fin du service</button></a>
+        <a href={{ path('Add_debut') }}><button class="btn btn-danger btn-lg btn-block" onclick=clickDebutHoraire()>montrer votre disponibilité</button></a>
+        <a href={{ path('Add_fin') }}><button disabled class="btn btn-danger btn-lg btn-block" onclick=clickFinHoraire()>ne plus étre disponible</button></a>
     {% endif %}
     {% if bool1 == false %}
-        <a href={{ path('Add_debut') }}><button disabled class="btn btn-danger btn-lg btn-block">debut du service</button></a>
-        <a href={{ path('Add_fin') }}><button class="btn btn-danger btn-lg btn-block">fin du service</button></a>
+        <a href={{ path('Add_debut') }}><button disabled class="btn btn-danger btn-lg btn-block" onclick=clickDebutHoraire()>montrer votre disponibilité</button></a>
+        <a href={{ path('Add_fin') }}><button class="btn btn-danger btn-lg btn-block" onclick=clickFinHoraire()>ne plus étre disponible</button></a>
     {% endif %}
 
+    <script>
 
+        function clickDebutHoraire(){
+            alert("Vous étes maintenant disponnible")
+        }
+
+        function clickFinHoraire(){
+            alert("Vous étes maintenant indisponnible")
+        }
+
+    </script>
 {% endblock %}
