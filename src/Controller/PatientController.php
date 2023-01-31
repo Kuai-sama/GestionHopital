@@ -70,7 +70,47 @@ class PatientController extends AbstractController
         $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email' => $user->getUserIdentifier()]);
         $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne' => $idpersonne->getId()]);
 
-        if ($idpatient == "") {
+        if($idpatient != "")
+        {
+            
+            $test_present = $lit->findOneBy(['IdPersonne' => $idpersonne]);
+            $code = $idpatient->getCodeEntre();
+        }
+
+        if($test_present != "")
+        {
+            return $this->render('patient/venue.html.twig', ['salle' => "present", 'code' => null]);
+        }
+
+        if($code != "")
+        {
+            $sallerecup = $lit->findOneBy(['IdPersonne' => $idpersonne->getId()]);
+            $salle = $lit->findSalleAssos($sallerecup->getId());
+            return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $code]);
+        }
+
+        if( $idpatient != "" && $code == "")
+        {
+            $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
+            if (!$disponible) {
+                return $this->render('patient/venue.html.twig', ['salle' => null, 'code' => ""]);
+            }
+            $sallerecup = $lit->findOneBy(['id' => $disponible->getId()]);
+            $salle = $lit->findSalleAssos($sallerecup->getId());
+
+            $disponible->setLitOccupe(true);
+            $em->persist($disponible);
+
+            $code = uniqid(10);
+            $idpatient->setCodeEntre($code);
+            $idpatient->setPersonne($idpersonne);
+            $idpersonne->setLit($disponible);
+            $em->persist($idpatient);
+            $em->persist($idpersonne);
+            $em->flush();
+            return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $code]);
+        }
+        else  {
             $idpatient = new Patient();
             // verification de lit disponible
             $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
@@ -91,10 +131,6 @@ class PatientController extends AbstractController
             $em->persist($idpersonne);
             $em->flush();
             return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $idpatient->getCodeEntre()]);
-        } else {
-            $sallerecup = $lit->findOneBy(['IdPersonne' => $idpersonne->getId()]);
-            $salle = $lit->findSalleAssos($sallerecup->getId());
-            return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $idpatient->getCodeEntre()]); // recup la salle TODO
         }
     }
 

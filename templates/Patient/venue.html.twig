@@ -5,6 +5,9 @@
 
     {% block body %}
         
+        {% if salle == "present" %}
+            <h1> Vous êtes déjà dans l'hôpital </h1> 
+        {% else %}
             {% if code != "" %}
             <!--
                 {% if salle != null %}
@@ -20,6 +23,7 @@
             {% else %}
                 <h1> Aucun lit n'est disponible, voici les hopitaux les plus proches : </h1>
             {% endif %}
+        {% endif %}
     {% endblock %}
 
 
