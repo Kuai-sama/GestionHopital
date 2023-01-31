@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\Lit;
 use App\Entity\Patient;
 use App\Entity\Personne;
-use App\Entity\Salle;
+use App\Entity\RDV;
+use App\Form\PrendreRDV;
 use App\Repository\LitRepository;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,7 +54,6 @@ class PatientController extends AbstractController
     public function __construct(Security $security)
     {
         $this->security = $security;
-
     }
 
 
@@ -67,19 +67,17 @@ class PatientController extends AbstractController
     public function VenueAction(EntityManagerInterface $em, LitRepository $lit): Response
     {
         $user = $this->security->getUser();
-        $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email'=>$user->getUserIdentifier()]);
-        $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne'=>$idpersonne->getId()]);
+        $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email' => $user->getUserIdentifier()]);
+        $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne' => $idpersonne->getId()]);
 
-        if($idpatient == "")
-        {
+        if ($idpatient == "") {
             $idpatient = new Patient();
             // verification de lit disponible
             $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
-            if(!$disponible)
-            {
-                return $this->render('patient/venue.html.twig',['salle'=>null,'code'=>""]);
+            if (!$disponible) {
+                return $this->render('patient/venue.html.twig', ['salle' => null, 'code' => ""]);
             }
-            $sallerecup = $lit->findOneBy(['id'=>$disponible->getId()]);
+            $sallerecup = $lit->findOneBy(['id' => $disponible->getId()]);
             $salle = $lit->findSalleAssos($sallerecup->getId());
 
             $disponible->setLitOccupe(true);
@@ -92,28 +90,93 @@ class PatientController extends AbstractController
             $em->persist($idpatient);
             $em->persist($idpersonne);
             $em->flush();
-            return $this->render('patient/venue.html.twig',['salle'=>$salle, 'code' =>$idpatient->getCodeEntre()]);
-        }
-        else
-        {
-            $sallerecup = $lit->findOneBy(['IdPersonne'=>$idpersonne->getId()]);
+            return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $idpatient->getCodeEntre()]);
+        } else {
+            $sallerecup = $lit->findOneBy(['IdPersonne' => $idpersonne->getId()]);
             $salle = $lit->findSalleAssos($sallerecup->getId());
-            return $this->render('patient/venue.html.twig',['salle'=>$salle, 'code' =>$idpatient->getCodeEntre()]); // recup la salle TODO
+            return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $idpatient->getCodeEntre()]); // recup la salle TODO
         }
     }
 
-    
+
     #[Route('/validation', name: 'validation')]
     public function validation(): Response
     {
         return $this->render('patient/validationDelete.html.twig');
     }
 
-    #[Route('/listePatient',name: "list_patient")]
+    #[Route('/listePatient', name: "list_patient")]
     public function listePat(PatientRepository $patient): Response
     {
         return $this->render('patient/listPat.html.twig', [
             'patients' => $patient->getPatPer(),
+        ]);
+    }
+
+    #[Route('/prendreRDV', name: 'prendre_rdv')]
+    public function prendreRDV(EntityManagerInterface $em, Request $request): Response
+    {
+        // form pour prendre un rdv
+        $form = $this->createForm(PrendreRDV::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //Ajout dans la base de donnée
+            $this->addFlash('info', 'Ajout réussi !');
+
+
+            // On Créer un objet RDV
+            $obj_rdv = new RDV();
+            // On hydrate l'objet RDV
+            $obj_rdv->setDateHeure($form->get('date_heure')->getData());
+            $obj_rdv->setDescription($form->get('description')->getData());
+            $obj_rdv->setPersonne1($this->getUser());
+
+            // On récupère la liste des médecins
+            $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
+
+            // On récupère la liste des rendez-vous
+            $rdvs = $em->getRepository(RDV::class)->findALL();
+
+
+            // On exclus les médecins qui ont déjà un rendez-vous à la date demandée + la durée
+            foreach ($rdvs as $rdv) {
+                // Si la date demandé est comprise entre la date de début et la date de fin du rendez-vous (date de fin = date de début + durée)
+                // On construit la date de fin du rendez-vous
+                $date_fin = $rdv->getDateHeure()->add(new \DateInterval('PT' . $rdv->getPersonne2()->getDuree() . 'M'));
+
+                dd($date_fin);
+                
+                
+                // if ($obj_rdv->getDateHeure() >= $rdv->getDateHeure() && $obj_rdv->getDateHeure() <= ) {
+                //     // On supprime le médecin de la liste
+                //     unset($medecins[array_search($rdv->getPersonne2(), $medecins)]);
+                // }
+                
+            }
+
+
+            if (empty($medecins)) {
+                $this->addFlash('info', 'Aucun médecin disponible à cette date');
+                return $this->redirectToRoute('patient_rdv');
+            }
+
+            // On hydrate l'objet RDV avec le premier médecin de la liste
+            $rdv->setPersonne2($medecins[0]);
+
+            // On enregistre l'objet RDV en base de donnée
+            $em->persist($rdv);
+
+            // On enregistre les modifications en base de donnée
+            $em->flush();
+
+            // On redirige vers la page de confirmation
+            $this->addFlash('info', 'Votre rendez-vous a bien été pris');
+            return $this->redirectToRoute('patient_menu');
+        }
+
+        return $this->render('patient/rdv.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

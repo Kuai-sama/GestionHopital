@@ -17,10 +17,10 @@ class RDV
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $DateHeure = null;
 
-    #[ORM\Column(type: Types::INTEGER)]  # minutes
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]  # minutes
     private ?int $Duree = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 100, nullable: true)]
     private ?string $Titre = null;
 
     #[ORM\Column(length: 255)]

@@ -348,4 +348,5 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }
