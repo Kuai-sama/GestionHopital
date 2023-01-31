@@ -61,7 +61,7 @@ class InfirmierController extends AbstractController
 
         $Patient = $patients->findOneBy(['code_entre' => $code]);
 
-        if($patients == null) // case de code invalide
+        if($Patient == null) // case de code invalide
         {
             return $this->render('infirmier/verifcode.html.twig', ['salle' => "introuvable"]);
         }
