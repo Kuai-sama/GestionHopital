@@ -81,6 +81,10 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
         $this->Diagnostic = new ArrayCollection();
     }
 
+    public function __toString(): string {
+        return $this->getNom() . $this->getPrenom();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

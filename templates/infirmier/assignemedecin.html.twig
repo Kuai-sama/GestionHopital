@@ -2,6 +2,8 @@
 
 {% block title %}Consultation d'un contact{% endblock %}
 {% block body %}
+    <link rel="stylesheet" href="/CSS/autoresizetextarea.css">
+    <script src="/JS/resizearea.min.js"></script>
         <style>
 
             .no-outline {
@@ -12,7 +14,12 @@
                 background-color: #f9f9f9;
             }
         </style>
-
+        <script>
+            function textAreaAdjust(element) {
+                element.style.height = "1px";
+                element.style.height = (25+element.scrollHeight)+"px";
+            }
+        </script>
 
     <table style="horizontal-align: middle;" class="table table-striped">
         <thead class="thead-dark">
@@ -33,7 +40,8 @@
                 <td class="text-center"> {{locsalle.NomSalle}} </td>
             {% endfor %}
 
-                <td class="text-center"><input  type="text"  name="raison" id="raison" placeholder="Ajouter la raison de la visite"/></td>
+                
+                <td><textarea onkeyup="textAreaAdjust(this)" style="overflow:hidden" class="form-control textarea-autosize" id="raison" rows="3" placeholder="Ajouter la raison de la visite"></textarea></td>
 
                 <td class="text-center"><input  class="no-outline" type="text" name="code" id="code" Value="{{code}}"/></td>
 
