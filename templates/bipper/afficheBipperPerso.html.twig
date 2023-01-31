@@ -20,7 +20,7 @@ width: 100%;">
                 <td> {{notif.NomSalle}} </td>
                 <td> {{notif.EmplacementSalle}}</td>
                 <td>
-                    <a href="{{path('app_bipper_fini_notif',{'id': notif.id})}}"><input type='button' class="btn btn-success" value="Fini"/></a>
+                    <a href="{{path('app_bipper_delete_notif',{'id': notif.id})}}"><input type='button' class="btn btn-success" value="Fini"/></a>
                 </td>
             </tr>
         {% endfor %}

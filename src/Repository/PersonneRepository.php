@@ -98,11 +98,31 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
     {
         return $this->createQueryBuilder('pharmacien')
             ->andWhere('pharmacien.roles like :val')
-            ->setParameter('val', '%ROLE_Pharmacien%')
+            ->setParameter('val', '%ROLE_PHARMACIEN%')
             ->getQuery()
             ->getResult()
             ;
     }
+
+    public function PersonneAmbulancier() : array
+    {
+        return $this->createQueryBuilder('ambulancier')
+            ->andWhere('ambulancier.roles like :val')
+            ->setParameter('val', '%ROLE_AMBULANCIER%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function MailCompte(string $mail): array
+    {
+        return $this->createQueryBuilder('compte')
+            ->where('compte.Email LIKE :Email')
+            ->setParameter('Email', $mail)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 //    /**
 //     * @return Personne[] Returns an array of Personne objects
