@@ -42,7 +42,8 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         }
     }
 
-    public function getPersonneByIdHoraire(int $idPersonne){
+    public function getPersonneByIdHoraire(int $idPersonne)
+    {
         $qb = $this->createQueryBuilder('p')
             ->where('p.id', $idPersonne);
 
@@ -50,11 +51,12 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         return $qb->getQuery()->getResult();
     }
 
-    public function AddPersoDiagno(int $idPersonne, int $idDiagno){
+    public function AddPersoDiagno(int $idPersonne, int $idDiagno)
+    {
         $qb = $this->createQueryBuilder('p')
-            ->leftJoin('p.Diagnostiquer','perDia')
-        ->add('perDia.personne_id',$idPersonne)
-            ->add('perDia.diagnostic_id',$idDiagno);
+            ->leftJoin('p.Diagnostiquer', 'perDia')
+            ->add('perDia.personne_id', $idPersonne)
+            ->add('perDia.diagnostic_id', $idDiagno);
 
 
         return $qb->getQuery()->getResult();
@@ -74,34 +76,44 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
         $this->save($user, true);
     }
 
-    public function PersonneMedecin() : array
+    public function PersonneMedecin(): array
     {
         return $this->createQueryBuilder('medecin')
             ->andWhere('medecin.roles like :val')
             ->setParameter('val', '%ROLE_MEDECIN%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
-    public function PersonneInfirmier() : array
+    public function PersonneInfirmier(): array
     {
         return $this->createQueryBuilder('infirmier')
             ->andWhere('infirmier.roles like :val')
             ->setParameter('val', '%ROLE_INFIRMIER%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
-    public function PersonnePharmacien() : array
+    public function PersonnePharmacien(): array
     {
         return $this->createQueryBuilder('pharmacien')
             ->andWhere('pharmacien.roles like :val')
             ->setParameter('val', '%ROLE_PHARMACIEN%')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
+    }
+
+    public function findAllUser(?string $roles)
+    {
+        if (!$roles) {
+            $query = $this->createQueryBuilder('u');
+            return $query->getQuery()->getResult();
+        } else {
+            $query = $this->createQueryBuilder('u')
+                ->where('u.roles LIKE :val')
+                ->setParameter('val', $roles);
+            return $query->getQuery()->getResult();
+        }
     }
 
     public function PersonneAmbulancier() : array
@@ -124,28 +136,28 @@ class PersonneRepository extends ServiceEntityRepository implements PasswordUpgr
     }
 
 
-//    /**
-//     * @return Personne[] Returns an array of Personne objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Personne[] Returns an array of Personne objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('p.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Personne
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Personne
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }
