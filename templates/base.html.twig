@@ -89,6 +89,9 @@
 					<li class="nav-item active">
 						<a class="nav-link" href={{path('listeRDV')}}>Ajouter une durée aux rendez-vous</a>
 					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href={{path('listeRDV')}}>Ajouter une durée au RDV</a>
+					</li>
 				{% endif %}
 			</ul>
 
@@ -106,7 +109,19 @@
 	<body>
 		{% block body %}{% endblock %}
 		<br/><br/>
-		{% block contenue %}{% endblock %}
+		{% block contenue %}
+			{% for message in app.flashes('info') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+			{% for message in app.flashes('delete') %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+		{% endblock %}
 
 	</body>
 </html>

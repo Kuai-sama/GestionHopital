@@ -69,30 +69,26 @@ class PatientController extends AbstractController
         $user = $this->security->getUser();
         $idpersonne = $em->getRepository(Personne::class)->findOneBy(['Email' => $user->getUserIdentifier()]);
         $idpatient = $em->getRepository(Patient::class)->findOneBy(['Personne' => $idpersonne->getId()]);
-        $code ="";
+        $code = "";
 
-        if($idpatient != "")
-        {
-            
+        if ($idpatient != "") {
+
             $test_present = $lit->findOneBy(['IdPersonne' => $idpersonne]);
             $code = $idpatient->getCodeEntre();
-            if($test_present != "")
-            {
+            if ($test_present != "") {
                 return $this->render('patient/venue.html.twig', ['salle' => "present", 'code' => null]);
             }
         }
 
-        
 
-        if($code != "")
-        {
+
+        if ($code != "") {
             $sallerecup = $lit->findOneBy(['IdPersonne' => $idpersonne->getId()]);
             $salle = $lit->findSalleAssos($sallerecup->getId());
             return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $code]);
         }
 
-        if( $idpatient != "" && $code == "")
-        {
+        if ($idpatient != "" && $code == "") {
             $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
             if (!$disponible) {
                 return $this->render('patient/venue.html.twig', ['salle' => null, 'code' => ""]);
@@ -111,8 +107,7 @@ class PatientController extends AbstractController
             $em->persist($idpersonne);
             $em->flush();
             return $this->render('patient/venue.html.twig', ['salle' => $salle, 'code' => $code]);
-        }
-        else  {
+        } else {
             $idpatient = new Patient();
             // verification de lit disponible
             $disponible = $em->getRepository(Lit::class)->findOneBy(['LitOccupe' => false]);
@@ -159,10 +154,6 @@ class PatientController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //Ajout dans la base de donnée
-            $this->addFlash('info', 'Ajout réussi !');
-
-
             // On Créer un objet RDV
             $obj_rdv = new RDV();
             // On hydrate l'objet RDV
@@ -174,8 +165,9 @@ class PatientController extends AbstractController
             // On récupère la liste des médecins
             $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
 
-            // On récupère la liste des rendez-vous
-            $rdvs = $em->getRepository(RDV::class)->findALL();
+            $date_debut_rdv = $obj_rdv->getDateHeure()->format('Y-m-d H:i:s');
+            // On récupère la liste des rendez-vous valide pour le jour demandé
+            $rdvs = $em->getRepository(RDV::class)->findValiderRDVByDate($date_debut_rdv);
 
             // On exclus les médecins qui ont déjà un rendez-vous à la date demandée
             foreach ($rdvs as $rdv) {
@@ -200,7 +192,7 @@ class PatientController extends AbstractController
 
             if (empty($medecins)) {
                 $this->addFlash('info', 'Aucun médecin disponible à cette date');
-                return $this->redirectToRoute('patient_rdv');
+                return $this->redirectToRoute('patient_prendre_rdv');
             }
 
             // On hydrate l'objet RDV avec le premier médecin de la liste
