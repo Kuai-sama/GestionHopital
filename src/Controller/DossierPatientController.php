@@ -57,8 +57,7 @@ class DossierPatientController extends AbstractController
             return $this->redirectToRoute('list_patient');
         }
 
-        $reponse = new Response($this->render('dossier_patient/dateSortieForm.html.twig',['form'=>$form->createView()]));
-        return $reponse;
+        return $this->render('dossier_patient/dateSortieForm.html.twig',['form'=>$form->createView()]);
     }
 
     #[Route('/dossier/service/{idpatient}', name: 'dossier_service')]
@@ -81,8 +80,7 @@ class DossierPatientController extends AbstractController
             return $this->redirectToRoute('list_patient');
         }
 
-        $reponse = new Response($this->render('dossier_patient/ServiceForm.html.twig',['form'=>$form->createView()]));
-        return $reponse;
+        return $this->render('dossier_patient/ServiceForm.html.twig',['form'=>$form->createView()]);
     }
 
     #[Route('/ajoutDiagno/{idper}', name: 'app_dossier_patient_ajout_diagno')]
@@ -115,8 +113,7 @@ class DossierPatientController extends AbstractController
             return $this->redirectToRoute('list_patient');
         }
 
-        $reponse = new Response($this->render('dossier_patient/DiagnoForm.html.twig',['form'=>$form->createView()]));
-        return $reponse;
+        return $this->render('dossier_patient/DiagnoForm.html.twig',['form'=>$form->createView()]);
     }
 
     #[Route('/ajoutPrescri/{idper}', name: 'app_dossier_patient_ajout_prescri')]
@@ -146,8 +143,7 @@ class DossierPatientController extends AbstractController
             return $this->redirectToRoute('list_patient');
         }
 
-        $reponse = new Response($this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]));
-        return $reponse;
+        return $this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]);
     }
 
     #[Route('/appliquer/{idprescription}/{idpatient}', name: 'patient_appliquer')]
@@ -199,7 +195,6 @@ class DossierPatientController extends AbstractController
             return $this->redirectToRoute('list_patient');
         }
 
-        $reponse = new Response($this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]));
-        return $reponse;
+        return $this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]);
     }
 }

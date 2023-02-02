@@ -46,7 +46,6 @@ class InfirmierController extends AbstractController
         {
             $assigner = true;
             $raison = $request->request->get('raison');
-            
         }
         else
         {
@@ -88,10 +87,4 @@ class InfirmierController extends AbstractController
 
         return $this->render('infirmier/verifcode.html.twig', ['salle' => $salle, 'patient'=>$personne]);
     }
-
-
-
-
-
-
 }
