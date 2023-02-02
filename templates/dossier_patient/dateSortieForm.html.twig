@@ -3,11 +3,18 @@
 {% block title %}Hello DossierPatientController!{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-{{ form_errors(form) }}
+    <body>
+        <link rel="stylesheet" href="/CSS/formDossierPatient.css">
+        <div class="form">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
 
-{{ form_row(form.DateHeureSortie) }}
+            {{ form_label(form.DateHeureSortie) }}
+            {{ form_widget(form.DateHeureSortie) }}
+            <br>
 
-{{ form_rest(form) }}
-{{ form_end(form) }}
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+        </div>
+    </body>
 {% endblock %}

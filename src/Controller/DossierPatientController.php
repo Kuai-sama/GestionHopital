@@ -28,7 +28,7 @@ class DossierPatientController extends AbstractController
     public function index($idpatient, PatientRepository $patient, AppliquerPrescriptionRepository $prescription): Response
     {
         //dump($patient->getPatInfo($idpatient));
-        dump($patient->findOneById($idpatient)->getPersonne()->getId());
+        //dump($patient->getDiagnostic($idpatient));
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
@@ -88,7 +88,7 @@ class DossierPatientController extends AbstractController
     {
         $diagnostic = new Diagnostic();
         $form = $this->createForm(AjoutDiagnosticType::class,$diagnostic);
-        $form->add('send',SubmitType::class,['label'=>'ajouter un diagnostic a se patient']);
+        $form->add('send',SubmitType::class,['label'=>'Ajouter']);
         $form->handleRequest($request);
 
         if(($form->isSubmitted() && $form->isValid())){
