@@ -8,8 +8,8 @@
 /var/
 /vendor/
 /.idea
-/database
-/migrations
+/database/
+/migrations/
 
 ###< symfony/framework-bundle ###
 
