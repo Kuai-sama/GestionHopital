@@ -106,7 +106,19 @@
 	<body>
 		{% block body %}{% endblock %}
 		<br/><br/>
-		{% block contenue %}{% endblock %}
+		{% block contenue %}
+			{% for message in app.flashes('error') %}
+				<div class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
+
+			{% for message in app.flashes('success') %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endblock %}
 
 	</body>
 </html>
