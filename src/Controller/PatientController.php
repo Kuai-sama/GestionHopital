@@ -191,7 +191,7 @@ class PatientController extends AbstractController
 
 
             if (empty($medecins)) {
-                $this->addFlash('info', 'Aucun médecin disponible à cette date');
+                $this->addFlash('error', 'Aucun médecin disponible à cette date');
                 return $this->redirectToRoute('patient_prendre_rdv');
             }
 
@@ -205,7 +205,7 @@ class PatientController extends AbstractController
             $em->flush();
 
             // On redirige vers la page de confirmation
-            $this->addFlash('info', 'Votre rendez-vous a bien été pris');
+            $this->addFlash('success', 'Votre rendez-vous a bien été pris');
             return $this->redirectToRoute('patient_menu');
         }
 
