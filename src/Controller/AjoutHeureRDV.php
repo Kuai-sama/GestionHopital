@@ -57,7 +57,6 @@ class AjoutHeureRDV extends AbstractController
         $rdv->setDuree($data['duree']);
         $rdv->setSalle($salle);
         $rdv->setValider(true);
-        $rdv->setAccompli(false);
 
         // On enregistre les modifications
         $em->persist($rdv);

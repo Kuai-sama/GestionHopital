@@ -161,6 +161,7 @@ class PatientController extends AbstractController
             $obj_rdv->setDescription($form->get('description')->getData());
             $obj_rdv->setPersonne1($this->getUser());
             $obj_rdv->setValider(false);
+            $obj_rdv->setAccompli(false);
 
             // On récupère la liste des médecins
             $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
