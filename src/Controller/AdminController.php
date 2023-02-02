@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Personne;
 use App\Form\CreerCompteAdminType;
+use App\Form\ModifierCompteType;
 use App\Repository\HoraireRepository;
 use App\Repository\PersonneRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,6 +94,29 @@ class AdminController extends AbstractController
         $em->remove($personne);
         $em->flush();
 
+        $this->addFlash("delte", "Le compte a été supprimer");
+
         return $this->redirectToRoute("app_admin_affichercompte");
+    }
+
+    #[Route('/admin/modifier/{id}', name: 'app_admin_modifier_compte')]
+    public function modifiercompte(int $id,Request $request, EntityManagerInterface $em, PersonneRepository $personnes){
+
+        $personne = $personnes->findOneById($id);
+        $form = $this->createForm(ModifierCompteType::class,$personne);
+        $form->add("envoyer",SubmitType::class,['label'=>'modifier un compte']);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($personne);
+            $em->flush();
+
+            $this->addFlash("info", "Le compte a été modifier");
+
+            return $this->redirectToRoute("app_admin_affichercompte");
+        }
+
+        return $this->render('admin/modifierCompte.html.twig', ['form' => $form->createView()]);
+
     }
 }

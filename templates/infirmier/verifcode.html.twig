@@ -5,7 +5,7 @@
 
 {% block body %}
     <form>
-        <input class="btn btn-success" type="text" placeholder="Code" id="code" name="code"></input>
+        <input class="btn btn-success" type="textarea" placeholder="Code" id="code" name="code"></input>
         <input class="btn btn-success" type="submit" value="Verifier" formmethod = "POST" formaction="{{path('infirmier_verification_code')}}"></input>
     </form>
     <br><br>

@@ -35,6 +35,7 @@ class CreerCompteAdminType extends AbstractType
                     ],
                 ],
             ])
+            ->add('Service')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les champs de mot de passe doivent correspondre.',

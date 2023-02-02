@@ -1,6 +1,18 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('delete') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+
     <h1>Medecin</h1>
     <table class="table table-striped" style="table-layout: auto;
 width: 100%;">
@@ -10,6 +22,7 @@ width: 100%;">
             <th scope="col"> Prenom </th>
             <th scope="col"> Email </th>
             <th scope="col">  </th>
+            <th scope="col">  </th>
         </tr>
         </thead>
         {% for medecin in medecins %}
@@ -17,6 +30,9 @@ width: 100%;">
                 <td> {{medecin.Nom}} </td>
                 <td> {{medecin.Prenom}} </td>
                 <td> {{medecin.EMail}} </td>
+                <td>
+                    <a href="{{path('app_admin_modifier_compte',{'id': medecin.id})}}"><input type='button' class="btn btn-warning" value="Modifier"/></a>
+                </td>
                 <td>
                     <a href="{{path('app_admin_valide_delete_compte',{'id': medecin.id})}}"><input type='button' class="btn btn-danger" value="Supprimer"/></a>
                 </td>
@@ -32,6 +48,7 @@ width: 100%;">
             <th scope="col"> Prenom </th>
             <th scope="col"> EMail </th>
             <th scope="col">  </th>
+            <th scope="col">  </th>
         </tr>
         </thead>
         {% for infirmier in infirmiers %}
@@ -39,6 +56,9 @@ width: 100%;">
                 <td> {{infirmier.Nom}} </td>
                 <td> {{infirmier.Prenom}} </td>
                 <td> {{infirmier.Email}} </td>
+                <td>
+                    <a href="{{path('app_admin_modifier_compte',{'id': infirmier.id})}}"><input type='button' class="btn btn-warning" value="Modifier"/></a>
+                </td>
                 <td>
                     <a href="{{path('app_admin_valide_delete_compte',{'id': infirmier.id})}}"><input type='button' class="btn btn-danger" value="Supprimer"/></a>
                 </td>
@@ -54,6 +74,7 @@ width: 100%;">
             <th scope="col"> Prenom </th>
             <th scope="col"> EMail </th>
             <th scope="col">  </th>
+            <th scope="col">  </th>
         </tr>
         </thead>
         {% for pharmacien in pharmaciens %}
@@ -61,6 +82,9 @@ width: 100%;">
                 <td> {{pharmacien.Nom}} </td>
                 <td> {{pharmacien.Prenom}} </td>
                 <td> {{pharmacien.Email}} </td>
+                <td>
+                    <a href="{{path('app_admin_modifier_compte',{'id': pharmacien.id})}}"><input type='button' class="btn btn-warning" value="Modifier"/></a>
+                </td>
                 <td>
                     <a href="{{path('app_admin_valide_delete_compte',{'id': pharmacien.id})}}"><input type='button' class="btn btn-danger" value="Supprimer"/></a>
                 </td>
@@ -76,6 +100,7 @@ width: 100%;">
             <th scope="col"> Prenom </th>
             <th scope="col"> EMail </th>
             <th scope="col">  </th>
+            <th scope="col">  </th>
         </tr>
         </thead>
         {% for ambulancier in ambulanciers %}
@@ -83,6 +108,9 @@ width: 100%;">
                 <td> {{ambulancier.Nom}} </td>
                 <td> {{ambulancier.Prenom}} </td>
                 <td> {{ambulancier.Email}} </td>
+                <td>
+                    <a href="{{path('app_admin_modifier_compte',{'id': ambulancier.id})}}"><input type='button' class="btn btn-warning" value="Modifier"/></a>
+                </td>
                 <td>
                     <a href="{{path('app_admin_valide_delete_compte',{'id': ambulancier.id})}}"><input type='button' class="btn btn-danger" value="Supprimer"/></a>
                 </td>

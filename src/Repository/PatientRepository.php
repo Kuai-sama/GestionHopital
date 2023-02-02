@@ -50,10 +50,12 @@ class PatientRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getPatPer(){
+    public function getPatPer($idUS){
         $qb = $this->createQueryBuilder('pat')
             ->leftJoin("pat.Personne","per")
-            ->select("pat","per");
+            ->leftJoin("pat.Service","ser")
+            ->select("pat","per")
+            ->where('ser.id ='."'$idUS'");
 
 
         return $qb->getQuery()->getResult();
@@ -66,7 +68,7 @@ class PatientRepository extends ServiceEntityRepository
             ->leftJoin("per.appliquerPrescriptions","apppres")
             ->leftJoin("apppres.Prescription","pres")
             ->select("pat","per")
-        ->where('pat.id ='."'$idp'");
+            ->where('pat.id ='."'$idp'");
 
 
         return $qb->getQuery()->getResult();

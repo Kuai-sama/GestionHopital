@@ -2,25 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Diagnostic;
+use App\Entity\Patient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class AjoutDiagnosticType extends AbstractType
+class DateDeSortiePatientType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Diagnostic')
+            ->add('DateHeureSortie')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Diagnostic::class,
-
+            'data_class' => Patient::class,
         ]);
     }
 }
