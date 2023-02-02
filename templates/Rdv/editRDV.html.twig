@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modifier des rendez-vous
+{% endblock %}
+{% block body %}
+	<h1>Appliquer des heures à des rendez-vous</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Patient</th>
+				<th>Horodatage</th>
+				<th>Motif</th>
+				<th>Titre</th>
+				<th>Salle</th>
+				<th>Durée</th>
+				<th>Valider</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			{% for event in events %}
+				<tr>
+					<td>{{ event.personne1.nom ~ " " ~ event.personne1.prenom}}</td>
+					<td>{{ event.dateheure|date('d/m/Y H:i') }}</td>
+					<td>{{ event.description }}</td>
+					<form action="{{ path('ajoutHeureRDV') }}" method="post">
+						<td><input type="text" name="titre" value="{{ event.titre }}"></td>
+						<td><input type="text" name="salle" value="{{ event.salle }}"></td>
+						<td><input type="number" name="duree" min="15" max="55" value="{{ event.duree }}"></td>
+						<input type="hidden" name="id" value="{{ event.id }}">
+						<td><input type="checkbox" name="event[]" onclick="this.form.submit();"></td>
+					</form>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
