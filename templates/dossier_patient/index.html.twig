@@ -3,24 +3,63 @@
 {% block title %}Hello DossierPatientController!{% endblock %}
 
 {% block body %}
+
+    <style>
+        th{
+            text-align: center;
+            background:  #4da6ff;
+            color:white;
+            font-size: 18px;
+        }
+        td{
+            text-align: center;
+        }
+		a{
+			list-style-type: none;  
+			display: inline;
+		}
+		button{
+			border: 2px solid #0066cc;
+			border-radius: 12px;
+		}
+		button:hover{
+			background:#1a8cff;
+			color:white;
+		}
+    </style>
+
     {% for infoPatient in InfoPatient %}
 <h1>Dossier Patient</h1>
-    <h4>nom = {{ infoPatient.Personne.nom }}</h4>
-    <h4>prenom = {{ infoPatient.Personne.prenom }}</h4>
-    <h4>raison = {{ infoPatient.Raison }}</h4>
-    <h4>date d'entree = {{ infoPatient.DateHeureEntree|date("H:i d/m/Y") }}</h4>
-    <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><!--<button>definir/modifier la date de sortie</button>-->
-    <h4>date de sortie = {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }}</h4><button><a href={{ path('dossier_date_sortie',{"idpatient": infoPatient.id}) }}>definir/modifier la date de sortie</a></button>
-    <h4>service actuelle = {{ infoPatient.Service }}</h4><button><a href={{ path('dossier_service',{"idpatient": infoPatient.id}) }}>definir/modifier le service</a></button>
+    <table class="table">
+        <tr>
+            <th> Nom </th>
+            <th> Prenom </th>
+            <th> Raison </th>
+            <th> Date d'entrée </th>
+            <th> Date de sortie </th>
+            <th> Service actuelle </th>
+
+        </tr>
+        <tr>
+            <td> {{ infoPatient.Personne.nom }} </td>
+            <td> {{ infoPatient.Personne.prenom }} </td>
+            <td> {{ infoPatient.Raison }} </td>
+            <td> {{ infoPatient.DateHeureEntree|date("H:i d/m/Y") }} </td>
+            <td> {{ infoPatient.DateHeureSortie is empty ? "" : infoPatient.DateHeureSortie|date("H:i d/m/Y") }} <br> <a href={{ path('dossier_date_sortie',{"idpatient": infoPatient.id}) }}><button>definir/modifier la date de sortie </button></a> </td>
+            <td> {{ infoPatient.Service }} <br> <a href={{ path('dossier_service',{"idpatient": infoPatient.id}) }}><button>definir/modifier le service</button></a> </td>
+        </tr>
+    </table>
 
         <h2>Diagnostic</h2>
         <table class="table">
             <tr>
                 <th scope="col">Diagnostic</th>
+                <th>Medecin ayant réalisé le diagnostic</th>
             </tr>
             {% for diagno in infoPatient.Personne.Diagnostic %}
                 <tr>
                     <td>{{ diagno.Diagnostic }}</td>
+                    <td></td>
                 </tr>
             {% endfor %}
         </table>
