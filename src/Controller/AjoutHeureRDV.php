@@ -38,14 +38,14 @@ class AjoutHeureRDV extends AbstractController
 
         // On vérifie que la salle existe
         if ($em->getRepository(Salle::class)->getByEmplacementSalle($data['salle']) == null) {
-            $this->addFlash('alert', 'La salle n\'existe pas');
-
+            $this->addFlash('error', 'La salle n\'existe pas');
+            //dd($data['salle']);
             return $this->redirectToRoute('listeRDV');
         }
-        
+
         // On vérifie que la durée est bien un nombre et est comprise entre 15 et 55
         if (!is_numeric($data['duree']) || $data['duree'] < 15 || $data['duree'] > 55) {
-            $this->addFlash('alert', 'La durée doit être un nombre compris entre 15 et 55');
+            $this->addFlash('error', 'La durée doit être un nombre compris entre 15 et 55');
             return $this->redirectToRoute('listeRDV');
         }
         // On récupère le rendez-vous et la salle
@@ -64,7 +64,7 @@ class AjoutHeureRDV extends AbstractController
         // On envoie les modifications à la base de données
         $em->flush();
 
-        $this->addFlash('info', 'Le rendez-vous a été modifié');
+        $this->addFlash('success', 'Le rendez-vous a été modifié');
         return $this->redirectToRoute('listeRDV');
     }
 }
