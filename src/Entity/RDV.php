@@ -29,6 +29,9 @@ class RDV
     #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
     private ?bool $valider = null;
 
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private ?bool $accompli = null;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Personne $Personne1 = null;
@@ -101,6 +104,18 @@ class RDV
     public function setValider(bool $valider): self
     {
         $this->valider = $valider;
+
+        return $this;
+    }
+
+    public function getAccompli(): ?bool
+    {
+        return $this->accompli;
+    }
+
+    public function setAccompli(bool $accompli): self
+    {
+        $this->accompli = $accompli;
 
         return $this;
     }
