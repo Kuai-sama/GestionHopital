@@ -18,16 +18,17 @@ class CalendarController extends AbstractController
         # Récupère l'id du médecin authentifié
         $id = $this->getUser()->getId();
 
-        $events = $em->getRepository(RDV::class)->findRDVByMedecin($id);
+        $events = $em->getRepository(RDV::class)->findValideRDVByMedecinOuInfermier($id);
         $rdvs = [];
 
         foreach ($events as $event) {
             # Calcul la date de fin de rendez-vous
             $end_date = new \DateTime($event->getDateHeure()->format('Y-m-d H:i:s'));
+            //dd($event->getDuree());
             $end_date->add(new \DateInterval('PT' . $event->getDuree() . 'M'));
 
-            $Nom_patient = $em->getRepository(Personne::class)->find($event->getPersonne2()->getId())->getNom();
-            $Prenom_patient = $em->getRepository(Personne::class)->find($event->getPersonne2()->getId())->getPrenom();
+            $Nom_patient = $em->getRepository(Personne::class)->find($event->getPersonne1()->getId())->getNom();
+            $Prenom_patient = $em->getRepository(Personne::class)->find($event->getPersonne1()->getId())->getPrenom();
 
             $rdvs[] = [
                 'id' => $event->getId(),

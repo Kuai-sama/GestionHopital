@@ -26,6 +26,9 @@ class RDV
     #[ORM\Column(length: 255)]
     private ?string $Description = null;
 
+    #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
+    private ?bool $valider = null;
+
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Personne $Personne1 = null;
@@ -86,6 +89,18 @@ class RDV
     public function setDescription(string $Description): self
     {
         $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getValider(): ?bool
+    {
+        return $this->valider;
+    }
+
+    public function setValider(bool $valider): self
+    {
+        $this->valider = $valider;
 
         return $this;
     }

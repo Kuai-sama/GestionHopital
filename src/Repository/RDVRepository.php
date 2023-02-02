@@ -39,11 +39,29 @@ class RDVRepository extends ServiceEntityRepository
         }
     }
 
-    # Récupérer les rendez-vous liés à un médecin
-    public function findRDVByMedecin($id): mixed
+    public function findValiderRDVByDate($date): mixed
     {
         $queryBuilder = $this->createQueryBuilder('r')
-            ->Where('r.Personne1 =' . "'$id'");
+            ->Where('r.DateHeure LIKE :date')
+            ->setParameter('date', $date . '%')
+            ->andWhere('r.valider = 1');
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    # Récupérer les rendez-vous validés liés à un médecin
+    public function findValideRDVByMedecinOuInfermier($id): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->Where('r.Personne2 =' . "'$id'")
+            ->andWhere('r.valider = 1');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+    # Récupérer tous les rendez-vous liés à un médecin
+    public function findRDVByMedecinOuInfermier($id): mixed
+    {
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->Where('r.Personne2 =' . "'$id'");
 
         return $queryBuilder->getQuery()->getResult();
     }
