@@ -2,6 +2,18 @@
 {% block title %}Modifier des rendez-vous
 {% endblock %}
 {% block body %}
+
+	{% for message in app.flashes('error') %}
+		<div class="alert alert-danger">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
 	<h1>Appliquer des heures à des rendez-vous</h1>
 
 	<style>
