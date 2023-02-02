@@ -79,8 +79,8 @@
                     <td>{{ prescri.Prescription.Medicament.NomMedicament }}</td>
                     <td>{{ prescri.Prescription.Unite }}</td>
                     <td>{{ prescri.Prescription.DateFin is empty ? "" : prescri.Prescription.DateFin|date("H:i d/m/Y") }}</td>
-                    <td><a href="{{ path('patient_appliquer', {"idprescription": prescri.Prescription.id ,"idpatient": infoPatient.Personne.id }) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Appliquer</a></td>
-                    <td><a href="{{ path('patient_modifier', {"idprescription": prescri.Prescription.id}) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Modifier</a></td>
+                    <td><a href="{{ path('patient_appliquer', {"idprescription": prescri.Prescription.id ,"idpatient": infoPatient.Personne.id }) }}"role="button" aria-pressed="true"> <button>Appliquer </button></a></td>
+                    <td><a href="{{ path('patient_modifier', {"idprescription": prescri.Prescription.id}) }}" role="button" aria-pressed="true"> <button>Modifier </button></a></td>
                 </tr>
             {% endfor %}
         </table>
