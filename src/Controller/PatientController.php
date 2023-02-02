@@ -169,6 +169,7 @@ class PatientController extends AbstractController
             $obj_rdv->setDateHeure($form->get('date_heure')->getData());
             $obj_rdv->setDescription($form->get('description')->getData());
             $obj_rdv->setPersonne1($this->getUser());
+            $obj_rdv->setValider(false);
 
             // On récupère la liste des médecins
             $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
@@ -190,7 +191,7 @@ class PatientController extends AbstractController
                         // Si rendez-vous est compris entre la date demandée et la date demandée + sa durée
                         if ($rdv->getDateHeure() >= $obj_rdv->getDateHeure() && $rdv->getDateHeure() <= $date_fin_rdv) {
                             // On supprime le médecin de la liste
-                            unset($medecin[$key]);
+                            unset($medecins[$key]);
                         }
                     }
                 }
@@ -203,10 +204,10 @@ class PatientController extends AbstractController
             }
 
             // On hydrate l'objet RDV avec le premier médecin de la liste
-            $rdv->setPersonne2($medecins[0]);
+            $obj_rdv->setPersonne2($medecins[0]);
 
             // On enregistre l'objet RDV en base de donnée
-            $em->persist($rdv);
+            $em->persist($obj_rdv);
 
             // On enregistre les modifications en base de donnée
             $em->flush();
