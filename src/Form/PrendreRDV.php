@@ -7,7 +7,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextAreaType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PrendreRDV extends AbstractType
@@ -37,7 +37,7 @@ class PrendreRDV extends AbstractType
             'data' => $date,
             'attr' => ['min' => $date->format('Y-m-d H:i')],
         ])
-            ->add('description', TextAreaType::class)
+            ->add('description', TextareaType::class)
             ->add('save', SubmitType::class, ['label' => 'Prendre rendez-vous']);
     }
 
