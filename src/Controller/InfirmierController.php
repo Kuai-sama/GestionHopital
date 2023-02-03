@@ -6,6 +6,7 @@ use App\Entity\Patient;
 use App\Entity\Personne;
 use App\Service\CodeReminder;
 use App\Repository\LitRepository;
+use App\Repository\SalleRepository;
 use App\Repository\PatientRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\PersonneRepository;
@@ -36,7 +37,7 @@ class InfirmierController extends AbstractController
     }*/
 
     #[Route('/verification_code', name: 'verification_code')]
-    public function verification_code(PatientRepository $patients, LitRepository $lit,PersonneRepository $roles ,ManagerRegistry $doctrine, EntityManagerInterface $em, ServiceRepository $service): Response
+    public function verification_code(SalleRepository $salles, PatientRepository $patients, LitRepository $lit,PersonneRepository $roles ,ManagerRegistry $doctrine, EntityManagerInterface $em, ServiceRepository $service): Response
     {
         $request = Request::createFromGlobals();
         $code = $request->request->get('code');
@@ -68,13 +69,15 @@ class InfirmierController extends AbstractController
         $personne = $Patient->getPersonne();
         $IdPersonne = $personne->getId();
         $salle = $lit->findSalle($IdPersonne);
+        
         if($assigner == false)
         {
             $services = $service->findAll();
             return $this->render('infirmier/assignemedecin.html.twig',[ 'personne'=> $personne, 'salle' => $salle, 'code'=>$code, 'services'=>$services]);
         }
 
-        $litpatient = $lit->findOneBy(['salle'=> $salle])->getId();
+        $idsalle = $salles->findOneBy(['NomSalle' => $salle[0]]);
+        $litpatient = $lit->findOneBy(['salle'=> $idsalle])->getId();
         $idservice = $service->findOneBy(['id' => $services]);
 
         $Patient->setRaison($raison);
