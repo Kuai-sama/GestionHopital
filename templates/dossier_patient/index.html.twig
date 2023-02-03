@@ -3,31 +3,7 @@
 {% block title %}Hello DossierPatientController!{% endblock %}
 
 {% block body %}
-
-    <style>
-        th{
-            text-align: center;
-            background:  #4da6ff;
-            color:white;
-            font-size: 18px;
-        }
-        td{
-            text-align: center;
-        }
-		a{
-			list-style-type: none;  
-			display: inline;
-		}
-		button{
-			border: 2px solid #0066cc;
-			border-radius: 12px;
-		}
-		button:hover{
-			background:#1a8cff;
-			color:white;
-		}
-    </style>
-
+    <link rel="stylesheet" href="/CSS/formDossierPatient.css">
     {% for infoPatient in InfoPatient %}
 <h1>Dossier Patient</h1>
     <table class="table">
@@ -59,7 +35,6 @@
             {% for diagno in infoPatient.Personne.Diagnostic %}
                 <tr>
                     <td>{{ diagno.Diagnostic }}</td>
-                    <td></td>
                 </tr>
             {% endfor %}
         </table>
@@ -79,8 +54,8 @@
                     <td>{{ prescri.Prescription.Medicament.NomMedicament }}</td>
                     <td>{{ prescri.Prescription.Unite }}</td>
                     <td>{{ prescri.Prescription.DateFin is empty ? "" : prescri.Prescription.DateFin|date("H:i d/m/Y") }}</td>
-                    <td><a href="{{ path('patient_appliquer', {"idprescription": prescri.Prescription.id ,"idpatient": infoPatient.Personne.id }) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Appliquer</a></td>
-                    <td><a href="{{ path('patient_modifier', {"idprescription": prescri.Prescription.id}) }}" class="btn btn-success btn-lg active" role="button" aria-pressed="true">Modifier</a></td>
+                    <td><a href="{{ path('patient_appliquer', {"idprescription": prescri.Prescription.id ,"idpatient": infoPatient.Personne.id }) }}"role="button" aria-pressed="true"> <button>Appliquer </button></a></td>
+                    <td><a href="{{ path('patient_modifier', {"idprescription": prescri.Prescription.id}) }}" role="button" aria-pressed="true"> <button>Modifier </button></a></td>
                 </tr>
             {% endfor %}
         </table>

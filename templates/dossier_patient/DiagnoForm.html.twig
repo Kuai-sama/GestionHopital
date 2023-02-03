@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DossierPatientController!{% endblock %}
+{% block title %}Diagnostic{% endblock %}
 
 {% block body %}
+<body>
+    <link rel="stylesheet" href="/CSS/formDossierPatient.css">
+    {% form_theme form 'bootstrap_5_layout.html.twig' %}
+    <div class="form">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_widget(form) }}
 
-{{ form_start(form) }}
-{{ form_errors(form) }}
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
 
+</body>
 
-{{ form_rest(form) }}
-{{ form_end(form) }}
 {% endblock %}

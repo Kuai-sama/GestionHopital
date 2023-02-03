@@ -67,12 +67,26 @@ class PatientRepository extends ServiceEntityRepository
             ->leftJoin("per.Diagnostic","dia")
             ->leftJoin("per.appliquerPrescriptions","apppres")
             ->leftJoin("apppres.Prescription","pres")
+            ->leftJoin("per.Diagnostiquer","diagnostiquer")
             ->select("pat","per")
             ->where('pat.id ='."'$idp'");
 
 
         return $qb->getQuery()->getResult();
     }
+
+    /*public function getDiagnostic(int $idPatient)
+    {
+        $qb = $this->createQueryBuilder('patient')
+            ->leftJoin("patient.Personne","personne")
+            ->leftJoin("personne.Diagnostic","diagnostic") // Pour avoir l'id du diag
+            ->leftJoin("personne.Diagnostiquer", "diagnostiquer")
+            ->select("patient", "personne","diagnostic","diagnostiquer")
+            ->where('patient.id ='."'$idPatient'")
+            ->where('diagnostiquer.diagnostic_id = diagnostic.diagnostic_id');
+
+        return $qb->getQuery()->getResult();
+    }*/
 
 //    /**
 //     * @return Patient[] Returns an array of Patient objects

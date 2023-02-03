@@ -3,10 +3,28 @@
 {% block title %}Hello DossierPatientController!{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-{{ form_errors(form) }}
+    <link rel="stylesheet" href="/CSS/formDossierPatient.css">
+    <div class="form">
 
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
 
-{{ form_rest(form) }}
-{{ form_end(form) }}
+        {{ form_label(form.Unite) }}
+        {{ form_widget(form.Unite) }}
+        <br><br>
+        {{ form_label(form.date_debut) }}
+        {{ form_widget(form.date_debut) }}
+        <br>
+        {{ form_label(form.DateFin) }}
+        {{ form_widget(form.DateFin) }}
+        <br>
+        {{ form_label(form.Status) }}
+        {{ form_widget(form.Status) }}
+        <br><br>
+        {{ form_label(form.Medicament) }}
+        {{ form_widget(form.Medicament) }}
+        <br><br>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

@@ -3,10 +3,15 @@
 {% block title %}Hello DossierPatientController!{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-{{ form_errors(form) }}
+    <body>
+    <link rel="stylesheet" href="/CSS/formDossierPatient.css">
+    {% form_theme form 'bootstrap_5_layout.html.twig' %}
+    <div class="form">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
 
 
-{{ form_rest(form) }}
-{{ form_end(form) }}
+            {{ form_rest(form) }}
+            {{ form_end(form) }}
+    </div>
 {% endblock %}
