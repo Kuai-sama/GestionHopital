@@ -29,170 +29,173 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script >
-    window.onload = () => {
-        let calendarElt = document.querySelector('#calendar')
+	<script>
+		window.onload = () => {
+			let calendarElt = document.querySelector('#calendar')
 
-        var currentHour = new Date().getHours().toString();
+			var currentHour = new Date().getHours().toString();
 
-        let myCalendar = new FullCalendar.Calendar(calendarElt, {
-            initialView: 'timeGridDay',
-            locale: 'fr',
-            timeZone: 'Europe/Paris',
-            headerToolbar: {
-                start: 'prev,next today',
-                center: 'title',
-                end: 'timeGridDay,timeGridWeek,dayGridMonth'
-            },
-            buttonText: {
-                today: 'Aujourd\'hui',
-                month: 'Mois',
-                week: 'Semaine',
-                day: 'Jour',
-                list: 'Liste',
-                this: 'Cette semaine'
-            },
-            nowIndicator: true,
-            slotMinTime: '06:00:00',
-            scrollTime: currentHour,
-            allDaySlot: false,
-            firstDay: 1,
-            displayEventEnd: true,
-            events: { { data | raw } },
-            selectable: true,
-            eventMinHeight: 20,
+			let myCalendar = new FullCalendar.Calendar(calendarElt, {
+				initialView: 'timeGridDay',
+				locale: 'fr',
+				timeZone: 'Europe/Paris',
+				headerToolbar: {
+				start: 'prev,next today',
+				center: 'title',
+				end: 'timeGridDay,timeGridWeek,dayGridMonth'
+			},
+			buttonText: {
+				today: 'Aujourd\'hui',
+				month: 'Mois',
+				week: 'Semaine',
+				day: 'Jour',
+				list: 'Liste',
+				this: 'Cette semaine'
+			},
+			nowIndicator: true,
+			slotMinTime: '06:00:00',
+			scrollTime: currentHour,
+			allDaySlot: false,
+			firstDay: 1,
+			displayEventEnd: true,
+			events: {{ data | raw }},
+			selectable: true,
+			eventMinHeight: 20,
 
-            eventContent: function(info) {
-                var start_time = new Date(Date.parse(info.event.start.toISOString()));
-                var end_time = new Date(Date.parse(info.event.end.toISOString()));
+			eventContent: function (info) {
+				var start_time = new Date(Date.parse(info.event.start.toISOString()));
+				var end_time = new Date(Date.parse(info.event.end.toISOString()));
 
-                start_time = start_time.toUTCString().slice(0, -4);
-                end_time = end_time.toUTCString().slice(0, -4);
+				start_time = start_time.toUTCString().slice(0, -4);
+				end_time = end_time.toUTCString().slice(0, -4);
 
-                start_time = new Date(start_time)
-                end_time = new Date(end_time)
+				start_time = new Date(start_time)
+				end_time = new Date(end_time)
 
-                var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
-                var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
+				var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
+				var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
 
-                // Si on est en mode mois
-                if (info.view.type == 'dayGridMonth') { // H:i -> i
-                    start_hour = start_time_str.substring(3);
-                    end_hour = end_time_str.substring(3);
-                    if (parseInt(start_hour) < 10)
-                        start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
+				// Si on est en mode mois
+				if (info.view.type == 'dayGridMonth') { // H:i -> i
+					start_hour = start_time_str.substring(3);
+					end_hour = end_time_str.substring(3);
+					if (parseInt(start_hour) < 10) 
+						start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
 
-                    if (parseInt(end_hour) < 10)
-                        end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
+					if (parseInt(end_hour) < 10) 
+						end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
 
-                    var element = document.createElement('div');
+					var element = document.createElement('div');
 
-                    element.innerHTML = "°" + start_time_str + "-" + end_time_str;
-                    return { domNodes: [element] }
-                }
-            },
+					element.innerHTML = "°" + start_time_str + "-" + end_time_str;
+					return {domNodes: [element]}
+				}
+			},
 
-            eventClick: function(info) {
-                var start_time = new Date(Date.parse(info.event.start.toISOString()));
-                var end_time = new Date(Date.parse(info.event.end.toISOString()));
+			eventClick: function (info) {
+				var start_time = new Date(Date.parse(info.event.start.toISOString()));
+				var end_time = new Date(Date.parse(info.event.end.toISOString()));
 
-                start_time = start_time.toUTCString().slice(0, -4);
-                end_time = end_time.toUTCString().slice(0, -4);
+				start_time = start_time.toUTCString().slice(0, -4);
+				end_time = end_time.toUTCString().slice(0, -4);
 
-                start_time = new Date(start_time)
-                end_time = new Date(end_time)
+				start_time = new Date(start_time)
+				end_time = new Date(end_time)
 
-                var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
-                var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
+				var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
+				var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
 
-                start_hour = start_time_str.substring(3);
-                end_hour = end_time_str.substring(3);
-                if (parseInt(start_hour) < 10)
-                    start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
+				start_hour = start_time_str.substring(3);
+				end_hour = end_time_str.substring(3);
+				if (parseInt(start_hour) < 10) 
+					start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
 
-                if (parseInt(end_hour) < 10)
-                    end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
+				if (parseInt(end_hour) < 10) 
+					end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
 
-                var container = document.createElement("div");
-                container.className = "container";
+				var container = document.createElement("div");
+				container.className = "container";
 
-                var div = document.createElement("div");
-                div.className = "row";
-                div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str + "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
+				var div = document.createElement("div");
+				div.className = "row";
+				div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str + "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
 
-                var label = document.createElement("label");
-                label.innerHTML = "Rendez-vous effectué ?";
-                label.htmlFor = "checkbox";
-                label.className = "labelCheckboxCalendar";
+				var label = document.createElement("label");
+				label.innerHTML = "Rendez-vous effectué ?";
+				label.htmlFor = "checkbox";
+				label.className = "labelCheckboxCalendar";
 
-                var labelAndCheckbox = document.createElement("div");
-                labelAndCheckbox.className = "labelAndCheckbox";
+				var labelAndCheckbox = document.createElement("div");
+				labelAndCheckbox.className = "labelAndCheckbox";
 
-                var checkbox = document.createElement("input");
-                checkbox.type = "checkbox";
-                checkbox.checked = false;
+				var checkbox = document.createElement("input");
+				checkbox.type = "checkbox";
+				checkbox.checked = false;
 
-                // Si le rendez-vous est validé
-                if (info.event.extendedProps.accompli == true) {
-                    checkbox.checked = true;
-                } else {
-                    checkbox.checked = false;
-                }
-                checkbox.onclick = function() {
-                    console.log("test");
-                    var url = "{{ path('addValidate') }}";
-                    if (checkbox.checked) {
-                        if ($(this).is(":checked")) {
-                            $.ajax({
-                                url: url,
-                                type: 'POST',
-                                data: {
-                                    id: info.event.id,
-                                    accomplished: true
-                                },
-                                success: function(data) {
-                                    console.log(data);
-                                }
-                            });
-                        }
-                    } else {
-                        $.ajax({
-                            url: url,
-                            type: 'POST',
-                            data: {
-                                id: info.event.id,
-                                accomplished: false
-                            },
-                            success: function(data) {
-                                console.log(data);
-                            }
-                        });
-                    }
-                }
+				// Si le rendez-vous est validé
+				if (info.event.extendedProps.accompli == true) {
+					checkbox.checked = true;
+				} else {
+					checkbox.checked = false;
+				}
+				checkbox.onclick = function () {
+					console.log("test");
 
-                labelAndCheckbox.appendChild(label);
-                labelAndCheckbox.appendChild(checkbox);
+					var url = "{{ path('addValidate') }}";
+					if (checkbox.checked) {
+						if ($(this).is(":checked")) {
+							$.ajax({
+								url: url,
+								type: 'POST',
+								data: {
+									id: info.event.id,
+									accomplished: true
+								},
+								success: function (data) {
+									console.log(data);
+								}
+							});
+						}
+					} else {
+						$.ajax({
+							url: url,
+							type: 'POST',
+							data: {
+								id: info.event.id,
+								accomplished: false
+							},
+							success: function (data) {
+								console.log(data);
+							}
+						});
+					}
+				}
 
-                container.appendChild(div);
-                container.appendChild(labelAndCheckbox);
+				labelAndCheckbox.appendChild(label);
+				labelAndCheckbox.appendChild(checkbox);
 
-                console.log(container)
-                console.log(start_time_str);
-                console.log(end_time_str);
-                console.log(info.event);
+				container.appendChild(div);
+				container.appendChild(labelAndCheckbox);
 
-                $popover = $(info.el).popover({
-                    html: true,
-                    title: info.event.title,
-                    content: container,
-                    trigger: 'click',
-                    placement: 'top',
-                    container: 'body'
-                });
-            }
-        })
+				console.log(container)
+				console.log(start_time_str);
+				console.log(end_time_str);
+				console.log(info.event);
 
-        myCalendar.render()
-    }
+				$popover = $(info.el).popover({
+					html: true,
+					title: info.event.title,
+
+					content: container,
+
+					trigger: 'click',
+					placement: 'top',
+					container: 'body'
+				});
+			}
+		})
+
+		myCalendar.render()
+	}
 	</script>
 {% endblock %}
