@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -21,6 +23,14 @@ class Commande
 
     #[ORM\Column(length: 255)]
     private ?string $Etat = null;
+
+    #[ORM\ManyToMany(targetEntity: Medicament::class, inversedBy: 'commandes')]
+    private Collection $Medicament;
+
+    public function __construct()
+    {
+        $this->Medicament = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +69,30 @@ class Commande
     public function setEtat(string $Etat): self
     {
         $this->Etat = $Etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Medicament>
+     */
+    public function getMedicament(): Collection
+    {
+        return $this->Medicament;
+    }
+
+    public function addMedicament(Medicament $medicament): self
+    {
+        if (!$this->Medicament->contains($medicament)) {
+            $this->Medicament->add($medicament);
+        }
+
+        return $this;
+    }
+
+    public function removeMedicament(Medicament $medicament): self
+    {
+        $this->Medicament->removeElement($medicament);
 
         return $this;
     }
