@@ -1,0 +1,26 @@
+.form{
+    margin-left: auto;
+    margin-right: auto;
+    width: 350px;
+}
+th{
+     text-align: center;
+     background:  #4da6ff;
+     color:white;
+     font-size: 18px;
+ }
+td{
+    text-align: center;
+}
+a{
+    list-style-type: none;
+    display: inline;
+}
+button{
+    border: 2px solid #0066cc;
+    border-radius: 12px;
+}
+button:hover{
+    background:#1a8cff;
+    color:white;
+}
