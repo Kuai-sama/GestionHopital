@@ -37,6 +37,7 @@ class CalendarController extends AbstractController
                 'end' => $end_date->format('Y-m-d H:i:s'),
                 'duration_time' => $event->getDuree(),
                 'description' => $event->getDescription(),
+                'accompli' => $event->getAccompli(),
                 'id_patient' => $event->getPersonne2()->getId(),
                 'Nom_patient' => $Nom_patient,
                 'Prenom_patient' => $Prenom_patient,

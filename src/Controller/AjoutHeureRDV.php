@@ -67,4 +67,25 @@ class AjoutHeureRDV extends AbstractController
         $this->addFlash('success', 'Le rendez-vous a été modifié');
         return $this->redirectToRoute('listeRDV');
     }
+
+    #[Route('/addValidate', name: 'addValidate')]
+    function addValidate(EntityManagerInterface $em, Request $request): Response
+    {
+        // On récupère les données du formulaire
+        $data = $request->request->all();
+
+        // On récupère le rendez-vous
+        $rdv = $em->getRepository(RDV::class)->find($data['id']);
+
+        if ($data['accomplished'] == 'true') {
+            $rdv->setAccompli(true);
+            $this->addFlash('success', 'Le rendez-vous a été effectué');
+        } else {
+            $rdv->setAccompli(false);
+            $this->addFlash('success', 'Le rendez-vous n\'a pas été effectué');
+        }
+        $em->persist($rdv);
+        $em->flush();
+        return $this->redirectToRoute('listeRDV');
+    }
 }

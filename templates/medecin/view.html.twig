@@ -17,6 +17,9 @@
 			overflow-x: scroll;
 			white-space: normal;
 		}
+		.labelCheckboxCalendar {
+			margin: 10px;
+		}
 	</style>
 {% endblock %}
 
@@ -118,16 +121,83 @@ end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
 
 
 
+var container = document.createElement("div");
+container.className = "container";
+
+var div = document.createElement("div");
+div.className = "row";
+div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str + "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
+
+var label = document.createElement("label");
+label.innerHTML = "Rendez-vous effectué ?";
+label.htmlFor = "checkbox";
+label.className = "labelCheckboxCalendar";
+
+var labelAndCheckbox = document.createElement("div");
+labelAndCheckbox.className = "labelAndCheckbox";
+
+var checkbox = document.createElement("input");
+checkbox.type = "checkbox";
+checkbox.checked = false;
+
+// Si le rendez-vous est validé
+if (info.event.extendedProps.accompli == true) {
+checkbox.checked = true;
+} else {
+checkbox.checked = false;
+} checkbox.onclick = function () {
+console.log("test");
+var url = "{{ path('addValidate') }}";
+if (checkbox.checked) {
+if ($(this).is(":checked")) {
+$.ajax({
+url: url,
+type: 'POST',
+data: {
+id: info.event.id,
+accomplished: true
+},
+success: function (data) {
+console.log(data);
+}
+});
+}
+} else {
+$.ajax({
+url: url,
+type: 'POST',
+data: {
+id: info.event.id,
+accomplished: false
+},
+success: function (data) {
+console.log(data);
+}
+});
+}
+}
+
+labelAndCheckbox.appendChild(label);
+labelAndCheckbox.appendChild(checkbox);
+
+
+container.appendChild(div);
+container.appendChild(labelAndCheckbox);
+
+console.log(container)
+
+
 console.log(start_time_str);
 console.log(end_time_str);
-
 console.log(info.event);
 
 $popover = $(info.el).popover({
 html: true,
 title: info.event.title,
 
-content: "Horaire : " + start_time_str + " - " + end_time_str + "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description,
+content: container,
+
+trigger: 'click',
 placement: 'top',
 container: 'body'
 });
