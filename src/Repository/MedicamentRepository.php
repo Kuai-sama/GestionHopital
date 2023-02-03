@@ -39,6 +39,23 @@ class MedicamentRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCommandeARecep(){
+        return $this->createQueryBuilder('Medicament')
+            ->leftJoin('Medicament.Commander','commande')
+            ->select('Medicament','commande')
+            ->where("commande.Etat = 'En cours'")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findCommande($id){
+        return $this->createQueryBuilder('Medicament')
+            ->leftJoin('Medicament.Commander','commande')
+            ->where("commande.id =".$id)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Medicament[] Returns an array of Medicament objects
 //     */

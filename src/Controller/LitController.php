@@ -50,6 +50,7 @@ class LitController extends AbstractController
     #[Route('/emplacementPatient', name:'emplacementPatient')]
     public function ouEstLePatient(PatientRepository $patient){
 
+        dump($patient->getPatLit());
         return $this->render('Lits/viewPat.html.twig', [
             'patient' => $patient->getPatLit()
         ]);

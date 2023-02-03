@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommandeController!{% endblock %}
+
+{% block body %}
+
+    <h2>Commande</h2>
+    <table class="table">
+        <tr>
+            <th scope="col">Fournisseur</th>
+            <th scope="col">Quantiter</th>
+            <th scope="col">Medicament</th>
+            <th></th>
+        </tr>
+        {% for commande in commandes %}
+            {% for commandes in commande.Commander %}
+            <tr>
+                <td>{{ commandes.Fournisseur }}</td>
+                <td>{{ commandes.Quantite }}</td>
+                <td>{{ commande.NomMedicament }}</td>
+                <td><a href="{{ path("reception",{"idcommande": commandes.id}) }}" role="button" aria-pressed="true"> <button>Receptionner</button></a></td>
+            </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

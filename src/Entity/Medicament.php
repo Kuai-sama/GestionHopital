@@ -27,13 +27,9 @@ class Medicament
     #[ORM\ManyToMany(targetEntity: Commande::class)]
     private Collection $Commander;
 
-    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'Medicament')]
-    private Collection $commandes;
-
     public function __construct()
     {
         $this->Commander = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
     }
 
     public function getId(): ?int
