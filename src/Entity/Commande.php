@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
@@ -21,6 +23,11 @@ class Commande
 
     #[ORM\Column(length: 255)]
     private ?string $Etat = null;
+
+    public function __construct()
+    {
+        $this->Medicament = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {

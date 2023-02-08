@@ -63,8 +63,10 @@ class AppliquerPrescriptionRepository extends ServiceEntityRepository
     public function getPrescirption( $idPatient ): array
     {
         return $this->createQueryBuilder('prescription')
+            ->leftJoin('prescription.Prescription','pres')
             ->where('prescription.patient = '. "'$idPatient'")
             ->andWhere('prescription.Soignant is null')
+            ->andWhere("pres.Status = 'En cours de traitement'")
             ->getQuery()
             ->getResult();
     }

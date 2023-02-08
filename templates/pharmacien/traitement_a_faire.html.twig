@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DossierPatientController!{% endblock %}
+
+{% block body %}
+
+    <style>
+        th{
+            text-align: center;
+            background:  #4da6ff;
+            color:white;
+            font-size: 18px;
+        }
+        td{
+            text-align: center;
+        }
+        a{
+            list-style-type: none;
+            display: inline;
+        }
+        button{
+            border: 2px solid #0066cc;
+            border-radius: 12px;
+        }
+        button:hover{
+            background:#1a8cff;
+            color:white;
+        }
+    </style>
+
+        <h2>Traitement a preparer</h2>
+        <table class="table">
+            <tr>
+                <th scope="col">Medicament</th>
+                <th scope="col">Quantiter</th>
+                <th scope="col">Date de fin</th>
+                <th></th>
+            </tr>
+            {% for prescri in Presciptions %}
+                <tr>
+                    <td>{{ prescri.Medicament.NomMedicament }}</td>
+                    <td>{{ prescri.Unite }}</td>
+                    <td><!--<a href="{{ path('pret', {"idprescription": prescri.id}) }}" role="button" aria-pressed="true">--> <button  onclick="clickCheckStock({{ prescri.Unite }},{{prescri.Medicament.Stock}},{{ prescri.id }})">Pret </button><!--</a>--></td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    <script>
+
+        function clickCheckStock(nb, stock, idp){
+            if(50>stock){
+                alert("stock faible commande effectuer")
+                window.location.href="/new_commande/"+idp+""
+            }
+            if(nb>stock) {
+                alert("Pas asser de stock")
+                window.location.href="/new_commande/"+0+""
+            }
+            window.location.href="/pret/"+idp+""
+        }
+
+    </script>
+{% endblock %}

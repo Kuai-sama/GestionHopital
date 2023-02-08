@@ -39,6 +39,15 @@ class PrescriptionRepository extends ServiceEntityRepository
         }
     }
 
+    public function To_prepare(): array
+    {
+        return $this->createQueryBuilder('pres')
+            ->leftJoin("pres.Medicament","medoc")
+            ->where("pres.Status = 'A faire'")
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Prescription[] Returns an array of Prescription objects
 //     */
