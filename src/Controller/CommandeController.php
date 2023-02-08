@@ -31,13 +31,21 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/new_commande', name: 'app_commande_new')]
-    public function dateSortieForm(Request $request,EntityManagerInterface $en): Response
+    #[Route('/new_commande/{iddprescription}', name: 'app_commande_new')]
+    public function dateSortieForm($iddprescription,Request $request,EntityManagerInterface $en): Response
     {
         $commande = new Commande();
         $commande->setFournisseur("Le fournisseur")->setEtat("En cours")->setQuantite(50);
 
-        return $this->redirectToRoute("app_traitement");
+        $en->persist($commande);
+        $en->flush();
+
+        if($iddprescription != 0){
+            return $this->redirectToRoute("pret",['idprescription'=>$iddprescription]);
+        }
+        else {
+            return $this->redirectToRoute("app_traitement");
+        }
     }
 
     #[Route('/reception/{idcommande}', name: 'reception')]

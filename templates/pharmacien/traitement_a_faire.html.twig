@@ -40,22 +40,23 @@
                 <tr>
                     <td>{{ prescri.Medicament.NomMedicament }}</td>
                     <td>{{ prescri.Unite }}</td>
-                    <td><a href="{{ path('pret', {"idprescription": prescri.id}) }}" role="button" aria-pressed="true"> <button  onclick="clickCheckStock({{ prescri.Unite }},{{prescri.Medicament.Stock}})">Pret </button></a></td>
+                    <td><!--<a href="{{ path('pret', {"idprescription": prescri.id}) }}" role="button" aria-pressed="true">--> <button  onclick="clickCheckStock({{ prescri.Unite }},{{prescri.Medicament.Stock}},{{ prescri.id }})">Pret </button><!--</a>--></td>
                 </tr>
             {% endfor %}
         </table>
 
     <script>
 
-        function clickCheckStock(nb, stock){
+        function clickCheckStock(nb, stock, idp){
             if(50>stock){
                 alert("stock faible commande effectuer")
-                window.location.href={{ path('app_commande_new') }}
+                window.location.href="/new_commande/"+idp+""
             }
             if(nb>stock) {
                 alert("Pas asser de stock")
-                window.location.href={{ path('app_commande_new') }}
+                window.location.href="/new_commande/"+0+""
             }
+            window.location.href="/pret/"+idp+""
         }
 
     </script>
