@@ -50,6 +50,7 @@ class AmbulancierController extends AbstractController
                 $mdp = $personne->getPassword();
                 $hashedPassword = $passwordHasher->hashPassword($personne, $mdp);
                 $personne->setPassword($hashedPassword);
+                $personne->setRoles(["ROLE_PATIENT"]);
                 $em->persist($personne);
                 $em->flush();
 

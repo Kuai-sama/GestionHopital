@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <body>
+    {% for flashMessage in app.session.flashbag.get('info') %}
+
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('alert') %}
+
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+
+    {% endfor %}
+    <div style="width: 700px; margin-left: auto; margin-right: auto">
+        {% form_theme form 'bootstrap_5_layout.html.twig' %}
+        <form method="post">
+            <section class="vh-100 gradient-custom">
+                <h2 class="fw-bold mb-2 text-uppercase">Création de compte</h2>
+                <div>
+                    {{ form_start(form) }}
+                    <div>
+                        <a>Nom</a></br>
+                        {{form_widget(form.Nom)}}
+                    </div>
+                    <br>
+                    <div>
+                        <a>Prénom</a></br>
+                        {{form_widget(form.Prenom)}}
+                    </div>
+                    <br>
+                    <div>
+                        <a>Numéro securité sociale</a></br>
+                        {{form_widget(form.NumSecuriteSociale)}}
+                    </div>
+                    <br>
+                    <div>
+                        <a>Mot de passe</a></br>
+                        {{form_widget(form.password)}}
+                    </div>
+                    <br>
+                    <div>
+                        <a>Email</a></br>
+                        {{form_widget(form.Email)}}
+                    </div>
+                    <br>
+                    <div>
+                        <a>Téléphone</a></br>
+                        {{ form_errors(form.NumTel) }}
+                        {{form_widget(form.NumTel)}}
+                    </div>
+                    <br>
+                    {{ form_end(form) }}
+                </div>
+            </section>
+        </form>
+    </div>
+    </body>
+{% endblock %}
