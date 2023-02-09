@@ -84,7 +84,7 @@ class DossierPatientController extends AbstractController
     }
 
     #[Route('/ajoutDiagno/{idper}', name: 'app_dossier_patient_ajout_diagno')]
-    public function AjoutDiagno(PersonneRepository $per,$idper,Request $request,EntityManagerInterface $en): Response
+    public function AjoutDiagno(PersonneRepository $per,$idper,Request $request,EntityManagerInterface $en,PatientRepository $pat): Response
     {
         $diagnostic = new Diagnostic();
         $form = $this->createForm(AjoutDiagnosticType::class,$diagnostic);
@@ -110,14 +110,16 @@ class DossierPatientController extends AbstractController
             //diagnostic diagno
             //$per->AddPersoDiagno($idper,$diagnostic->getId());
 
-            return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$idpatient]);
+            $patients = $pat->getPer($idper);
+            $patient = $pat->find($patients[0])->getId();
+            return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$patient]);
         }
 
         return $this->render('dossier_patient/DiagnoForm.html.twig',['form'=>$form->createView()]);
     }
 
     #[Route('/ajoutPrescri/{idper}', name: 'app_dossier_patient_ajout_prescri')]
-    public function AjoutPrescription(PersonneRepository $per,$idper,Request $request,EntityManagerInterface $en): Response
+    public function AjoutPrescription(PersonneRepository $per,$idper,Request $request,EntityManagerInterface $en,PatientRepository $pat): Response
     {
         $prescription = new Prescription();
         $form = $this->createForm(AjoutPrescriptionType::class,$prescription);
@@ -140,7 +142,9 @@ class DossierPatientController extends AbstractController
             //prescription diagno
             //$per->AddPersoDiagno($idper,$prescription->getId());
 
-            return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$idpatient]);
+            $patients = $pat->getPer($idper);
+            $patient = $pat->find($patients[0])->getId();
+            return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$patient]);
         }
 
         return $this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]);

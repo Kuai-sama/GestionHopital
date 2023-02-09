@@ -61,6 +61,16 @@ class PatientRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function getPer($idUS){
+        $qb = $this->createQueryBuilder('pat')
+            ->leftJoin("pat.Personne","per")
+            ->select("pat")
+            ->where('per.id ='."'$idUS'");
+
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function getPatInfo(int $idp){
         $qb = $this->createQueryBuilder('pat')
             ->leftJoin("pat.Personne","per")
