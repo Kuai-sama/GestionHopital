@@ -46,9 +46,6 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $NumTel = null;
 
     #[ORM\ManyToOne]
-    private ?Lit $idLit = null;
-
-    #[ORM\ManyToOne]
     private ?Metier $Metier = null;
 
     #[ORM\ManyToOne]
@@ -211,18 +208,6 @@ class Personne implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNumTel(string $NumTel): self
     {
         $this->NumTel = $NumTel;
-
-        return $this;
-    }
-
-    public function getIdLit(): ?Lit
-    {
-        return $this->idLit;
-    }
-
-    public function setIdLit(?Lit $idLit): self
-    {
-        $this->idLit = $idLit;
 
         return $this;
     }
