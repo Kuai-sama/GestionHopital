@@ -7,11 +7,13 @@ use App\Entity\Salle;
 use App\Entity\Personne;
 use App\Form\AjoutLitType;
 use App\Form\ModifierLitType;
+use Doctrine\ORM\EntityRepository;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -82,8 +84,23 @@ class LitController extends AbstractController
     public function ModifierLit($id, EntityManagerInterface $em, Request $request){
 
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
-        dump($lit);
+        if($lit->getIdPersonne() != null)
+        {
+            $occupant = $lit->getIdPersonne()->getId();            
+        }
+        else
+        {
+            $occupant = null;
+        }
         $form = $this->createForm(ModifierLitType::class, $lit);
+        $form->add('IdPersonne', EntityType::class, [
+            'class' => Personne::class,
+            'query_builder' => function (EntityRepository $er) use ($occupant) {
+            return $er->createQueryBuilder('P')
+                ->leftJoin('P.lit','l')
+                ->where('l.IdPersonne is null')
+                ->orWhere("P.id = '$occupant'");
+        }]);
         $form->add('send', SubmitType::class, ['label' => 'Valider']);
         $form->handleRequest($request);
 
