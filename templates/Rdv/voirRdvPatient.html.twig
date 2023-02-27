@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>Date Heure</th>
+        <th>Titre</th>
+        <th>Description</th>
+        <th>Durée</th>
+        <th>Salle</th>
+        <th>Soignant</th>
+        <th>Rendez-vous valider</th>
+        <th>Rendez-vous réaliser</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for rdv in rdvs %}
+        <tr>
+            <td>{{ rdv.DateHeure|date('d-m-Y H:m') }}</td>
+            <td>{{ rdv.Titre }}</td>
+            <td>{{ rdv.Description }}</td>
+            <td>{{ rdv.Duree }}</td>
+            <td>{{ rdv.Salle }}</td>
+            <td>{{ rdv.Personne2 }}</td>
+            {% if rdv.valider == "0" %}
+                <td>En cours de validation</td>
+            {% else %}
+                <td>Valider</td>
+            {% endif%}
+            {% if rdv.accompli%}
+                <td>Fait</td>
+            {% else %}
+                <td>Pas fait</td>
+            {% endif%}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
