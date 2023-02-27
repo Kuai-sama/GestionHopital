@@ -32,7 +32,7 @@
 				<th>Motif</th>
 				<th>Titre</th>
 				<th>Salle</th>
-				<th>Durée</th>
+				<th>Durée (min)</th>
 				<th>Valider</th>
 			</tr>
 		</thead>
@@ -45,7 +45,13 @@
 					<td>{{ event.description }}</td>
 					<form action="{{ path('ajoutHeureRDV') }}" method="post">
 						<td><input id="textinput" type="text" name="titre" value="{{ event.titre }}"></td>
-						<td><input id="textinput" type="text" name="salle" value="{{ event.salle }}"></td>
+						<!--<td><input id="textinput" type="text" name="salle" value="{{ event.salle }}"></td>-->
+						<td><select name="salle">
+							{% for salle in salles %}
+								{{ dump(salle.EmplacementSalle) }}
+								<option>{{ salle.EmplacementSalle }}</option>
+							{% endfor %}
+						</select></td>
 						<td><input id="textinput" type="number" name="duree" min="15" max="55" value="{{ event.duree }}"></td>
 						<input type="hidden" name="id" value="{{ event.id }}">
 						<td><input type="checkbox" name="event[]" onclick="this.form.submit();"></td>
