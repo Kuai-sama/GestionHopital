@@ -5,23 +5,79 @@
 
     {% block body %}
         
+	<link rel="stylesheet" href="/CSS/listHopital.css">
+
+
         {% if salle == "present" %}
             <h1> Vous êtes déjà dans l'hôpital </h1> 
         {% else %}
             {% if code != "" %}
-            <!--
-                {% if salle != null %}
-                    {% for salle_reserve in salle %}
-                        <h1> La lit de la {{salle_reserve.NomSalle}} vous est attribué, veuillez vous addresser à l'accueil </h1> 
-                        <br>
-                        <h1>Vous pouvez venir </h1>
-                    {% endfor %}
-                {% endif %}
-            -->
                 <h1> Donner le code suivant à l'acceuil lors de votre arrivée : </h1> 
                 <h1><b>{{code}}</b></h1>
             {% else %}
                 <h1> Aucun lit n'est disponible, voici les hopitaux les plus proches : </h1>
+		        <table class="table table-striped table-responsive-sm">
+                    <thead>
+                        <tr>
+                            <th>
+                                Nom
+                            </th>
+                            <th>
+                                Adresse
+                            </th>
+                            <th>
+                                Numéro de téléphone
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>
+                                    <h1>Hôpital Henri Laborit</h1>
+                                </td>
+                                <td >
+                                    <a href="https://goo.gl/maps/GDXJLX7gnNyyimoU6"> 7 All. Martin Luther King, 86000 Poitiers </a>
+                                </td>
+                                <td >
+                                    <a href="tel:0549016230"> 05 49 01 62 30 </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h1>Polyclinique HAD</h1>
+                                </td>
+                                <td >
+                                    <a href="https://goo.gl/maps/2dm92JGrnmET4qkH6"> 3 Rue de la Providence, 86000 Poitiers </a>
+                                </td>
+                                <td >
+                                    <a href="tel:0549422617"> 05 49 42 26 17 </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h1>CHU de Poitiers Site de la Milétrie</h1>
+                                </td>
+                                <td >
+                                    <a href="https://goo.gl/maps/33EKofNBWkHjYd9c9"> 2 Rue de la Milétrie, 86000 Poitiers </a>
+                                </td>
+                                <td >
+                                    <a href="tel:0549444444"> 05 49 44 44 44 </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h1>CHU de Poitiers Site de Châtellerault</h1>
+                                </td>
+                                <td >
+                                    <a href="https://goo.gl/maps/KALGa5sFtoLH63t87"> Rue Du Docteur Luc Montagnier, 86106 Châtellerault </a>
+                                </td>
+                                <td >
+                                    <a href="tel:0549029090"> 05 49 02 90 90 </a>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+
             {% endif %}
         {% endif %}
     {% endblock %}

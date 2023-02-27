@@ -81,7 +81,6 @@ class PatientController extends AbstractController
         }
 
 
-
         if ($code != "") {
             $sallerecup = $lit->findOneBy(['IdPersonne' => $idpersonne->getId()]);
             $salle = $lit->findSalleAssos($sallerecup->getId());
