@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\MedicamentRepository;
 use App\Repository\PrescriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PharmacienController extends AbstractController
 {
     #[Route('/pharmacien', name: 'app_pharmacien')]
+    #[Security("is_granted('ROLE_PHARMACIEN')")]
     public function index(): Response
     {
         return $this->render('pharmacien/index.html.twig', [
@@ -20,6 +22,7 @@ class PharmacienController extends AbstractController
     }
 
     #[Route('/traitement', name: 'app_traitement')]
+    #[Security("is_granted('ROLE_PHARMACIEN')")]
     public function a_preparer(PrescriptionRepository $pres): Response
     {
         $prescriptions = $pres->To_prepare();
@@ -30,6 +33,7 @@ class PharmacienController extends AbstractController
     }
 
     #[Route('/pret/{idprescription}', name: 'pret')]
+    #[Security("is_granted('ROLE_PHARMACIEN')")]
     public function pret(MedicamentRepository $medoc,PrescriptionRepository $pres,$idprescription,EntityManagerInterface $en): Response
     {
 
