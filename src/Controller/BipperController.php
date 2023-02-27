@@ -64,7 +64,7 @@ class BipperController extends AbstractController
         }
         else
         {
-            return $this->redirectToRoute("app_infirmier");
+            return $this->redirectToRoute("infirmier_accueil");
         }
     }
 
