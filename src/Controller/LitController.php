@@ -31,7 +31,7 @@ class LitController extends AbstractController
     public function index($page, EntityManagerInterface $em)
     {
 
-        $nbPerPage = 10;
+        $nbPerPage = 25;
         // On compte tout les articles qui sont publiés (méthode magique count() de Doctrine)
 
         $lits = $em->getRepository(Lit::class)->findAllWithSalleAndPaging($page, $nbPerPage);
