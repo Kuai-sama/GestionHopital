@@ -38,7 +38,7 @@ class PharmacienController extends AbstractController
         $en->persist($prescription);
         $en->flush();
 
-        $medicament = $medoc->findOneById($prescription->getId());
+        $medicament = $medoc->findOneById($prescription->getMedicament());
         $stock = $medicament->getStock();
         $medicament->setStock($stock - $prescription->getUnite());
         $en->persist($medicament);

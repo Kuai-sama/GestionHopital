@@ -22,7 +22,6 @@ class CommandeController extends AbstractController
     {
         $commandes = $medic->getCommandeARecep();
 
-        dump($commandes);
 
         return $this->render('commande/index.html.twig', [
             'controller_name' => 'CommandeController',
@@ -57,10 +56,10 @@ class CommandeController extends AbstractController
         $en->persist($commande);
         $en->flush();
 
-        $medicament = $medoc->findCommande($commande->getId());
+        /*$medicament = $medoc->findCommande($commande->getId());
         $medicament[0]->setStock($medicament[0]->getStock() + $commande->getQuantite());
         $en->persist($medicament[0]);
-        $en->flush();
+        $en->flush();*/
 
         return $this->redirectToRoute("app_commande");
     }
