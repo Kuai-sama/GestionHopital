@@ -8,6 +8,7 @@ use App\Repository\PatientRepository;
 use App\Repository\PersonneRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class MedecinController extends AbstractController
 {
     #[Route('/medecin', name: 'app_medecin')]
+    #[Security("is_granted('ROLE_MEDECIN')")]
     public function index(): Response
     {
         return $this->render('medecin/index.html.twig', [
@@ -23,6 +25,7 @@ class MedecinController extends AbstractController
     }
 
     #[Route('/listePatient',name: "list_patient")]
+    #[Security("is_granted('ROLE_INFIRMIER') or is_granted('ROLE_MEDECIN')")]
     public function listePat(PatientRepository $patient,PersonneRepository $per, ServiceRepository $ser, EntityManagerInterface $en): Response
     {
         $idUserSer = $per->find($this->getUser())->getService()->getId();
