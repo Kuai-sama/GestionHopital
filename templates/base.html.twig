@@ -39,6 +39,14 @@
 						<a class="nav-link" href={{path('patient_prendre_rdv')}}>Prendre un rendez-vous</a>
 					</li>
 				{% endif %}
+				{% if is_granted('ROLE_PHARMACIEN') %}
+					<li class="nav-item active">
+						<a class="nav-link" href={{path('app_traitement')}}>Prescription</a>
+					</li>
+					<li class="nav-item active">
+						<a class="nav-link" href={{path('app_commande')}}>Commande</a>
+					</li>
+				{% endif %}
 				{% if is_granted('ROLE_AMBULANCIER') %}
 					<li class="nav-item active">
 						<a class="nav-link " href="{{ path('app_ambulancier_ajoutcompte') }}">Créer compte patient</a>
