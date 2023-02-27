@@ -118,7 +118,7 @@
 
 				var div = document.createElement("div");
 				div.className = "row";
-				div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str + "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
+				div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str +"<br> Salle : " +info.event.extendedProps.Salle +"<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
 
 				var label = document.createElement("label");
 				label.innerHTML = "Rendez-vous effectué ?";
@@ -138,36 +138,51 @@
 				} else {
 					checkbox.checked = false;
 				}
+
 				checkbox.onclick = function () {
 					console.log("test");
-
 					var url = "{{ path('addValidate') }}";
+
 					if (checkbox.checked) {
+						
 						if ($(this).is(":checked")) {
+							confirmBox = confirm("Voulez-vous vraiment valider ce rendez-vous ?");
+							if (confirmBox == true) {
+								$.ajax({
+									url: url,
+									type: 'POST',
+									data: {
+										id: info.event.id,
+										accomplished: true
+									},
+									success: function (data) {
+										console.log(data);
+										alert("Le rendez-vous a bien été validé")
+									}
+								});
+							}
+							else {
+								checkbox.checked = false;
+							}
+						}
+					} else {
+						confirmBox = confirm("Voulez-vous vraiment annuler ce rendez-vous ?");
+						if (confirmBox == true) {
 							$.ajax({
 								url: url,
 								type: 'POST',
 								data: {
 									id: info.event.id,
-									accomplished: true
+									accomplished: false
 								},
 								success: function (data) {
 									console.log(data);
+									alert("Le rendez-vous a bien été annulé")
 								}
 							});
+						} else {
+							checkbox.checked = true;
 						}
-					} else {
-						$.ajax({
-							url: url,
-							type: 'POST',
-							data: {
-								id: info.event.id,
-								accomplished: false
-							},
-							success: function (data) {
-								console.log(data);
-							}
-						});
 					}
 				}
 

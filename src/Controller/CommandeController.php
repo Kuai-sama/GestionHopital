@@ -9,6 +9,7 @@ use App\Repository\MedicamentRepository;
 use App\Repository\PatientRepository;
 use App\Repository\PrescriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommandeController extends AbstractController
 {
     #[Route('/commande', name: 'app_commande')]
+    #[Security("is_granted('ROLE_PHARMACIEN')")]
     public function index(MedicamentRepository $medic): Response
     {
         $commandes = $medic->getCommandeARecep();
 
-        dump($commandes);
 
         return $this->render('commande/index.html.twig', [
             'controller_name' => 'CommandeController',
@@ -32,6 +33,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/new_commande/{iddprescription}', name: 'app_commande_new')]
+    #[Security("is_granted('ROLE_PHARMACIEN')")]
     public function dateSortieForm($iddprescription,Request $request,EntityManagerInterface $en): Response
     {
         $commande = new Commande();
@@ -49,6 +51,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/reception/{idcommande}', name: 'reception')]
+    #[Security("is_granted('ROLE_PHARMACIEN')")]
     public function pret(MedicamentRepository $medoc,CommandeRepository $co,$idcommande,EntityManagerInterface $en): Response
     {
 
@@ -57,10 +60,10 @@ class CommandeController extends AbstractController
         $en->persist($commande);
         $en->flush();
 
-        $medicament = $medoc->findCommande($commande->getId());
+        /*$medicament = $medoc->findCommande($commande->getId());
         $medicament[0]->setStock($medicament[0]->getStock() + $commande->getQuantite());
         $en->persist($medicament[0]);
-        $en->flush();
+        $en->flush();*/
 
         return $this->redirectToRoute("app_commande");
     }

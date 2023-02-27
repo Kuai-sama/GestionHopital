@@ -29,6 +29,7 @@ class DossierPatientController extends AbstractController
     {
         //dump($patient->getPatInfo($idpatient));
         //dump($patient->getDiagnostic($idpatient));
+        dump($patient->findOneById($idpatient));
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
@@ -150,11 +151,13 @@ class DossierPatientController extends AbstractController
         return $this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]);
     }
 
-    #[Route('/appliquer/{idprescription}/{idpatient}', name: 'patient_appliquer')]
-    public function appliquer($idprescription, $idpatient,PersonneRepository $pers,PrescriptionRepository $presciption ,AppliquerPrescriptionRepository $prescripApp, EntityManagerInterface $em): Response
+    #[Route('/appliquer/{idprescription}/{idpersonne}/{idpatient}', name: 'patient_appliquer')]
+    public function appliquer($idprescription, $idpersonne, $idpatient,PersonneRepository $pers,PrescriptionRepository $presciption ,AppliquerPrescriptionRepository $prescripApp, EntityManagerInterface $em): Response
     {
-        $idApplication = $prescripApp->retrouverPrescription($idpatient,$idprescription);
+        $idApplication = $prescripApp->retrouverPrescription($idpersonne,$idprescription);
 
+
+        dump($idApplication);
         $ApplicationPrescription = $prescripApp->find($idApplication[0]->getId());
         $soignant = $pers->findOneById($this->getUser()->getId());
         $ApplicationPrescription->setSoignant($soignant)->setDateHeureApplication(new \DateTime());
@@ -162,7 +165,7 @@ class DossierPatientController extends AbstractController
         $em->persist($ApplicationPrescription);
         $em->flush();
 
-        $patient = $pers->findOneById($idpatient);
+        $patient = $pers->findOneById($idpersonne);
         $presci = $presciption->findOneById($idprescription);
 
         //$test = $patient->getPatient()->getId();
