@@ -20,7 +20,8 @@ class ModifierLitType extends AbstractType
                 'class' => Personne::class,
                 'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('P')
-                    ->where('P.idLit is null');
+                    ->leftJoin('P.lit','l')
+                    ->where('l.IdPersonne is null');
             }])
         ;
     }

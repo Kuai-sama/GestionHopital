@@ -82,14 +82,14 @@ class LitController extends AbstractController
     public function ModifierLit($id, EntityManagerInterface $em, Request $request){
 
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
-
+        dump($lit);
         $form = $this->createForm(ModifierLitType::class, $lit);
         $form->add('send', SubmitType::class, ['label' => 'Valider']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
-            $personne->setIdLit($lit);
+            $personne->setLit($lit);
             $lit->setLitOccupe(true);
 
             $em->persist($personne);            
@@ -110,7 +110,7 @@ class LitController extends AbstractController
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
         $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
         if($personne != null){
-            $personne->setIdLit(null);
+            $personne->setLit(null);
             $em->persist($personne); 
         }
         $lit->setLitOccupe(false);
