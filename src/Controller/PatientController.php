@@ -162,6 +162,7 @@ class PatientController extends AbstractController
             $obj_rdv->setPersonne1($this->getUser());
             $obj_rdv->setValider(false);
             $obj_rdv->setAccompli(false);
+            $obj_rdv->setCode(uniqid(10));
 
             // On récupère la liste des médecins
             $medecins = $em->getRepository(Personne::class)->findAllUser('["ROLE_MEDECIN"]');
@@ -206,7 +207,7 @@ class PatientController extends AbstractController
             $em->flush();
 
             // On redirige vers la page de confirmation
-            $this->addFlash('success', 'Votre rendez-vous a bien été pris');
+            $this->addFlash('success', 'Votre rendez-vous a bien été pris, veuillez noter le code suivant : ' . $obj_rdv->getCode() . '');
             return $this->redirectToRoute('patient_menu');
         }
 

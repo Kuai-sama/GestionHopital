@@ -31,6 +31,9 @@ class RDV
 
     #[ORM\Column(type: Types::BOOLEAN, nullable: false)]
     private ?bool $accompli = null;
+    
+    #[ORM\Column(length: 255, nullable: false)]
+    private ?string $code = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
@@ -140,6 +143,18 @@ class RDV
     public function setPersonne2(?Personne $Personne2): self
     {
         $this->Personne2 = $Personne2;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }
