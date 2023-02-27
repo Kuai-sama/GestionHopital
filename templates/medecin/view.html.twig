@@ -118,7 +118,7 @@
 
 				var div = document.createElement("div");
 				div.className = "row";
-				div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str + "<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
+				div.innerHTML = "Horaire : " + start_time_str + " - " + end_time_str +"<br> Salle : " +info.event.extendedProps.Salle +"<br> Durée: " + info.event.extendedProps.duration_time + " minutes" + "<br> Patient: " + info.event.extendedProps.Nom_patient + " " + info.event.extendedProps.Prenom_patient + "<br> Description: " + info.event.extendedProps.description;
 
 				var label = document.createElement("label");
 				label.innerHTML = "Rendez-vous effectué ?";

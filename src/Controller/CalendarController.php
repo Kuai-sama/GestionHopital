@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\RDV;
 use App\Entity\Personne;
+use App\Entity\Salle;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,6 +31,8 @@ class CalendarController extends AbstractController
             $Nom_patient = $em->getRepository(Personne::class)->find($event->getPersonne1()->getId())->getNom();
             $Prenom_patient = $em->getRepository(Personne::class)->find($event->getPersonne1()->getId())->getPrenom();
 
+            $emplacementSalle = $em->getRepository(Salle::class)->find($event->getSalle()->getId())->getEmplacementSalle();
+
             $rdvs[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitre(),
@@ -41,6 +44,7 @@ class CalendarController extends AbstractController
                 'id_patient' => $event->getPersonne2()->getId(),
                 'Nom_patient' => $Nom_patient,
                 'Prenom_patient' => $Prenom_patient,
+                'Salle' => $emplacementSalle,
             ];
         }
         $data = json_encode($rdvs);
