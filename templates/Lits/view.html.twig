@@ -60,7 +60,7 @@
 	<div class="pagination">
 		{% if (nbTotalPages > 1)  %}
 			{% for myPage in 1..nbTotalPages %}
-				<a href="{{ path('list_lits', {'page': myPage}) }}">
+				<a href="{{ path('lits_list', {'page': myPage}) }}">
 					<button>
 						{{myPage}}
 					</button>
