@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\RDV;
 use App\Entity\Salle;
 
+use App\Repository\SalleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +16,13 @@ class AjoutHeureRDV extends AbstractController
 {
 
     #[Route('/listeRDV', name: 'listeRDV')]
-    function view(EntityManagerInterface $em): Response
+    function view(EntityManagerInterface $em, SalleRepository $salleRepository): Response
     {
         $id = $this->getUser()->getId();
         // On récupère tout les rdvs liés à l'utilisateur
         $events = $em->getRepository(RDV::class)->findRDVByMedecinOuInfermier($id);
+
+        $salles = $salleRepository->findAll();
 
         // On enlève tout les rendez-vous qui ont déjà une durée
         foreach ($events as $key => $event) {
@@ -27,7 +30,7 @@ class AjoutHeureRDV extends AbstractController
                 unset($events[$key]);
             }
         }
-        return $this->render('Rdv/editRDV.html.twig', compact('events'));
+        return $this->render('Rdv/editRDV.html.twig', compact('events','salles'));
     }
 
     #[Route('/ajoutHeureRDV', name: 'ajoutHeureRDV')]
