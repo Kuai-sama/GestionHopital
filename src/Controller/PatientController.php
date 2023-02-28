@@ -77,7 +77,7 @@ class PatientController extends AbstractController
             $test_present = $lit->findOneBy(['IdPersonne' => $idpersonne]);
             $code = $idpatient->getCodeEntre();
             if ($test_present != "") {
-                return $this->render('patient/venue.html.twig', ['salle' => "present", 'code' => null]);
+                return $this->render('patient/venue.html.twig', ['salle' => "present", 'code' => $code]);
             }
         }
 

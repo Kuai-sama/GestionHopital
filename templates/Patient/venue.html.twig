@@ -10,6 +10,7 @@
 
         {% if salle == "present" %}
             <h1> Vous êtes déjà dans l'hôpital </h1> 
+            <h1> code : {{code}} </h1>
         {% else %}
             {% if code != "" %}
                 <h1> Donner le code suivant à l'acceuil lors de votre arrivée : </h1> 
