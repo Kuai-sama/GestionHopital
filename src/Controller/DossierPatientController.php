@@ -27,9 +27,6 @@ class DossierPatientController extends AbstractController
     #[Route('/dossier/{idpatient}', name: 'app_dossier_patient')]
     public function index($idpatient, PatientRepository $patient, AppliquerPrescriptionRepository $prescription): Response
     {
-        //dump($patient->getPatInfo($idpatient));
-        //dump($patient->getDiagnostic($idpatient));
-        dump($patient->findOneById($idpatient));
 
         return $this->render('dossier_patient/index.html.twig', [
             'InfoPatient' => $patient->getPatInfo($idpatient),
@@ -157,7 +154,6 @@ class DossierPatientController extends AbstractController
         $idApplication = $prescripApp->retrouverPrescription($idpersonne,$idprescription);
 
 
-        dump($idApplication);
         $ApplicationPrescription = $prescripApp->find($idApplication[0]->getId());
         $soignant = $pers->findOneById($this->getUser()->getId());
         $ApplicationPrescription->setSoignant($soignant)->setDateHeureApplication(new \DateTime());
@@ -186,13 +182,10 @@ class DossierPatientController extends AbstractController
         $form->add('send',SubmitType::class,['label'=>'ajouter un prescription a se patient']);
         $form->handleRequest($request);
 
-        dump($prescription);
-
         if(($form->isSubmitted() && $form->isValid())){
             //form
             $em->persist($prescription);
             $em->flush();
-
 
             //message
             $this->addFlash('info','ajout réussi');
@@ -203,7 +196,7 @@ class DossierPatientController extends AbstractController
             //prescription diagno
             //$per->AddPersoDiagno($idper,$prescription->getId());
 
-            return $this->redirectToRoute('app_dossier_patient',['idpatient'=>$idpatient]);
+            return $this->redirectToRoute('patient_list_patient');
         }
 
         return $this->render('dossier_patient/PrescriptionForm.html.twig',['form'=>$form->createView()]);
