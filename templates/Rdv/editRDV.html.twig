@@ -48,7 +48,6 @@
 						<!--<td><input id="textinput" type="text" name="salle" value="{{ event.salle }}"></td>-->
 						<td><select name="salle">
 							{% for salle in salles %}
-								{{ dump(salle.EmplacementSalle) }}
 								<option>{{ salle.EmplacementSalle }}</option>
 							{% endfor %}
 						</select></td>
