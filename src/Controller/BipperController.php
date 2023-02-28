@@ -33,7 +33,6 @@ class BipperController extends AbstractController
         $salle = $em
             ->getRepository(Salle::class)->findAll();
 
-        //dump($salle);
 
         return $this->render('bipper/afficheSalle.html.twig', ['salles' => $salle, 'idReceveur' => $idReceveur]);
     }
@@ -77,8 +76,6 @@ class BipperController extends AbstractController
         //$notif = $em->getRepository(Message::class)->findBy(['Personne2' => $user]);
         $notif = $em->getRepository(Message::class)->findNotif($user);
 
-        //dump($user);
-        //dump($notif);
 
         return $this->render('bipper/afficheBipperPerso.html.twig', ['notifs' => $notif]);
     }
@@ -96,9 +93,6 @@ class BipperController extends AbstractController
 
         $em->remove($message);
         $em->flush();
-
-
-        dump($message);
 
         return $this->redirectToRoute("app_bipper_affiche_notif");
     }
