@@ -59,10 +59,12 @@ class BipperController extends AbstractController
         $user = $this->getUser()->getRoles();
         if ($user[0] == "ROLE_MEDECIN")
         {
+            $this->addFlash("alert", "Bipp réalisé");
             return $this->redirectToRoute("app_medecin");
         }
         else
         {
+            $this->addFlash("alert", "Bipp réalisé");
             return $this->redirectToRoute("infirmier_accueil");
         }
     }

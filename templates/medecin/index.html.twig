@@ -9,6 +9,10 @@
 </style>
 
 <div class="example-wrapper">
-
+    {% for flashMessage in app.session.flashbag.get('alert') %}
+            <div class="alert alert-success">
+                    {{ flashMessage }}
+            </div>
+    {% endfor %}
 </div>
 {% endblock %}
