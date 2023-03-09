@@ -30,7 +30,7 @@ class AjoutHeureRDV extends AbstractController
                 unset($events[$key]);
             }
         }
-        return $this->render('Rdv/editRDV.html.twig', compact('events','salles'));
+        return $this->render('Rdv/editRDV.html.twig', compact('events', 'salles'));
     }
 
     #[Route('/ajoutHeureRDV', name: 'ajoutHeureRDV')]
@@ -46,9 +46,9 @@ class AjoutHeureRDV extends AbstractController
             return $this->redirectToRoute('listeRDV');
         }
 
-        // On vérifie que la durée est bien un nombre et est comprise entre 15 et 55
-        if (!is_numeric($data['duree']) || $data['duree'] < 15 || $data['duree'] > 55) {
-            $this->addFlash('error', 'La durée doit être un nombre compris entre 15 et 55');
+        // On vérifie que la durée est bien un nombre et est comprise entre 15min et 24 heures
+        if (!is_numeric($data['duree']) || $data['duree'] < 15 || $data['duree'] > 14405) {
+            $this->addFlash('error', 'La durée doit être un nombre compris entre 15 min et 24h');
             return $this->redirectToRoute('listeRDV');
         }
         // On récupère le rendez-vous et la salle
