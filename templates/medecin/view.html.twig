@@ -102,16 +102,29 @@
 				start_time = new Date(start_time)
 				end_time = new Date(end_time)
 
-				var start_time_str = start_time.getHours() + ":" + start_time.getMinutes();
-				var end_time_str = end_time.getHours() + ":" + end_time.getMinutes();
+				// On récupère les heures
+				var start_hour =  start_time.getHours();
+				if (start_hour < 10) {
+					start_hour = "0" + start_hour;
+				}
+				var end_hour = end_time.getHours();
+				if (end_hour < 10) {
+					end_hour = "0" + end_hour;
+				}
 
-				start_hour = start_time_str.substring(3);
-				end_hour = end_time_str.substring(3);
-				if (parseInt(start_hour) < 10) 
-					start_time_str = start_time_str.substring(0, 3) + "0" + start_hour;
+				// On récupère les minutes
+				var start_minute = start_time.getMinutes();
+				if (start_minute < 10) {
+					start_minute = "0" + start_minute;
+				}
+				var end_minute = end_time.getMinutes();
+				if (end_minute < 10) {
+					end_minute = "0" + end_minute;
+				}
 
-				if (parseInt(end_hour) < 10) 
-					end_time_str = end_time_str.substring(0, 3) + "0" + end_hour;
+				// On concatène les heures et les minutes
+				start_time_str = start_hour + ":" + start_minute;
+				end_time_str = end_hour + ":" + end_minute;
 
 				var container = document.createElement("div");
 				container.className = "container";
@@ -192,10 +205,10 @@
 				container.appendChild(div);
 				container.appendChild(labelAndCheckbox);
 
-				console.log(container)
-				console.log(start_time_str);
-				console.log(end_time_str);
-				console.log(info.event);
+				// console.log(container)
+				// console.log(start_time_str);
+				// console.log(end_time_str);
+				// console.log(info.event);
 
 				$popover = $(info.el).popover({
 					html: true,
