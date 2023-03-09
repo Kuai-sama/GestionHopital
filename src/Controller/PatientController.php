@@ -61,7 +61,7 @@ class PatientController extends AbstractController
     #[Route('', name: 'menu')]
     public function menuAction(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('Patient/index.html.twig');
     }
 
     #[Route('/venue', name: 'venue')]
