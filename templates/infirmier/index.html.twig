@@ -9,12 +9,12 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% for flashMessage in app.session.flashbag.get('alert') %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/tcheva10/be/projet-hopital/src/Controller/InfirmierController.php'|file_link(0) }}">src/Controller/InfirmierController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/tcheva10/be/projet-hopital/templates/infirmier/creerCompteAdmin.html.twig'|file_link(0) }}">templates/infirmier/index.html.twig</a></code></li>
-    </ul>
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+
+    {% endfor %}
 </div>
 {% endblock %}

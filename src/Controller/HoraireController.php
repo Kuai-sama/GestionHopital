@@ -28,7 +28,7 @@ class HoraireController extends AbstractController
         $userId = $user->getId();
         //$time = date('H:i:s d/m/Y').datetime;
         //$date = new \DateTime('@'.strtotime('now'));
-        //dump($date);
+
 
         if($horaireRepository->getHoraireWithoutEnd($userId) == null){
             $EnService = true;
@@ -55,7 +55,7 @@ class HoraireController extends AbstractController
     public function addFinHoraire(PersonneRepository $personne,HoraireRepository $horaireRepository,EntityManagerInterface $em,UserInterface $user){
         $idP = $user->getId();
         $horaire = $horaireRepository->getHoraireWithoutEnd($idP);
-        dump($horaire);
+
         $horaire[0]->setTfin(new \DateTime());
 
         $em->persist($horaire[0]);

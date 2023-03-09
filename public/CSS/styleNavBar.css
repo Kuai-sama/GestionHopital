@@ -1,0 +1,25 @@
+li{
+    display:inline-block;
+    min-width:5px;
+    margin:2px;
+    background-color: #ECECEC;
+    border-radius: 30px;
+}
+
+li a:after {
+    content: '';
+    display: block;
+    margin: auto;
+    height: 1px;
+    width: 0;
+    transition: width .5s ease, background-color .5s ease;
+}
+li a:hover:after {
+    width: 100%;
+    background: black;
+}
+
+li:hover{
+    background-color: #CFCFCF;
+}
+

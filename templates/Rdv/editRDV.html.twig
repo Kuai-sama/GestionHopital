@@ -5,28 +5,26 @@
 	<h1>Appliquer des heures à des rendez-vous</h1>
 
 	<style>
-		th {
-			text-align: center;
-			background: #e62e00;
-			color: white;
-			font-size: 18px;
+		th{
+			text-align:center;
+			background:  #e62e00;
+            color:white;
+            font-size: 18px;
 		}
-		td {
-			text-align: center;
+		td{
+			text-align:center;
 		}
-		#textinput {
+		#textinput{
 			border: 2px solid #008000;
 			border-radius: 12px;
 		}
-		#textinput:focus {
+		#textinput:focus{
 			background-color: #ffffe6;
 			border-radius: 2px;
 		}
 	</style>
 	<script>
 		function validateForm() {
-			// Console
-			console.log("test");
 			var x = confirm("Voulez-vous vraiment modifier ces rendez-vous ?");
 			if (x) {
 				// On récupère le formulaire et on le soumet
@@ -34,12 +32,11 @@
 
 			}
 			else {
-				// On récurère le checkbox qui s'appelle event[] et on le décoche
+				// On récupère le checkbox qui s'appelle event[] et on le décoche
 				return document.getElementsByName("event[]").checked = false;
 			}
 		}
 	</script>
-
 
 	<table class="table table-striped table-hover">
 		<thead>
@@ -63,21 +60,17 @@
 					<form action="{{ path('ajoutHeureRDV') }}" method="post">
 						<td><input id="textinput" type="text" name="titre" value="{{ event.titre }}"></td>
 						<!--<td><input id="textinput" type="text" name="salle" value="{{ event.salle }}"></td>-->
-						<td>
-							<select name="salle">
-								{% for salle in salles %}
-									{{ dump(salle.EmplacementSalle) }}
-									<option>{{ salle.EmplacementSalle }}</option>
-								{% endfor %}
-							</select>
-						</td>
+						<td><select name="salle">
+							{% for salle in salles %}
+								<option>{{ salle.EmplacementSalle }}</option>
+							{% endfor %}
+						</select></td>
 						<td><input id="textinput" type="number" name="duree" min="15" max="1440" value="{{ event.duree }}"></td>
 						<input type="hidden" name="id" value="{{ event.id }}">
-						<td><input type="checkbox" name="event[]" onclick="return validateForm()" value="{{ event.id }}"></td>
+						<td><input type="checkbox" name="event[]" onclick="return validateForm()"></td>
 					</form>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 {% endblock %}
-

@@ -9,6 +9,7 @@ use App\Entity\RDV;
 use App\Form\PrendreRDV;
 use App\Repository\LitRepository;
 use App\Repository\PatientRepository;
+use App\Repository\RDVRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -76,10 +77,9 @@ class PatientController extends AbstractController
             $test_present = $lit->findOneBy(['IdPersonne' => $idpersonne]);
             $code = $idpatient->getCodeEntre();
             if ($test_present != "") {
-                return $this->render('patient/venue.html.twig', ['salle' => "present", 'code' => null]);
+                return $this->render('patient/venue.html.twig', ['salle' => "present", 'code' => $code]);
             }
         }
-
 
 
         if ($code != "") {
@@ -215,5 +215,14 @@ class PatientController extends AbstractController
         return $this->render('patient/rdv.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    #[Route('/voirRdv', name: "list_rdv")]
+    public function voirRdv(RDVRepository $RDVRepository): Response
+    {
+        $idCompte = $this->getUser()->getId();
+        $rdv = $RDVRepository->findBy(array("Personne1" => $idCompte));
+
+        return $this->render('Rdv/voirRdvPatient.html.twig', ['rdvs' => $rdv]);
     }
 }

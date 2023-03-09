@@ -7,11 +7,13 @@ use App\Entity\Salle;
 use App\Entity\Personne;
 use App\Form\AjoutLitType;
 use App\Form\ModifierLitType;
+use Doctrine\ORM\EntityRepository;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -31,7 +33,7 @@ class LitController extends AbstractController
     public function index($page, EntityManagerInterface $em)
     {
 
-        $nbPerPage = 10;
+        $nbPerPage = 25;
         // On compte tout les articles qui sont publiés (méthode magique count() de Doctrine)
 
         $lits = $em->getRepository(Lit::class)->findAllWithSalleAndPaging($page, $nbPerPage);
@@ -50,7 +52,6 @@ class LitController extends AbstractController
     #[Route('/emplacementPatient', name:'emplacementPatient')]
     public function ouEstLePatient(PatientRepository $patient){
 
-        dump($patient->getPatLit());
         return $this->render('Lits/viewPat.html.twig', [
             'patient' => $patient->getPatLit()
         ]);
@@ -82,14 +83,29 @@ class LitController extends AbstractController
     public function ModifierLit($id, EntityManagerInterface $em, Request $request){
 
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
-
+        if($lit->getIdPersonne() != null)
+        {
+            $occupant = $lit->getIdPersonne()->getId();            
+        }
+        else
+        {
+            $occupant = null;
+        }
         $form = $this->createForm(ModifierLitType::class, $lit);
+        $form->add('IdPersonne', EntityType::class, [
+            'class' => Personne::class,
+            'query_builder' => function (EntityRepository $er) use ($occupant) {
+            return $er->createQueryBuilder('P')
+                ->leftJoin('P.lit','l')
+                ->where('l.IdPersonne is null')
+                ->orWhere("P.id = '$occupant'");
+        }]);
         $form->add('send', SubmitType::class, ['label' => 'Valider']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
-            $personne->setIdLit($lit);
+            $personne->setLit($lit);
             $lit->setLitOccupe(true);
 
             $em->persist($personne);            
@@ -110,7 +126,7 @@ class LitController extends AbstractController
         $lit = $em->getRepository(Lit::class)->findOneBy(['id'=>$id]);
         $personne = $em->getRepository(Personne::class)->findOneBy(['id'=>$lit->getIdPersonne()]);
         if($personne != null){
-            $personne->setIdLit(null);
+            $personne->setLit(null);
             $em->persist($personne); 
         }
         $lit->setLitOccupe(false);

@@ -1,0 +1,26 @@
+td {
+	border: none;
+	border-bottom: 1px solid #eee;
+	position: relative;
+	padding-left: 50%
+}
+
+th{
+    text-align: center;
+    font-size: large;
+}
+
+h1{
+    font-size: large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+a{
+	list-style-type: none;  
+	display: inline;
+}
+
+a:hover {
+    color: rgb(190, 62, 62);
+}
