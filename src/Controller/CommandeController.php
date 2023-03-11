@@ -28,7 +28,6 @@ class CommandeController extends AbstractController
         return $this->render('commande/index.html.twig', [
             'controller_name' => 'CommandeController',
                 "commandes" => $commandes
-
         ]);
     }
 
